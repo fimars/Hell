@@ -1,0 +1,33 @@
+//
+// Basic styles
+//
+
+.card {
+  @include transition;
+  border: solid 1px $border-color;
+  &:hover {
+    border-color: $border-hover-color;
+  }
+
+  &.is-highlight {
+    border-color: $border-highlight-color;
+
+    &:hover {
+      border-color: $border-highlight-hover-color;
+    }
+
+    .card-title {
+      border-color: $border-highlight-color;
+    }
+  }
+}
+
+.card-body {
+  padding: $card-spacer;
+}
+
+.card-title {
+  border-top: solid 1px $border-color;
+  padding: $card-spacer;
+  background-color: $card-header-backgorund;
+}

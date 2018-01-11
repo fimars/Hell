@@ -1,0 +1,15 @@
+{
+  "name": "helenae",
+  "version": "1.0.0",
+  "description": "theme",
+  "scripts": {
+    "deploy": "parcel build && gh-pages"
+  },
+  "main": "noop",
+  "repository": "noop",
+  "author": "fimars <foru.fy@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "node-sass": "^4.7.2"
+  }
+}

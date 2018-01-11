@@ -1,0 +1,14 @@
+.columns {
+  display: flex;
+}
+
+.column {
+  box-sizing: border-box;
+  flex: 1 1 auto;
+}
+
+@for $i from 1 through 12 {
+  .column-#{$i} {
+    @include make-column($i,12);
+  }
+}

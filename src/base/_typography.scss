@@ -1,0 +1,13 @@
+//
+// body
+//
+
+body {
+  background-color: $body-backgorund;
+  color: $body-color;
+  font-family: $font-family;
+}
+
+*::selection{
+    background-color: $rose;
+}

@@ -32,6 +32,9 @@ bower_components
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
+# Build folder
+dist/**
+
 # Dependency directories
 node_modules/
 jspm_packages/
@@ -57,3 +60,5 @@ typings/
 # dotenv environment variables file
 .env
 
+# dotcache 
+.cache

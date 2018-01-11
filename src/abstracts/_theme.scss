@@ -1,0 +1,15 @@
+//
+// default theme
+//
+$body-backgorund: $black;
+$body-color: $white;
+
+$card-spacer: $block-neer-spacer;
+$card-body-backgorund: $black;
+$card-header-backgorund: $black;
+
+$border-color: tint($black, 33.33);
+$border-hover-color: tint($black, 100);
+$border-hover-transition: border-color .4s linear;
+$border-highlight-color: shade($azure-radiance, 33.33);
+$border-highlight-hover-color: $azure-radiance;
