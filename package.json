@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "deploy": "parcel build && gh-pages"
+    "build": "parcel build -d build/",
+    "doc": "gh-pages -d ./"
   },
-  "main": "noop",
-  "repository": "noop",
+  "main": "src/index.scss",
+  "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",
   "dependencies": {
