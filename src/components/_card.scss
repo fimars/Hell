@@ -4,9 +4,9 @@
 
 .card {
   @include transition;
-  border: solid 1px $border-color;
+  border: $border-default;
   &:hover {
-    border-color: $border-hover-color;
+    border-color: shade($border-color, 20);
   }
 
   &.is-highlight {
@@ -27,7 +27,7 @@
 }
 
 .card-title {
-  border-top: solid 1px $border-color;
+  border-top: $border-default;
   padding: $card-spacer;
   background-color: $card-header-backgorund;
 }

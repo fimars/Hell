@@ -1,8 +1,10 @@
 .columns {
   display: flex;
+  align-items: center;
 }
 
 .column {
+  padding: $block-inner-spacer;
   box-sizing: border-box;
   flex: 1 1 auto;
 }
@@ -11,4 +13,9 @@
   .column-#{$i} {
     @include make-column($i,12);
   }
+}
+
+
+.columns.is-between {
+  justify-content: space-between;
 }

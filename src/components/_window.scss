@@ -1,0 +1,50 @@
+// Because this is a example, will be move to layout
+
+.window {
+    border-radius: 4px;
+    border: $border-default;
+    box-shadow: $window-shadow;
+}
+
+.window-bar {
+    @include border-top-radius(4px);
+    line-height: $window-bar-height;
+    background-color: $window-bar-bg-color;
+    border-bottom: $border-default;
+    color: $window-bar-color;
+    text-align: center;
+}
+
+.window-box {
+    @include border-bottom-radius(4px);
+    min-height: 400px;
+}
+
+
+%item {
+    margin-left: -$block-inner-spacer;
+    margin-right:-$block-inner-spacer;
+    padding: $block-inner-spacer / 2 $block-inner-spacer;
+    background-color: $window-item-bg-color;
+}
+.window-item {
+    @extend %item;
+    color: $typo-dark;
+}
+
+.window-box>.columns>* {
+    height: 400px;
+}
+.expolorer {
+    border-right: $border-default;
+    background-color: $window-bar-bg-color;
+    line-height: 200%;
+
+    .item {
+        @extend %item;
+        background-color: $window-bar-bg-color;        
+        &.selected {
+            background-color: $window-item-selected-color;
+        }
+    }
+}

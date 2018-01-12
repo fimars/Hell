@@ -3,13 +3,17 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "build": "parcel build -d build/"
+    "build": "parcel docs/index.pug"
   },
   "main": "src/index.scss",
   "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",
+  "devDependencies": {
+    "node-sass": "^4.7.2",
+    "parcel-plugin-pug": "^0.2.1"
+  },
   "dependencies": {
-    "node-sass": "^4.7.2"
+    "parcel-bundler": "https://github.com/fimars/parcel.git"
   }
-}·
+}

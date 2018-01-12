@@ -1,13 +1,31 @@
-//
-// body
-//
+@import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html {
+  font-size: 13px;
+}
 
 body {
-  background-color: $body-backgorund;
-  color: $body-color;
+  color: $typo;
   font-family: $font-family;
 }
 
+a {
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  &.selected {
+    font-weight: 600;
+  }
+}
+
+code {
+  color: $azure-radiance;
+}
+
 *::selection{
-    background-color: $rose;
+    background-color: $typo-selection-color;
 }
