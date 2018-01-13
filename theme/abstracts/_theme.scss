@@ -1,0 +1,27 @@
+//
+// default theme
+//
+$base: $white;
+$typo: $black;
+$typo-dark: mix($base, $typo, 60);
+$typo-selection-color: $aquamarine;
+
+$body-backgorund: $base;
+$body-color: $typo;
+
+$card-spacer: $block-neer-spacer;
+$card-body-backgorund: $base;
+$card-header-backgorund: $base;
+
+$border-color: shade($base, 14);
+$border-hover-transition: border-color .4s linear;
+$border-highlight-color: shade($rose, 33.33);
+$border-highlight-hover-color: $rose;
+$border-default: solid 1px $border-color;
+
+$window-bar-height: 28px;
+$window-bar-color: $typo;
+$window-bar-bg-color: shade($base, 1);
+$window-item-bg-color: shade($base, 3);
+$window-item-hover-color: shade($base, 5);
+$window-item-selected-color: shade($base, 8);

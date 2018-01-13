@@ -1,0 +1,47 @@
+// 暂时使用在线版本
+@import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+html {
+  font-size: 13px;
+}
+
+body {
+  // 苹果默认 or Roboto
+  $font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  color: $typo;
+  font-family: $font-family;
+}
+
+// 让链接更醒目
+a {
+  color: $typo;
+  text-decoration: none;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  &.selected {
+    font-weight: 600;
+  }
+}
+
+//code {
+//  color: $azure-radiance;
+//
+//  &::before,
+//  &::after {
+//    content: '`';
+//  }
+//}
+
+*::selection {
+  background-color: $typo-selection-color;
+}
+
+p {
+  // 用1.6的行高让行与行之间的距离很适合阅读
+  line-height: 1.6;
+}
