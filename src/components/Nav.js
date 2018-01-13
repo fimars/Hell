@@ -23,7 +23,7 @@ const ALink = (name) => (
 const Nav = () => (
   <section className="section nav">
     { Label('GETSTART') }
-    { LabelPost(ALink('colors'), ALink('layout')) }
+    { LabelPost(ALink('colors'), ALink('layout'), ALink('Card')) }
   </section>
 )
 
