@@ -15,6 +15,7 @@ body {
 
 // 让链接更醒目
 a {
+  color: $typo;
   text-decoration: none;
 
   &:hover {

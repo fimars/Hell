@@ -3,17 +3,26 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "build": "parcel docs/index.pug"
+    "dev": "parcel index.html"
   },
   "main": "src/index.scss",
   "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-eslint": "7",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "3.x",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-react": "^7.5.1",
     "node-sass": "^4.7.2",
     "parcel-plugin-pug": "^0.2.1"
   },
   "dependencies": {
-    "parcel-bundler": "https://github.com/fimars/parcel.git"
+    "parcel-bundler": "^1.4.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2"
   }
 }
