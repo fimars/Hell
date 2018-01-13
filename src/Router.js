@@ -16,8 +16,10 @@ const Topics = Page('Topics')
 const Router = () => (
   <BrowserRouter>
     <div className="columns">
-      <Nav></Nav>
-      <div className="column column-8">
+      <div className="column-3">
+        <Nav></Nav>
+      </div>
+      <div className="column-8">
         <Route path="/colors" component={Colors}></Route>
         <Route path="/layout" component={About}></Route>
         <Route path="/topics" component={Topics}></Route>

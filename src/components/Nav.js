@@ -21,12 +21,10 @@ const ALink = (name) => (
 )
 
 const Nav = () => (
-  <div className="column-3">
-      <section className="section">
-        { Label('GETSTART') }
-        { LabelPost(ALink('colors'), ALink('layout')) }
-      </section>
-  </div>
+  <section className="section nav">
+    { Label('GETSTART') }
+    { LabelPost(ALink('colors'), ALink('layout')) }
+  </section>
 )
 
 export default Nav
