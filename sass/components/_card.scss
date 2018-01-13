@@ -5,9 +5,8 @@
 .card {
   @include transition;
   border: $border-default;
-  &:hover {
-    border-color: shade($border-color, 20);
-  }
+
+  &:hover { border-color: shade($border-color, 20); }
 
   &.is-highlight {
     border-color: $border-highlight-color;
@@ -27,7 +26,7 @@
 }
 
 .card-title {
+  background-color: $card-header-backgorund;
   border-top: $border-default;
   padding: $card-spacer;
-  background-color: $card-header-backgorund;
 }

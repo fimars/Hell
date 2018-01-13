@@ -1,6 +1,8 @@
-@import "mixins/border-radius";
-@import "mixins/columns";
-@import "mixins/transition";
+@import 'mixins/border-radius';
+@import 'mixins/box-shadow';
+@import 'mixins/columns';
+@import 'mixins/transition';
+
 
 /// Slightly lighten a color
 /// @access public
@@ -18,4 +20,9 @@
 /// @return {Color}
 @function shade($color, $percentage) {
   @return mix(black, $color, $percentage);
+}
+
+@mixin size($width, $height: $width) {
+  height: $height;
+  width: $width;
 }

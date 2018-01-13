@@ -19,10 +19,9 @@ $border-highlight-color: shade($rose, 33.33);
 $border-highlight-hover-color: $rose;
 $border-default: solid 1px $border-color;
 
-
-$window-shadow: 0 0 20px 2px shade($base, 11.11);
 $window-bar-height: 28px;
 $window-bar-color: $typo;
 $window-bar-bg-color: shade($base, 1);
 $window-item-bg-color: shade($base, 3);
+$window-item-hover-color: shade($base, 5);
 $window-item-selected-color: shade($base, 8);

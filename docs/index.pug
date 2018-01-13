@@ -4,18 +4,32 @@ html(lang='en')
   include includes/mixin.pug
   body.columns
     include includes/nav.pug
-    main.column-8
+    main.column-8(style="max-height: 100vh; overflow: auto;")
+      +section("Colors")
+        +section
+          | Preview the colors using in <code>Helenae.scss</code>
+        
+        +section
+          .columns
+            - n = 0
+            while n < 7
+              .color
+              - n++
+
+
       +section("Layouts")
         +section
-          | The <code>Helenae.scss</code> is a css framework for electron application.
-          | Emm, first version just think about server for Lidis.
+          p
+            | The <code>Helenae.scss</code> is a css framework for electron application.
+            | Emm, first version just think about server for Lidis.
+            | Here are a small exmpale.
 
         +section
           .window
               .window-bar Helenae.scss
               .window-box
                 .columns
-                  .column-3.column.expolorer
+                  .column-3.expolorer
                     .columns.is-between.window-item
                       span EXPOLORER
                       .columns.is-between
@@ -26,5 +40,11 @@ html(lang='en')
                     .item Fourth Man
                     .item Fiyth Man
                   .column-9
+              .window-bottom.columns.is-between
+                .columns
+                  .tag.columns
+                    .icon.ion-social-github
+                    span Helenae.scss
+                .columns
 
-    script(src='../src/index.js')
+    script(src='../index.js')
