@@ -1,13 +1,5 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+import doc from './src/doc'
+// Theme
+import './theme/index.scss'
 
-// Helenae
-import './sass/index.scss'
-
-// Router
-import Router from './src/Router'
-
-ReactDOM.render(
-  <Router/>,
-  document.getElementById('app')
-)
+doc.init({})

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "parcel index.html"
   },
-  "main": "src/index.scss",
+  "main": "src/index.js",
   "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",
@@ -15,7 +15,11 @@
     "babel-preset-react": "^6.24.1",
     "eslint": "3.x",
     "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-react": "^7.5.1",
+    "eslint-plugin-standard": "^3.0.1",
     "node-sass": "^4.7.2",
     "parcel-plugin-pug": "^0.2.1"
   },

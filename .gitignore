@@ -62,3 +62,7 @@ typings/
 
 # dotcache 
 .cache
+
+# ide
+.vscode
+.idea
