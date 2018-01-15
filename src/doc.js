@@ -14,4 +14,4 @@ class Doc {
   }
 }
 
-export default Doc
+export default new Doc()
