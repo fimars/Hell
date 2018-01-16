@@ -28,14 +28,14 @@ a {
   }
 }
 
-code {
-  color: $azure-radiance;
-
-  &::before,
-  &::after {
-    content: '`';
-  }
-}
+//code {
+//  color: $azure-radiance;
+//
+//  &::before,
+//  &::after {
+//    content: '`';
+//  }
+//}
 
 *::selection {
   background-color: $typo-selection-color;

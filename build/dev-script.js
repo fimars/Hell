@@ -10,10 +10,11 @@ const config = require('./config')
 sh.rm('-rf', 'dist')
 sh.rm('-rf', '.cache')
 
-// `serve` docs folder
+// `serve` public folder
 
-serve(resolve(__dirname, '../docs'), {
-  port: config.DOC_PORT
+serve(resolve(__dirname, '../public'), {
+  port: config.DOC_PORT,
+  cors: true
 })
 
 // `parcel` index.html
