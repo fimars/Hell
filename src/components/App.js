@@ -1,18 +1,29 @@
+// BuildIn
+import qs from 'querystring'
+
+// Packages
 import React from 'react'
 import marked from 'marked'
+import {
+  HashRouter as Router,
+  Route
+} from 'react-router-dom'
 
-import {fetchFile} from '../lib/helper'
+// Libs
+import {fetchFile, scrollToElement} from '../lib/helper'
 import {getState} from '../lib/state'
+
+// Components
 import Nav from './Nav'
 
-// marked
+// Deal Markdown Parser Options
 const renderer = new marked.Renderer()
 
 marked.setOptions({
   renderer: renderer
 })
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor () {
     super()
     this.state = {
@@ -26,6 +37,8 @@ export default class App extends React.Component {
   async componentDidMount () {
     const url = this.state.path + '/' + this.state.current
 
+    // Handle toc
+    // TODO: More clear way to total the level
     const toc = []
     let preNode = null
     renderer.heading = function (text, level) {
@@ -55,6 +68,13 @@ export default class App extends React.Component {
     const raw = await fetchFile(url)
     const contentHtml = marked(raw)
 
+    // Handle heading jump
+    const { location } = this.props
+    if (location.search) {
+      const query = qs.parse(location.search.slice(1))
+      setTimeout(() => scrollToElement(query.id), 0)
+    }
+
     this.setState({
       toc: toc,
       docContent: contentHtml
@@ -62,17 +82,32 @@ export default class App extends React.Component {
   }
 
   render () {
+    console.log(this.props)
     return (
-      <div className="columns">
-        <div className="column-3">
-          <div className="nav section">
-            <Nav toc={this.state.toc}/>
+      <div>
+        <div className="columns">
+          <div className="column-3">
+            <div className="nav section">
+              <Nav location={this.props.location} toc={this.state.toc}/>
+            </div>
+          </div>
+          <div className="column-8">
+            <div className="markdown-body section" dangerouslySetInnerHTML={{__html: this.state.docContent}}></div>
           </div>
         </div>
-        <div className="column-8">
-          <div className="markdown-body section" dangerouslySetInnerHTML={{__html: this.state.docContent}}></div>
-        </div>
       </div>
+    )
+  }
+}
+
+export default class R extends React.Component {
+  render () {
+    return (
+      <Router>
+        <div>
+          <Route path="/" component={App}></Route>
+        </div>
+      </Router>
     )
   }
 }
