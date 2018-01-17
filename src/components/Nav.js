@@ -1,29 +1,35 @@
+// TODO: Rename To 'TOC'
+// TODO: handle url white sapce
+
 // BuiltIn
 import qs from 'querystring'
 
 // Packages
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 // Libs
-import {scrollToElement} from '../lib/helper'
+import {jumpTo} from '../lib/helper'
 
 class SideNavLink extends React.Component {
-  getActive () {
+  constructor () {
+    super()
+    this.scrollToHeading = this.scrollToHeading.bind(this)
+  }
+  isActive () {
     return this.props.activeName === this.props.name
   }
   scrollToHeading () {
-    scrollToElement(this.props.name)
+    jumpTo(this.props.name)
   }
   render () {
     const { name } = this.props
     return (
-      <NavLink
-        onClick={() => this.scrollToHeading()}
+      <Link
         to={'?id=' + name}
-        activeClassName="selected"
-        isActive={() => this.getActive()}
-      >{name}</NavLink>
+        replace={this.isActive()}
+        onClick={this.scrollToHeading}
+      >{name}</Link>
     )
   }
 }

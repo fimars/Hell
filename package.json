@@ -22,7 +22,6 @@
     "eslint-plugin-standard": "^3.0.1",
     "node-sass": "^4.7.2",
     "parcel-bundler": "^1.4.1",
-    "parcel-plugin-pug": "^0.2.1",
     "serve": "^6.4.8",
     "shelljs": "^0.8.0"
   },

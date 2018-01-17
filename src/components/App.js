@@ -10,85 +10,96 @@ import {
 } from 'react-router-dom'
 
 // Libs
-import {fetchFile, scrollToElement} from '../lib/helper'
-import {getState} from '../lib/state'
+import {fetchFile, jumpTo} from '../lib/helper'
+// import {getState} from '../lib/state'
 
 // Components
 import Nav from './Nav'
+import NotFound from './NotFound'
 
-// Deal Markdown Parser Options
 const renderer = new marked.Renderer()
-
-marked.setOptions({
-  renderer: renderer
-})
 
 class App extends React.Component {
   constructor () {
     super()
     this.state = {
-      current: getState('current'),
-      path: getState('path'),
       docContent: '',
-      toc: []
+      docHeadings: []
     }
   }
 
-  async componentDidMount () {
-    const url = this.state.path + '/' + this.state.current
+  getCurrentPath ({ options, location }) {
+    const { path, current = 'README.md' } = options
+    const { pathname } = location
+    return path + (pathname === '/' ? pathname + current : pathname)
+  }
 
-    // Handle toc
-    // TODO: More clear way to total the level
-    const toc = []
-    let preNode = null
-    renderer.heading = function (text, level) {
-      if (level <= 2) {
-        const node = {
-          level,
-          text,
-          children: [],
-          parent: preNode || toc
-        }
+  scrollIntoLastVisit () {
+    const { search } = this.props.location
+    if (search) {
+      const { id } = qs.parse(search.slice(1))
+      if (id) jumpTo(id)
+    }
+  }
 
-        if (!preNode) {
-          toc.push(node)
-          preNode = node
-        } else {
-          if (level > preNode.level) {
-            preNode.children.push(node)
-          } else {
+  async fetchData (url) {
+    // render content
+    try {
+      const toc = []
+      let preNode = null
+      renderer.heading = function (text, level) {
+        if (level <= 2) {
+          const node = {
+            level,
+            text,
+            children: [],
+            parent: preNode || toc
+          }
+
+          if (!preNode) {
             toc.push(node)
             preNode = node
+          } else {
+            if (level > preNode.level) {
+              preNode.children.push(node)
+            } else {
+              toc.push(node)
+              preNode = node
+            }
           }
         }
+        return level > 1 ? `<h${level} id="${text}">${text}</h${level}>` : ''
       }
-      return level > 1 ? `<h${level} id="${text}">${text}</h${level}>` : ''
+      marked.setOptions({ renderer })
+
+      const raw = await fetchFile(url)
+      const formatted = marked(raw)
+
+      this.setState({
+        docHeadings: toc,
+        docContent: formatted
+      }, this.scrollIntoLastVisit)
+    } catch (e) {
+      this.props.history.push('404')
     }
+  }
 
-    const raw = await fetchFile(url)
-    const contentHtml = marked(raw)
-
-    // Handle heading jump
-    const { location } = this.props
-    if (location.search) {
-      const query = qs.parse(location.search.slice(1))
-      setTimeout(() => scrollToElement(query.id), 0)
-    }
-
-    this.setState({
-      toc: toc,
-      docContent: contentHtml
-    })
+  async componentDidUpdate (prevProps) {
+    const prevPath = this.getCurrentPath(prevProps)
+    const nowPath = this.getCurrentPath(this.props)
+    if (nowPath !== prevPath) this.fetchData(nowPath)
+  }
+  async componentDidMount () {
+    this.fetchData(this.getCurrentPath(this.props))
   }
 
   render () {
-    console.log(this.props)
     return (
       <div>
         <div className="columns">
           <div className="column-3">
             <div className="nav section">
-              <Nav location={this.props.location} toc={this.state.toc}/>
+              <Nav location={this.props.location} toc={this.state.docHeadings}/>
             </div>
           </div>
           <div className="column-8">
@@ -100,12 +111,15 @@ class App extends React.Component {
   }
 }
 
-export default class R extends React.Component {
+export default class Doc extends React.Component {
   render () {
     return (
       <Router>
         <div>
-          <Route path="/" component={App}></Route>
+          <Route exact path="/404" component={NotFound}></Route>
+          <Route path="/" render={
+            props => (<App options={this.props.options} {...props }/>)
+          }></Route>
         </div>
       </Router>
     )

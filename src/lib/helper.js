@@ -1,11 +1,20 @@
 import scrollIntoView from 'scroll-into-view'
+import { $ } from './dom'
 
 export async function fetchFile (url) {
   const resp = await fetch(url)
-  const content = await resp.text()
-  return content
+  if (resp.ok) {
+    const result = await resp.text()
+    return result
+  } else {
+    throwError(resp.statusText)
+  }
 }
 
-export function scrollToElement (id) {
-  if (id) scrollIntoView(document.getElementById(id))
+export function jumpTo (id) {
+  scrollIntoView($('#' + id))
+}
+
+export function throwError (message) {
+  throw new Error(message)
 }
