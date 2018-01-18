@@ -4,16 +4,15 @@ const { resolve } = require('path')
 const sh = require('shelljs')
 const serve = require('serve')
 
-const config = require('./config')
+const runtimeConfig = require('./config')
 
 // rm -rf dist .cache
 sh.rm('-rf', 'dist')
 sh.rm('-rf', '.cache')
 
 // `serve` public folder
-
 serve(resolve(__dirname, '../public'), {
-  port: config.DOC_PORT,
+  port: runtimeConfig.DOC_PORT,
   cors: true
 })
 

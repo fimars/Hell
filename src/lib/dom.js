@@ -1,5 +1,5 @@
-export function $ (...args) {
-  return document.querySelector(...args)
+export function $ (id) {
+  return document.getElementById(id)
 }
 
 export function $$ (...args) {
