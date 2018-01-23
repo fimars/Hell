@@ -1,5 +1,5 @@
-import React from 'react'
+import React from "react";
 
-const NotFound = () => (<div className="section">404 | Not Found</div>)
+const NotFound = () => <div className="section">404 | Not Found</div>;
 
-export default NotFound
+export default NotFound;

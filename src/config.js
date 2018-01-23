@@ -1,15 +1,15 @@
 let initConfig = {
   // default index
-  index: 'README',
+  index: "README",
   // default source path
-  path: ''
-}
+  path: ""
+};
 
 export default {
-  update (cfg) {
-    initConfig = Object.assign(initConfig, cfg)
+  update(cfg) {
+    initConfig = Object.assign(initConfig, cfg);
   },
-  get it () {
-    return initConfig
+  get it() {
+    return initConfig;
   }
-}
+};
