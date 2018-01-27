@@ -2,7 +2,6 @@ import qs from "querystring";
 // Packages
 import React from "react";
 import { NavLink } from "react-router-dom";
-
 // Libs
 import { jumpTo } from "../lib/helper";
 

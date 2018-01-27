@@ -6,7 +6,7 @@ import marked from "marked";
 // Libs
 import Toc from "./Toc";
 import config from "../config";
-import { isTest, fetchFile, jumpTo } from "../lib/helper";
+import { fetchFile, isTest, jumpTo } from "../lib/helper";
 
 const renderer = new marked.Renderer();
 
