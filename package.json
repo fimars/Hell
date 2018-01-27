@@ -3,17 +3,42 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "build": "parcel docs/index.pug"
+    "dev": "node build/dev-script",
+    "test": "jest"
   },
-  "main": "src/index.scss",
+  "main": "src/index.js",
   "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "babel-jest": "^22.1.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "eslint": "3.x",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.5.0",
+    "eslint-plugin-react": "^7.5.1",
+    "jest": "^22.1.2",
+    "jest-fetch-mock": "^1.4.0",
     "node-sass": "^4.7.2",
-    "parcel-plugin-pug": "^0.2.1"
+    "parcel-bundler": "^1.4.1",
+    "prettier": "^1.10.2",
+    "react-test-renderer": "^16.2.0",
+    "serve": "^6.4.8",
+    "shelljs": "^0.8.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {
-    "parcel-bundler": "https://github.com/fimars/parcel.git"
+    "babel-polyfill": "^6.26.0",
+    "marked": "^0.3.12",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
+    "scroll-into-view": "^1.9.1"
+  },
+  "jest": {
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   }
 }

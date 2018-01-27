@@ -1,0 +1,30 @@
+@import 'mixins/border-radius';
+@import 'mixins/box-shadow';
+@import 'mixins/columns';
+@import 'mixins/transition';
+
+
+/// Slightly lighten a color
+/// @access public
+/// @param {Color} $color - color to tint
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function tint($color, $percentage) {
+  $white: #fff;
+  @return mix($white, $color, $percentage);
+}
+
+/// Slightly darken a color
+/// @access public
+/// @param {Color} $color - color to shade
+/// @param {Number} $percentage - percentage of `$color` in returned color
+/// @return {Color}
+@function shade($color, $percentage) {
+  $black: #000;
+  @return mix($black, $color, $percentage);
+}
+
+@mixin size($width, $height: $width) {
+  height: $height;
+  width: $width;
+}

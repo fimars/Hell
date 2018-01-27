@@ -1,0 +1,15 @@
+.columns {
+  display: flex;
+  &.is-between { justify-content: space-between; }
+}
+
+.column {
+  flex: 1 1 auto;
+  padding: $block-inner-spacer;
+}
+
+@for $i from 1 through 12 {
+  .column-#{$i} {
+    @include make-column($i, 12);
+  }
+}

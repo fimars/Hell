@@ -1,0 +1,7 @@
+@mixin transition($transitions...) {
+  @if length($transitions) == 0 {
+    transition: $transition-base;
+  } @else {
+    transition: $transitions;
+  }
+}

@@ -1,7 +1,0 @@
-.section {
-    margin: $block-out-spacer;
-
-    & + & {
-        margin-top: $block-out-spacer * 1.5;
-    }
-}
