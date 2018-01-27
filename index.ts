@@ -4,6 +4,6 @@ import "whatwg-fetch";
 // theme
 import "./theme/index.scss";
 // doc
-import hl from "./src";
+import Hell from "./src/index";
 
-export default hl;
+export default Hell

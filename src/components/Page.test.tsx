@@ -1,6 +1,6 @@
 // Packages
+import renderer = require("react-test-renderer");
 import React from "react";
-import renderer from "react-test-renderer";
 import { MemoryRouter, Route } from "react-router-dom";
 // Libs
 import Page from "./Page";

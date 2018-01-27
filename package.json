@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "dev": "node build/dev-script",
+    "dev": "node example/dev-script.js",
     "test": "jest"
   },
   "main": "src/index.js",
@@ -11,6 +11,8 @@
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/marked": "^0.3.0",
+    "@types/react-router-dom": "^4.2.3",
     "babel-jest": "^22.1.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
@@ -26,9 +28,12 @@
     "react-test-renderer": "^16.2.0",
     "serve": "^6.4.8",
     "shelljs": "^0.8.0",
+    "typescript": "^2.6.2",
     "whatwg-fetch": "^2.0.3"
   },
   "dependencies": {
+    "@types/react": "^16.0.35",
+    "@types/react-dom": "^16.0.3",
     "babel-polyfill": "^6.26.0",
     "marked": "^0.3.12",
     "react": "^16.2.0",
