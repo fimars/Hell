@@ -14,9 +14,7 @@ const CanJumpNavLink = ({name, location}) => (
         }
         to={"?id=" + encodeURIComponent(name)}
         onClick={() => jumpTo(name)}
-    >
-        {name}
-    </NavLink>
+    >{name}</NavLink>
 );
 
 const NavLabel = ({level, text, children, location}) => {

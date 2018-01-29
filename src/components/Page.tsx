@@ -10,10 +10,18 @@ import Toc from "./Toc";
 import config from "../config";
 import {fetchFile, isTest, jumpTo} from "../lib/helper";
 import {Route, RouterProps} from "react-router";
+import Heading = marked.Tokens.Heading;
 
 export interface PageState {
     docContent: string;
-    docHeadings: Array<string>
+    docHeadings: Array<any>
+}
+
+interface Heading {
+    level: number,
+    text: string,
+    id: string,
+    parent?: string
 }
 
 const renderer = new marked.Renderer();
@@ -24,7 +32,7 @@ export default class Page extends React.Component<RouterProps, PageState> {
         this.state = {
             docContent: '',
             docHeadings: []
-        } as PageState
+        }
     }
 
     get currentPath() {
@@ -41,48 +49,47 @@ export default class Page extends React.Component<RouterProps, PageState> {
     }
 
     async fetchData() {
-        const { history } = this.props
+        const {history} = this.props
         try {
-            const toc: Array<string> = [];
-            let preNode = null;
-            renderer.heading = function (text, level) {
-                if (level <= 2) {
-                    const node = {
-                        level,
-                        text,
-                        children: [],
-                        parent: preNode || toc
-                    };
+            const toc: Array<Heading> = [];
 
-                    if (!preNode) {
-                        toc.push(node);
-                        preNode = node;
-                    } else {
-                        if (level > preNode.level) {
-                            preNode.children.push(node);
-                        } else {
-                            toc.push(node);
-                            preNode = node;
-                        }
-                    }
+            let prev: Heading
+
+            renderer.heading = function (text, level) {
+                const heading: Heading = {
+                    text,
+                    level,
+                    id: this.newId(text, level)
                 }
-                return level > 1 ? `<h${level} id="${text}">${text}</h${level}>` : "";
+
+                if (heading.level < prev.level) heading.parent = prev.id
+                if (heading.level === prev.level && prev.parent) heading.parent = prev.parent
+                prev = heading
+
+                toc.push(heading)
+
+                return `<h${level} id="heading-${text}">${text}</h${level}>`;
             };
+
             marked.setOptions({renderer});
 
             const currentPath = this.currentPath;
 
             isTest && console.warn(`The file ${currentPath} fetching...`);
+
             const raw = await fetchFile(currentPath);
+
             isTest && console.warn(`The file ${currentPath} fetch done!`);
             isTest && console.log(`Result: \n${raw}`);
-            const formatted = marked(raw, void 0);
+
+            const formatted: string = marked(raw, void 0);
             isTest && console.warn("The file Content format done!");
 
             const newState: PageState = {
                 docHeadings: toc,
                 docContent: formatted
             }
+
             this.setState(newState, this.scrollIntoLastVisit);
         } catch (e) {
             if (isTest) {
@@ -90,6 +97,10 @@ export default class Page extends React.Component<RouterProps, PageState> {
             }
             history.replace("/404");
         }
+    }
+
+    private newId(text, level) {
+        return `heading-${text}-${level}`;
     }
 
     async componentDidUpdate({location: {pathname}}) {
