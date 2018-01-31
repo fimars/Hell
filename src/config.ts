@@ -1,10 +1,10 @@
-export interface HellConfig {
+export interface IHellConfig {
     index?: string;
     path?: string;
 }
 
 
-let initConfig: HellConfig = {
+let initConfig: IHellConfig = {
     // default index
     index: "README",
     // default source path
@@ -12,8 +12,8 @@ let initConfig: HellConfig = {
 };
 
 export default {
-    update(config: HellConfig) {
-        initConfig = Object.assign(initConfig, config);
+    update(config: IHellConfig) {
+        initConfig = {...initConfig, ...config};
     },
     get it() {
         return initConfig;

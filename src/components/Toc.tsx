@@ -1,39 +1,54 @@
-// BulIn
-import qs = require("querystring");
-// Packages
+/// <reference path="../types.ts" />
+import { Location } from 'history';
+import { parse as qsparse } from "querystring";
 import * as React from "react";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 // Libs
-import {jumpTo} from "../lib/helper";
+import { jumpTo } from "../lib/helper";
 
-const CanJumpNavLink = ({name, location}) => (
+export interface ITocProps {
+  headings: Hell.Heading[];
+  location: Location
+}
+
+const CanJumpNavLink = ({ name, location, id }) => {
+  const isActive = () =>
+    location.search && qsparse(location.search.slice(1)).id === id;
+  const jumpToId = () => jumpTo(id);
+
+  return (
     <NavLink
-        activeClassName="selected"
-        isActive={() =>
-            location.search && qs.parse(location.search.slice(1)).id === name
-        }
-        to={"?id=" + encodeURIComponent(name)}
-        onClick={() => jumpTo(name)}
-    >{name}</NavLink>
-);
-
-const NavLabel = ({level, text, children, location}) => {
-    return [
-        <div key="label" className={level === 1 ? "label" : ""}>
-            <CanJumpNavLink name={text} location={location}/>
-        </div>,
-        children.length ? (
-            <div key="post" className="label-post">
-                {makeNavLabels(children, location)}
-            </div>
-        ) : null
-    ];
+      activeClassName="selected"
+      isActive={isActive}
+      to={"?id=" + encodeURIComponent(id)}
+      onClick={jumpToId}
+    >
+      {name}
+    </NavLink>
+  );
 };
-const makeNavLabels = (nodes, location) =>
-    nodes.map((node, index) => (
-        <NavLabel key={index} location={location} {...node} />
-    ));
 
-const Nav = ({headings, location}) => makeNavLabels(headings, location);
+interface Iparams {
+  level: number;
+  text: string;
+  id: string;
+  parent?: string;
+  location: Location;
+}
+const NavLabel = ({ level, text, id, parent, location }: Iparams) => {
+  return (
+    <div key={id} className={level === 1 ? "label" : ""}>
+      <CanJumpNavLink name={text} id={id} location={location} />
+    </div>
+  );
+};
 
-export default Nav;
+class Toc extends React.Component<ITocProps, {}> {
+  public render() {
+    const { location, headings } = this.props;
+    return headings.map((heading, idx) => NavLabel({ location, ...heading }));
+  }
+}
+
+export default Toc;

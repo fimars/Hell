@@ -1,4 +1,4 @@
-import Hell from '../index.ts'
+import Hell from '../index'
 
 Hell.init({
     path: '/dist/assets'

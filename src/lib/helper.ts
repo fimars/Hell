@@ -4,16 +4,14 @@ import {$} from "./dom";
 export async function fetchFile(url) {
     const resp = await fetch(url);
     if (resp.ok) {
-        return await resp.text();
+        return resp.text();
     } else {
         throwError(resp.statusText);
     }
 }
 
 export function jumpTo(id) {
-    scrollIntoView($(id), {
-        time: 800
-    });
+    scrollIntoView($(id), { time: 800 });
 }
 
 export function throwError(message) {
