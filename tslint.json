@@ -9,6 +9,7 @@
         "interface-name": false,
         "no-reference": false,
         "no-namespace": false,
-        "no-implicit-dependencies": false
+        "no-implicit-dependencies": false,
+        "max-classes-per-file": false
     }
 }

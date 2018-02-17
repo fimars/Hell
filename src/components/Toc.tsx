@@ -1,53 +1,46 @@
 /// <reference path="../types.ts" />
+import * as React from "react";
+
 import { Location } from 'history';
 import { parse as qsparse } from "querystring";
-import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // Libs
 import { jumpTo } from "../lib/helper";
 
-export interface ITocProps {
-  headings: Hell.Heading[];
-  location: Location
-}
-
-const CanJumpNavLink = ({ name, location, id }) => {
-  const isActive = () =>
-    location.search && qsparse(location.search.slice(1)).id === id;
-  const jumpToId = () => jumpTo(id);
-
-  return (
-    <NavLink
-      activeClassName="selected"
-      isActive={isActive}
-      to={"?id=" + encodeURIComponent(id)}
-      onClick={jumpToId}
-    >
-      {name}
-    </NavLink>
-  );
-};
-
-interface Iparams {
-  level: number;
-  text: string;
-  id: string;
-  parent?: string;
-  location: Location;
-}
-const NavLabel = ({ level, text, id, parent, location }: Iparams) => {
-  return (
-    <div key={id} className={level === 1 ? "label" : ""}>
-      <CanJumpNavLink name={text} id={id} location={location} />
-    </div>
-  );
-};
-
-class Toc extends React.Component<ITocProps, {}> {
+class CanJumpNavLink extends React.Component<Hell.Heading, {}> {
   public render() {
-    const { location, headings } = this.props;
-    return headings.map((heading, idx) => NavLabel({ location, ...heading }));
+    const { text, id, level } = this.props
+    const propsData = {
+      dangerouslySetInnerHTML: { __html: text },
+      onClick: () => jumpTo(id),
+      to: '?id=' + encodeURIComponent(id)
+    }
+
+    return <Link {...propsData} />
+  }
+}
+
+class NavLabel extends React.Component<Hell.Heading, {}> {
+  public render() {
+    const { level, text, id, parent } = this.props
+    const propsData = { text, id, level }
+    const className = `nav-label__item level-${level}`
+    return (
+      <div className={className}>
+        <CanJumpNavLink {...propsData} />
+      </div>
+    );
+  }
+}
+
+interface TocProps {
+  headings: Hell.Heading[]
+}
+class Toc extends React.Component<TocProps, {}> {
+  public render() {
+    const { headings } = this.props;
+    return headings.map((heading, idx) => <NavLabel key={idx} {...heading} />);
   }
 }
 

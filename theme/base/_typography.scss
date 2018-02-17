@@ -1,7 +1,3 @@
-// 暂时使用在线版本
-@import url('http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
-@import url('https://fonts.googleapis.com/css?family=Roboto');
-
 html {
   font-size: 13px;
 }
@@ -27,15 +23,6 @@ a {
     font-weight: 600;
   }
 }
-
-//code {
-//  color: $azure-radiance;
-//
-//  &::before,
-//  &::after {
-//    content: '`';
-//  }
-//}
 
 *::selection {
   background-color: $typo-selection-color;

@@ -13,7 +13,7 @@ let initConfig: IHellConfig = {
 
 export default {
     update(config: IHellConfig) {
-        initConfig = {...initConfig, ...config};
+        initConfig = { ...initConfig, ...config };
     },
     get it() {
         return initConfig;

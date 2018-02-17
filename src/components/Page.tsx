@@ -44,7 +44,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     const { id } = qs.parse(search.slice(1));
 
     this.fetchData().then(() => {
-      jumpTo(id);
+      jumpTo(id as string);
     });
   }
   public async fetchData() {
@@ -66,7 +66,7 @@ export default class Page extends React.Component<PageProps, PageState> {
         <div className="columns">
           <div className="column-2">
             <div className="nav section">
-              <Toc location={location} headings={this.state.docHeadings} />
+              <Toc headings={this.state.docHeadings} />
             </div>
           </div>
           <div className="column-8">

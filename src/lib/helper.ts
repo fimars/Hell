@@ -1,7 +1,7 @@
 import * as scrollIntoView from "scroll-into-view";
-import {$} from "./dom";
+import { $ } from "./dom";
 
-export async function fetchFile(url) {
+export async function fetchFile(url: string) {
     const resp = await fetch(url);
     if (resp.ok) {
         return resp.text();
@@ -10,15 +10,15 @@ export async function fetchFile(url) {
     }
 }
 
-export function jumpTo(id) {
+export function jumpTo(id: string): void {
     scrollIntoView($(id), { time: 800 });
 }
 
-export function throwError(message) {
+export function throwError(message: string): Error {
     throw new Error(message);
 }
 
-export function sleep(time = 1000) {
+export function sleep(time: number = 1000): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
