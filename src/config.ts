@@ -8,7 +8,7 @@ let initConfig: IHellConfig = {
     // default index
     index: "README",
     // default source path
-    path: ""
+    path: "."
 };
 
 export default {
