@@ -1,30 +1,40 @@
 /// <reference path="../types.ts"/>
 
 // BuiltIn
-import qs = require("querystring");
+import PropTypes = require('prop-types');
+import qs = require('querystring');
 
 // Packages
-import * as marked from "marked";
-import * as React from "react";
-import { RouteComponentProps } from "react-router";
+import * as marked from 'marked';
+import * as React from 'react';
+import { RouteComponentProps } from 'react-router';
 
 // Libs
-import config from "../config";
-import { fetchFile, isTest, jumpTo } from "../lib/helper";
-import Toc from "./Toc";
+import config from '../config';
+import { fetchFile, isTest, jumpTo } from '../lib/helper';
+import Toc from './Toc';
 
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
   docContent: string;
   docHeadings: any[];
+  activeId: string;
 }
 export default class Page extends React.Component<PageProps, PageState> {
+  static childContextTypes = {
+    activeId: PropTypes.string,
+    updateActiveId: PropTypes.func
+  }
   private toc: Hell.Heading[] = [];
 
   constructor(props: PageProps) {
     super(props);
 
-    this.state = { docContent: "", docHeadings: [] };
+    this.state = {
+      docContent: '',
+      docHeadings: [],
+      activeId: ''
+    };
 
     const renderer = new marked.Renderer();
     renderer.heading = this.headingRender.bind(this);
@@ -34,18 +44,26 @@ export default class Page extends React.Component<PageProps, PageState> {
     const { location: { pathname } } = this.props;
     return this.formatPath(pathname);
   }
+  public getChildContext() {
+    return {
+      activeId: this.state.activeId,
+      updateActiveId: this.updateActiveId.bind(this)
+    };
+  }
+  public updateActiveId (activeId : string) {
+    jumpTo(activeId);
+    this.setState({ activeId })
+  }
   public componentDidUpdate({ location: { pathname } }) {
-    if (this.formatPath(pathname + "") !== this.path) {
+    if (this.formatPath(pathname + '') !== this.path) {
       this.fetchData();
     }
   }
   public componentDidMount() {
     const { location: { search } } = this.props;
-    const { id } = qs.parse(search.slice(1));
+    const id = qs.parse(search.slice(1)).id as string;
 
-    this.fetchData().then(() => {
-      jumpTo(id as string);
-    });
+    this.fetchData().then(() => { this.updateActiveId(id); });
   }
   public async fetchData() {
     const { history } = this.props;
@@ -56,7 +74,7 @@ export default class Page extends React.Component<PageProps, PageState> {
 
       this.setState({ docContent: fileFomatted, docHeadings: this.toc });
     } catch (e) {
-      history.replace("/404");
+      history.replace('/404');
     }
   }
   public render(): JSX.Element {
@@ -101,9 +119,9 @@ export default class Page extends React.Component<PageProps, PageState> {
   private formatPath(pathname: string): string {
     const { index, path } = config.it;
     // index
-    if (pathname === "/") {
+    if (pathname === '/') {
       pathname += index;
     }
-    return path + pathname + ".md";
+    return path + pathname + '.md';
   }
 }
