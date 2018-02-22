@@ -21,7 +21,7 @@ export interface PageState {
   activeId: string;
 }
 export default class Page extends React.Component<PageProps, PageState> {
-  static childContextTypes = {
+  public static childContextTypes = {
     activeId: PropTypes.string,
     updateActiveId: PropTypes.func
   }
@@ -31,9 +31,9 @@ export default class Page extends React.Component<PageProps, PageState> {
     super(props);
 
     this.state = {
+      activeId: '',
       docContent: '',
-      docHeadings: [],
-      activeId: ''
+      docHeadings: []
     };
 
     const renderer = new marked.Renderer();

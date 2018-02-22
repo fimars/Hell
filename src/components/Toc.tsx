@@ -1,6 +1,6 @@
 /// <reference path="../types.ts" />
-import * as React from 'react';
 import PropsType = require('prop-types');
+import * as React from 'react';
 
 import { Location } from 'history';
 import { parse as qsparse } from 'querystring';
@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import { jumpTo } from '../lib/helper';
 
 class CanJumpNavLink extends React.Component<Hell.Heading, {}> {
-  static contextTypes = {
+  public static contextTypes = {
     activeId: PropsType.string,
     updateActiveId: PropsType.func
   }
@@ -18,11 +18,11 @@ class CanJumpNavLink extends React.Component<Hell.Heading, {}> {
     const { text, id, level } = this.props;
     const isActive = id === this.context.activeId
     const propsData = {
-      replace: isActive,
-      to: '?id=' + encodeURIComponent(id),
+      className: isActive ? 'selected' : '',
       dangerouslySetInnerHTML: { __html: text },
       onClick: () => { this.context.updateActiveId(id); },
-      className: isActive ? 'selected' : ''
+      replace: isActive,
+      to: '?id=' + encodeURIComponent(id)
     };
 
     return <Link {...propsData} />;

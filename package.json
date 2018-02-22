@@ -3,8 +3,12 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "lint": "tslint 'src/**/*.{ts,tsx}' --fix",
     "dev": "node example/dev-script.js",
+    "example": "yarn build && cp -r build example && serve example",
+    "build:js": "parcel build src/index.tsx --out-dir build",
+    "build:css": "parcel build theme/index.scss --out-dir build",
+    "build": "yarn build:js && yarn build:css",
+    "lint": "tslint 'src/**/*.{ts,tsx}' --fix",
     "test": "jest --config='jest.config.json'"
   },
   "main": "src/index.js",
@@ -34,7 +38,8 @@
     "tslint-config-prettier": "^1.6.0",
     "tslint-react": "^3.4.0",
     "typescript": "^2.6.2",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "ts-jest": "^22.0.2"
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
@@ -44,8 +49,7 @@
     "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "scroll-into-view": "^1.9.1",
-    "ts-jest": "^22.0.2"
+    "scroll-into-view": "^1.9.1"
   },
   "jest": {
     "setupFiles": [
