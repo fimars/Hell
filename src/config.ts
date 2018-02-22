@@ -3,7 +3,6 @@ export interface IHellConfig {
     path?: string;
 }
 
-
 let initConfig: IHellConfig = {
     // default index
     index: "README",

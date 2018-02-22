@@ -1,15 +1,12 @@
 /// <reference path="../types.ts"/>
 
-// BuiltIn
 import PropTypes = require('prop-types');
 import qs = require('querystring');
 
-// Packages
 import * as marked from 'marked';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
-// Libs
 import config from '../config';
 import { fetchFile, isTest, jumpTo } from '../lib/helper';
 import Toc from './Toc';

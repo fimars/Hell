@@ -6,7 +6,6 @@ import { Location } from 'history';
 import { parse as qsparse } from 'querystring';
 import { Link } from 'react-router-dom';
 
-// Libs
 import { jumpTo } from '../lib/helper';
 
 class CanJumpNavLink extends React.Component<Hell.Heading, {}> {
