@@ -6,3 +6,5 @@ import config from "./src/config";
 config.update({
   path: "http://127.0.0.1:1233"
 });
+
+console.log('[Setup Jest Finish]');

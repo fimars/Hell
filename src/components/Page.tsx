@@ -1,5 +1,3 @@
-/// <reference path="../types.ts"/>
-
 import PropTypes = require('prop-types');
 import qs = require('querystring');
 
@@ -9,7 +7,8 @@ import { RouteComponentProps } from 'react-router';
 
 import config from '../config';
 import { fetchFile, isTest, jumpTo } from '../lib/helper';
-import Toc from './Toc';
+
+import Toc from '../container/Toc';
 
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
@@ -26,7 +25,6 @@ export default class Page extends React.Component<PageProps, PageState> {
 
   constructor(props: PageProps) {
     super(props);
-
     this.state = {
       activeId: '',
       docContent: '',
@@ -47,14 +45,14 @@ export default class Page extends React.Component<PageProps, PageState> {
       updateActiveId: this.updateActiveId.bind(this)
     };
   }
-  public updateActiveId (activeId : string) {
-    jumpTo(activeId);
-    this.setState({ activeId })
-  }
   public componentDidUpdate({ location: { pathname } }) {
     if (this.formatPath(pathname + '') !== this.path) {
       this.fetchData();
     }
+  }
+  public updateActiveId (activeId : string) {
+    jumpTo(activeId);
+    this.setState({ activeId })
   }
   public componentDidMount() {
     const { location: { search } } = this.props;

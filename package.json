@@ -8,7 +8,7 @@
     "build:css": "parcel build theme/index.scss --out-dir build",
     "build": "yarn build:js && yarn build:css",
     "lint": "tslint 'src/**/*.{ts,tsx}' --fix",
-    "test": "jest --config='jest.config.json'"
+    "test": "jest --config='test/jest.config.json'"
   },
   "main": "src/index.js",
   "repository": "https://github.com/fimars/Helenae.scss",
@@ -52,7 +52,7 @@
   },
   "jest": {
     "setupFiles": [
-      "./setupJest.js"
+      "./test/setupJest.js"
     ]
   }
 }

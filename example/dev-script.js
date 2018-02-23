@@ -17,5 +17,5 @@ fs.watch(readme, (evt, filename) => {
 })
 
 // `parcel` index.html
-cp.exec(`parcel example/dev.html`);
+sh.exec(`parcel example/dev.html`);
 console.log('open: http://127.0.0.1:1234')
