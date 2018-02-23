@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "cp:readme": "cp README.md example/assets",
     "dev": "node example/dev-script.js",
-    "example": "yarn build && serve .",
     "build:js": "parcel build src/index.tsx --out-dir build",
     "build:css": "parcel build theme/index.scss --out-dir build",
     "build": "yarn build:js && yarn build:css",
