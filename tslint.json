@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "tslint:latest",
+        "tslint-react",
+        "tslint-config-prettier"
+    ],
+    "rules": {
+        "jsx-boolean-value": false,
+        "interface-name": false,
+        "no-reference": false,
+        "no-namespace": false,
+        "no-implicit-dependencies": false,
+        "max-classes-per-file": false
+    }
+}

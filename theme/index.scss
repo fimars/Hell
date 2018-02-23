@@ -2,15 +2,13 @@
 @import 'abstracts/variables';
 @import 'abstracts/theme';
 
-@import 'base/reset';
 @import 'base/typography';
-@import 'base/markdown';
+
+@import 'vendors/reset';
+@import 'vendors/markdown';
 
 @import 'components/button';
-@import 'components/card';
 @import 'components/list';
-@import 'components/preview';
-@import 'components/window';
 
 @import 'layout/columns';
 @import 'layout/section';
