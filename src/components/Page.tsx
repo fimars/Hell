@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import config from '../config';
 import { fetchFile, isTest, jumpTo } from '../lib/helper';
 
+import PageLayout from '../components/PageLayout';
 import Toc from '../container/Toc';
 
 export type PageProps = RouteComponentProps<any>;
@@ -20,7 +21,7 @@ export default class Page extends React.Component<PageProps, PageState> {
   public static childContextTypes = {
     activeId: PropTypes.string,
     updateActiveId: PropTypes.func
-  }
+  };
   private toc: Hell.Heading[] = [];
 
   constructor(props: PageProps) {
@@ -50,15 +51,17 @@ export default class Page extends React.Component<PageProps, PageState> {
       this.fetchData();
     }
   }
-  public updateActiveId (activeId : string) {
+  public updateActiveId(activeId: string) {
     jumpTo(activeId);
-    this.setState({ activeId })
+    this.setState({ activeId });
   }
   public componentDidMount() {
     const { location: { search } } = this.props;
     const id = qs.parse(search.slice(1)).id as string;
 
-    this.fetchData().then(() => { this.updateActiveId(id); });
+    this.fetchData().then(() => {
+      this.updateActiveId(id);
+    });
   }
   public async fetchData() {
     const { history } = this.props;
@@ -75,21 +78,10 @@ export default class Page extends React.Component<PageProps, PageState> {
   public render(): JSX.Element {
     const { location } = this.props;
     return (
-      <div>
-        <div className="columns">
-          <div className="column-2">
-            <div className="nav section">
-              <Toc headings={this.state.docHeadings} />
-            </div>
-          </div>
-          <div className="column-8">
-            <div
-              className="markdown-body section"
-              dangerouslySetInnerHTML={{ __html: this.state.docContent }}
-            />
-          </div>
-        </div>
-      </div>
+      <PageLayout
+        Side={<Toc headings={this.state.docHeadings} />}
+        Content={<div className="markdown-body section" dangerouslySetInnerHTML={{ __html: this.state.docContent }} />}
+      />
     );
   }
 
