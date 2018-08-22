@@ -22,7 +22,7 @@ export default class FileFetcher extends React.Component<
       this.setState({ fileRaw });
     } catch (e) { onNotFound(e) }
   }
-  render() {
+  public render() {
     return this.props.children;
   }
 }

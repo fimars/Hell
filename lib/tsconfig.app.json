@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "jsx": "react",
+    "lib": ["esnext", "dom"],
+    "target": "es5"
+  },
+  "files": ["app/app.ts"]
+}

@@ -1,5 +1,5 @@
-import qs = require('querystring');
 import PropTypes = require('prop-types');
+import qs = require('querystring');
 
 import * as React from 'react';
 import { jumpTo } from '../lib/helper';

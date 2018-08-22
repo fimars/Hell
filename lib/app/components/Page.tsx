@@ -74,7 +74,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     );
   }
 
-  private headingRender(text, level) {
+  private headingRender(text,  level) {
     const id = text;
     const heading: Hell.Heading = { text, level, id };
 

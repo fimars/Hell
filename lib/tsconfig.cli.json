@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "outDir": "../build",
+    "module": "commonjs",
+    "lib": ["es6"]
+  },
+  "exclude": ["app", "default-theme"],
+  "files": ["./dev.ts"]
+}

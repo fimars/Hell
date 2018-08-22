@@ -7,7 +7,7 @@ import NotFound from './NotFound';
 import Page from './Page';
 
 export default class App extends React.PureComponent {
-  render() {
+  public render() {
     return (
       <Router>
         <Switch>

@@ -1,5 +1,5 @@
-import * as React from 'react';
 import PropsType = require('prop-types');
+import * as React from 'react';
 
 import { Link } from 'react-router-dom';
 import Heading from '../components/Heading';
@@ -23,11 +23,11 @@ class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
     const selected = id === this.context.activeId;
     return {
       className: selected ? 'selected' : '',
-      replace: selected,
       dangerouslySetInnerHTML: { __html: text },
       onClick: () => {
         this.context.updateActiveId(id);
       },
+      replace: selected,
       to: '?id=' + encodeURIComponent(id)
     };
   }
