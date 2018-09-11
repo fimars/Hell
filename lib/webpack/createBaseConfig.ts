@@ -1,7 +1,7 @@
-import path = require("path");
-import Config = require("webpack-chain");
 import HtmlWebpackPlugin = require("html-webpack-plugin");
-import { atApp, atLib } from "./resolvePaths";
+import Config = require("webpack-chain");
+
+import { atApp, atLib } from "../util/resolvePaths";
 
 export default function() {
   const config = new Config();

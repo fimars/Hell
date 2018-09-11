@@ -2,7 +2,8 @@
   "compilerOptions": {
     "outDir": "../build",
     "module": "commonjs",
-    "lib": ["es6"]
+    "lib": ["es6"],
+    "allowJs": true
   },
   "exclude": ["app", "default-theme"],
   "files": ["./dev.ts"]
