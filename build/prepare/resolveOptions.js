@@ -39,6 +39,7 @@ var fs = require("fs-extra");
 var globby = require("globby");
 var marked = require("marked");
 var path = require("path");
+var index_1 = require("../util/index");
 function resolveOptions(sourceDir) {
     return __awaiter(this, void 0, void 0, function () {
         var patterns, pageFiles, pagesData, siteData, options;
@@ -51,28 +52,35 @@ function resolveOptions(sourceDir) {
                 case 1:
                     pageFiles = _a.sent();
                     return [4 /*yield*/, Promise.all(pageFiles.map(function (file) { return __awaiter(_this, void 0, void 0, function () {
-                            var key, title, resolvePath, headers, renderer, content, excerpt;
+                            var filepath, data, content, frontmatter, headers;
                             return __generator(this, function (_a) {
                                 switch (_a.label) {
                                     case 0:
-                                        key = "v-" + Math.random();
-                                        title = file;
-                                        resolvePath = path.resolve(sourceDir, file);
-                                        headers = [];
-                                        renderer = new marked.Renderer();
-                                        renderer.heading = extractHeaders(headers);
-                                        marked.setOptions({ renderer: renderer });
-                                        return [4 /*yield*/, fs.readFile(resolvePath, "utf8")];
+                                        filepath = path.resolve(sourceDir, file);
+                                        data = {
+                                            key: "v-" + Math.random().toString(16).slice(2),
+                                            path: filepath
+                                        };
+                                        return [4 /*yield*/, fs.readFile(filepath, "utf-8")];
                                     case 1:
                                         content = _a.sent();
-                                        excerpt = marked(content, void 0);
-                                        return [2 /*return*/, {
-                                                content: content,
-                                                excerpt: excerpt,
-                                                headers: headers,
-                                                key: key,
-                                                title: title
-                                            }];
+                                        frontmatter = index_1.parseFrontmatter(content);
+                                        console.log(frontmatter);
+                                        headers = index_1.extractHeaders(frontmatter.content, [], marked.lexer);
+                                        if (headers.length) {
+                                            data.headers = headers;
+                                        }
+                                        if (Object.keys(frontmatter.data).length) {
+                                            data.frontmatter = frontmatter.data;
+                                        }
+                                        // TODO: 之后放到前端进行处理，支持更多的自定义功能。
+                                        if (frontmatter.content) {
+                                            data.content = marked(frontmatter.content);
+                                        }
+                                        if (frontmatter.excrept) {
+                                            data.excerpt = marked(frontmatter.excrept);
+                                        }
+                                        return [2 /*return*/, data];
                                 }
                             });
                         }); }))];
@@ -91,22 +99,3 @@ function resolveOptions(sourceDir) {
     });
 }
 exports["default"] = resolveOptions;
-function extractHeaders(headers) {
-    return function (text, level) {
-        var id = text;
-        var heading = { text: text, level: level, id: id, parent: null };
-        for (var idx = headers.length; idx > 0; idx--) {
-            var prev = headers[idx - 1];
-            if (heading.level > prev.level) {
-                heading.parent = prev.id;
-                break;
-            }
-            else if (heading.level === prev.level && prev.parent) {
-                heading.parent = prev.parent;
-                break;
-            }
-        }
-        headers.push(heading);
-        return "<h" + level + " id=\"" + id + "\">" + text + "</h" + level + ">";
-    };
-}

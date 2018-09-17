@@ -1,8 +1,8 @@
-```
+---
 title: 本hexo博客是如何部署的
 date: 2018-05-07 14:12:59
 tags: 教程
-```
+---
 
 # The `One` Doc
 
@@ -88,7 +88,3 @@ hexo clean & hexo generate --deploy
 ```
 
 以上
-
-
-
-

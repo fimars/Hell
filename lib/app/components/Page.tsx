@@ -4,9 +4,9 @@ import { RouteComponentProps } from 'react-router';
 import config from '../config';
 import { fetchFile } from '../lib/helper';
 
+import JumpMan from '../components/JumpMan';
 import PageLayout from '../components/PageLayout';
-import JumpMan from '../container/JumpMan';
-import Toc from '../container/Toc';
+import Toc from '../components/Toc';
 
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
@@ -43,7 +43,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     this.toc = [];
     try {
       const { siteData: { pages } } = await import('@/.temp/siteData');
-      const docContent: string = pages[0].excerpt;
+      const docContent: string = pages[0].content;
       const docHeadings = pages[0].headers
       this.setState({ docContent, docHeadings });
     } catch (e) {

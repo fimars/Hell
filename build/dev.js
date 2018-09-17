@@ -61,12 +61,10 @@ function dev(sourceDir, cliOptions) {
                         for (var _i = 0; _i < arguments.length; _i++) {
                             args[_i] = arguments[_i];
                         }
-                        console.log(args);
                         prepare_1["default"](sourceDir)["catch"](function (err) {
                             console.error(chalk_1["default"].red(err.stack), false);
                         });
                     };
-                    console.log(sourceDir);
                     pagesWatcher = chokidar.watch([
                         '**/*.md'
                     ], {

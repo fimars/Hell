@@ -14,13 +14,11 @@ async function dev(sourceDir, cliOptions = {}) {
 
   // setup watchers to update options and dynamically generated files
   const update = (...args) => {
-    console.log(args);
     prepare(sourceDir).catch(err => {
       console.error(chalk.red(err.stack), false);
     })
   }
 
-  console.log(sourceDir);
   //  watch add/remove of files
   const pagesWatcher = chokidar.watch([
     '**/*.md'
