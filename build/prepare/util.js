@@ -35,68 +35,25 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var chalk_1 = require("chalk");
-var chokidar = require("chokidar");
-var opn = require("opn");
-var path = require("path");
-var serve = require("webpack-serve");
-var prepare_1 = require("./prepare");
-var resolvePaths_1 = require("./util/resolvePaths");
-var createBaseConfig_1 = require("./webpack/createBaseConfig");
-function dev(sourceDir, cliOptions) {
-    if (cliOptions === void 0) { cliOptions = {}; }
+var fs = require("fs-extra");
+var resolvePaths_1 = require("../util/resolvePaths");
+var tempCache = new Map();
+function writeTemp(file, content) {
     return __awaiter(this, void 0, void 0, function () {
-        var options, update, pagesWatcher, config, host, port, nonExistentDir;
+        var cached;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log('\nExtracting site metadata...');
-                    return [4 /*yield*/, prepare_1["default"](sourceDir)
-                        // setup watchers to update options and dynamically generated files
-                    ];
+                    cached = tempCache.get(file);
+                    if (!(cached !== content)) return [3 /*break*/, 2];
+                    return [4 /*yield*/, fs.outputFile(resolvePaths_1.atApp(".temp/" + file), content)];
                 case 1:
-                    options = _a.sent();
-                    update = function () {
-                        var args = [];
-                        for (var _i = 0; _i < arguments.length; _i++) {
-                            args[_i] = arguments[_i];
-                        }
-                        console.log(args);
-                        prepare_1["default"](sourceDir)["catch"](function (err) {
-                            console.error(chalk_1["default"].red(err.stack), false);
-                        });
-                    };
-                    console.log(sourceDir);
-                    pagesWatcher = chokidar.watch([
-                        '**/*.md'
-                    ], {
-                        cwd: sourceDir,
-                        ignoreInitial: true
-                    });
-                    pagesWatcher.on('add', update);
-                    pagesWatcher.on('change', update);
-                    pagesWatcher.on('unlink', update);
-                    pagesWatcher.on('addDir', update);
-                    pagesWatcher.on('unlinkDir', update);
-                    config = createBaseConfig_1["default"]();
-                    host = '0.0.0.0';
-                    port = 8080;
-                    nonExistentDir = path.resolve(__dirname, "non-existent");
-                    return [4 /*yield*/, serve({}, {
-                            config: config.toConfig(),
-                            content: [nonExistentDir],
-                            host: host,
-                            logLevel: "error",
-                            port: port
-                        })];
-                case 2:
                     _a.sent();
-                    opn("http://" + host + ":" + port);
-                    return [2 /*return*/];
+                    tempCache.set(file, content);
+                    _a.label = 2;
+                case 2: return [2 /*return*/];
             }
         });
     });
 }
-exports["default"] = dev;
-// TEST
-dev(resolvePaths_1.atRoot('docs'));
+exports.writeTemp = writeTemp;

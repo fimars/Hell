@@ -1,8 +1,8 @@
 "use strict";
 exports.__esModule = true;
-var Config = require("webpack-chain");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-var resolvePaths_1 = require("./resolvePaths");
+var Config = require("webpack-chain");
+var resolvePaths_1 = require("../util/resolvePaths");
 function default_1() {
     var config = new Config();
     config.entry("app").add(resolvePaths_1.atApp("app.ts"));

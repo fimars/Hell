@@ -10,6 +10,7 @@
         "no-reference": false,
         "no-namespace": false,
         "no-implicit-dependencies": false,
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "no-console": false
     }
 }

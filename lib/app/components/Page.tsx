@@ -1,9 +1,8 @@
-import * as marked from 'marked';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 
 import config from '../config';
-import { fetchFile, isTest, jumpTo } from '../lib/helper';
+import { fetchFile } from '../lib/helper';
 
 import PageLayout from '../components/PageLayout';
 import JumpMan from '../container/JumpMan';
@@ -23,10 +22,6 @@ export default class Page extends React.Component<PageProps, PageState> {
       docContent: '',
       docHeadings: []
     };
-
-    const renderer = new marked.Renderer();
-    renderer.heading = this.headingRender.bind(this);
-    marked.setOptions({ renderer });
   }
   get path() {
     const { location: { pathname } } = this.props;
@@ -47,10 +42,10 @@ export default class Page extends React.Component<PageProps, PageState> {
     const { history } = this.props;
     this.toc = [];
     try {
-      const fileRaw = await fetchFile(this.path);
-      const fileFomatted: string = marked(fileRaw, void 0);
-
-      this.setState({ docContent: fileFomatted, docHeadings: this.toc });
+      const { siteData: { pages } } = await import('@/.temp/siteData');
+      const docContent: string = pages[0].excerpt;
+      const docHeadings = pages[0].headers
+      this.setState({ docContent, docHeadings });
     } catch (e) {
       history.replace('/404');
     }
@@ -72,24 +67,6 @@ export default class Page extends React.Component<PageProps, PageState> {
         }
       />
     );
-  }
-
-  private headingRender(text,  level) {
-    const id = text;
-    const heading: Hell.Heading = { text, level, id };
-
-    for (let idx = this.toc.length; idx > 0; idx--) {
-      const prev = this.toc[idx - 1];
-      if (heading.level > prev.level) {
-        heading.parent = prev.id;
-        break;
-      } else if (heading.level === prev.level && prev.parent) {
-        heading.parent = prev.parent;
-        break;
-      }
-    }
-    this.toc.push(heading);
-    return `<h${level} id="${id}">${text}</h${level}>`;
   }
 
   private formatPath(pathname: string): string {
