@@ -76,7 +76,7 @@ function dev(sourceDir, cliOptions) {
                     pagesWatcher.on('unlink', update);
                     pagesWatcher.on('addDir', update);
                     pagesWatcher.on('unlinkDir', update);
-                    config = createBaseConfig_1["default"]();
+                    config = createBaseConfig_1["default"](options);
                     host = '0.0.0.0';
                     port = 8080;
                     nonExistentDir = path.resolve(__dirname, "non-existent");

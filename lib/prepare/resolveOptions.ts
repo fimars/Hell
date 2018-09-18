@@ -15,13 +15,13 @@ export default async function resolveOptions(sourceDir) {
     pageFiles.map(async file => {
       const filepath = path.resolve(sourceDir, file)
       const data: any = {
+        file, // TODO: remove this attr after server side render the router file.
         key: "v-" + Math.random().toString(16).slice(2),
-        path: filepath
+        path: filepath,
       }
 
       const content = await fs.readFile(filepath, "utf-8");
       const frontmatter = parseFrontmatter(content);
-      console.log(frontmatter);
       
       const headers = extractHeaders(
         frontmatter.content,
@@ -35,9 +35,6 @@ export default async function resolveOptions(sourceDir) {
         data.frontmatter = frontmatter.data;
       }
       // TODO: 之后放到前端进行处理，支持更多的自定义功能。
-      if (frontmatter.content) {
-        data.content = marked(frontmatter.content);
-      }
       if (frontmatter.excrept) {
         data.excerpt = marked(frontmatter.excrept);
       }
@@ -51,7 +48,9 @@ export default async function resolveOptions(sourceDir) {
   };
 
   const options = {
-    siteData
+    markdown: marked,
+    siteData,
+    sourceDir
   };
 
   return options;

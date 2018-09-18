@@ -10,7 +10,7 @@ import Toc from '../components/Toc';
 
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
-  docContent: string;
+  docContent: (() => JSX.Element) | JSX.Element;
   docHeadings: any[];
 }
 export default class Page extends React.Component<PageProps, PageState> {
@@ -19,7 +19,7 @@ export default class Page extends React.Component<PageProps, PageState> {
   constructor(props: PageProps) {
     super(props);
     this.state = {
-      docContent: '',
+      docContent: null,
       docHeadings: []
     };
   }
@@ -43,7 +43,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     this.toc = [];
     try {
       const { siteData: { pages } } = await import('@/.temp/siteData');
-      const docContent: string = pages[0].content;
+      const { default: docContent } = await import(`@source/Ch1.md`);
       const docHeadings = pages[0].headers
       this.setState({ docContent, docHeadings });
     } catch (e) {
@@ -62,8 +62,9 @@ export default class Page extends React.Component<PageProps, PageState> {
         Content={
           <div
             className="markdown-body section"
-            dangerouslySetInnerHTML={{ __html: this.state.docContent }}
-          />
+          >
+            { this.state.docContent }
+          </div>
         }
       />
     );

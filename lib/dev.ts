@@ -33,7 +33,7 @@ async function dev(sourceDir, cliOptions = {}) {
   pagesWatcher.on('unlinkDir', update);
 
   // resolve webpack config
-  const config = createBaseConfig();
+  const config = createBaseConfig(options);
 
   const host = '0.0.0.0';
   const port = 8080;

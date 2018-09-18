@@ -2,15 +2,21 @@ import HtmlWebpackPlugin = require("html-webpack-plugin");
 import Config = require("webpack-chain");
 
 import { atApp, atLib } from "../util/resolvePaths";
+import markdownLoader from './markdownLoader';
 
-export default function() {
+export default function({
+  sourceDir,
+  markdown
+}) {
   const config = new Config();
 
-  config.entry("app").add(atApp("app.ts"));
+  config
+    .entry("app")
+    .add(atApp("app.ts"));
 
   // TODO: remove this preset
   config.set("mode", "development");
-  config.devtool("inline-source-map");
+  config.devtool("source-map");
 
   // 支持TypeScript扩展
   config.resolve.extensions
@@ -18,12 +24,15 @@ export default function() {
     .add(".tsx")
     .add(".js")
     .add(".jsx")
-    .add("scss");
+    .add(".md")
+    .add(".scss");
 
   config.resolve.alias
     // TODO: lib可能用不上 will be removed
     .set("lib", atLib())
+    // components
     .set("@", atApp())
+    .set('@source', sourceDir)
     .set("theme", atLib("default-theme"));
 
   const defaultHtmlTemplate = atApp("index.html");
@@ -31,22 +40,36 @@ export default function() {
     .plugin("html")
     .use(HtmlWebpackPlugin, [{ template: defaultHtmlTemplate }]);
 
+  function applyTypeScriptPipeline (rule) {
+    rule
+      .use("ts-loader")
+      .loader("ts-loader")
+      .options({
+        configFile: atLib("tsconfig.app.json")
+      });
+  }
   // TypeScript
-  config.module
+  const tsRule = config.module
     .rule("typescript")
-    .test(/\.tsx?$/)
-    .use("typescript")
-    .loader("ts-loader")
-    .options({
-      configFile: atLib("tsconfig.app.json")
-    });
+    .test(/\.tsx?$/);
+  applyTypeScriptPipeline(tsRule);
+  // md
+  const mdRule = config.module
+    .rule("markdown")
+    .test(/\.md$/);
 
-  // TODO: Use pipe loader for scss file in WebpackChain.
+  applyTypeScriptPipeline(mdRule);
+  
+  mdRule
+    .use('markdown-loader')
+    .loader(require.resolve('./markdownLoader'))
+    .options({ sourceDir, markdown })
+
   // Scss
-  const baseConfig = config.module.rule("scss").test(/\.scss$/);
-  baseConfig.use("style-loader").loader("style-loader");
-  baseConfig.use("css-loader").loader("css-loader");
-  baseConfig.use("sass-loader").loader("sass-loader");
+  const styleRule = config.module.rule("scss").test(/\.scss$/);
+  styleRule.use("style-loader").loader("style-loader");
+  styleRule.use("css-loader").loader("css-loader");
+  styleRule.use("sass-loader").loader("sass-loader");
 
   return config;
 }

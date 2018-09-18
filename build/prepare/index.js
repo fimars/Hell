@@ -48,7 +48,7 @@ function prepare(sourceDir) {
                     return [4 /*yield*/, util_1.writeTemp('siteData.js', "export const siteData = " + JSON.stringify(options.siteData, null, 2))];
                 case 2:
                     _a.sent();
-                    return [2 /*return*/];
+                    return [2 /*return*/, options];
             }
         });
     });

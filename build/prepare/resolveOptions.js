@@ -58,6 +58,7 @@ function resolveOptions(sourceDir) {
                                     case 0:
                                         filepath = path.resolve(sourceDir, file);
                                         data = {
+                                            file: file,
                                             key: "v-" + Math.random().toString(16).slice(2),
                                             path: filepath
                                         };
@@ -65,7 +66,6 @@ function resolveOptions(sourceDir) {
                                     case 1:
                                         content = _a.sent();
                                         frontmatter = index_1.parseFrontmatter(content);
-                                        console.log(frontmatter);
                                         headers = index_1.extractHeaders(frontmatter.content, [], marked.lexer);
                                         if (headers.length) {
                                             data.headers = headers;
@@ -74,9 +74,6 @@ function resolveOptions(sourceDir) {
                                             data.frontmatter = frontmatter.data;
                                         }
                                         // TODO: 之后放到前端进行处理，支持更多的自定义功能。
-                                        if (frontmatter.content) {
-                                            data.content = marked(frontmatter.content);
-                                        }
                                         if (frontmatter.excrept) {
                                             data.excerpt = marked(frontmatter.excrept);
                                         }
@@ -91,7 +88,9 @@ function resolveOptions(sourceDir) {
                         title: "siteTitle"
                     };
                     options = {
-                        siteData: siteData
+                        markdown: marked,
+                        siteData: siteData,
+                        sourceDir: sourceDir
                     };
                     return [2 /*return*/, options];
             }
