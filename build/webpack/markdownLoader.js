@@ -8,8 +8,7 @@ function default_1(src) {
     var content = frontmatter.content;
     var html = markdown(content);
     var res = "import * as React from 'react';\n" +
-        "export default () => <div className='content' />;";
-    console.log(res);
+        ("export default () => <div className='content'>" + html + "</div>;");
     return res;
 }
 exports["default"] = default_1;

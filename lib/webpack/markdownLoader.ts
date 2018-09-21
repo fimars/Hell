@@ -10,7 +10,6 @@ export default function(src) {
   const html = markdown(content);
   const res = 
     `import * as React from 'react';\n` +
-    `export default () => <div className='content' />;`;
-  console.log(res);
+    `export default () => <div className='content'>${html}</div>;`;
   return res;
 }

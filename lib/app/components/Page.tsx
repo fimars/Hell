@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
+import * as Hell from '../types';
 
 import config from '../config';
 import { fetchFile } from '../lib/helper';
@@ -10,7 +11,7 @@ import Toc from '../components/Toc';
 
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
-  docContent: (() => JSX.Element) | JSX.Element;
+  docContent: any;
   docHeadings: any[];
 }
 export default class Page extends React.Component<PageProps, PageState> {
@@ -43,9 +44,12 @@ export default class Page extends React.Component<PageProps, PageState> {
     this.toc = [];
     try {
       const { siteData: { pages } } = await import('@/.temp/siteData');
-      const { default: docContent } = await import(`@source/Ch1.md`);
-      const docHeadings = pages[0].headers
-      this.setState({ docContent, docHeadings });
+      const docContent = require(`@source/Ch1.md`).default;
+      const docHeadings = pages[0].headers as any[];
+      this.setState({
+        docContent,
+        docHeadings
+      });
     } catch (e) {
       history.replace('/404');
     }
@@ -63,7 +67,7 @@ export default class Page extends React.Component<PageProps, PageState> {
           <div
             className="markdown-body section"
           >
-            { this.state.docContent }
+            {  this.state.docContent ? this.state.docContent() : '' }
           </div>
         }
       />

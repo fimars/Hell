@@ -45,6 +45,7 @@ export default function({
       .use("ts-loader")
       .loader("ts-loader")
       .options({
+        appendTsxSuffixTo: [/\.md$/],
         configFile: atLib("tsconfig.app.json")
       });
   }
