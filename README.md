@@ -1,4 +1,4 @@
-## Hell Doc [WIP]
+## Hell Doc ！主分支版本在未来变动巨大
 React + ZEIT DOCS风格的静态文档工具.
 
 ### 快速上手
