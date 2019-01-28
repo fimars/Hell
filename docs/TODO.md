@@ -9,3 +9,5 @@ tags = "TODO"
 - remove `createBaseConfig` hack []
 - make HMR working
 - use babel to support typescript, because babel can make better HMR experience.
+- better project code style rules.
+- TOC component rewrite.

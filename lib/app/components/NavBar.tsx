@@ -10,7 +10,7 @@ export default () => (
       siteData.pages.map(
         (page, idx) => 
           <Link key={idx} to={page.file}>
-            <div style={{ border: 'dashed 2px #eee', marginRight: '10px', padding: '0 10px' }}>{page.file}</div>
+            <div style={{ border: 'dashed 1px #eee', marginRight: '10px', padding: '0 10px' }}>{page.file}</div>
           </Link>
       )
     }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { hot } from 'react-hot-loader/root';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 
 import NavBar from './NavBar';
@@ -18,6 +19,10 @@ let App = class extends React.PureComponent {
       </Router>
     );
   }
+}
+
+if (process.env.NODE_ENV === 'development') {
+  App = hot(App);
 }
 
 export default App;
