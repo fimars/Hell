@@ -1,10 +1,3 @@
-# Hell Doc
+用TypeScript写的静态文档工具
 
-React + ZEIT DOCS风格的静态文档工具.
-
-## 快速上手
-
-## TODO
-
-### Dev && Build
-
+> 本项目使用MIT开源协议
