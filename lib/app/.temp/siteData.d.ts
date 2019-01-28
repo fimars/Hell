@@ -1,0 +1,1 @@
+export const siteData: { pages: Array<any> };
