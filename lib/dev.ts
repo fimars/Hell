@@ -2,7 +2,8 @@ import chalk from 'chalk';
 import chokidar = require('chokidar');
 import opn = require('opn');
 import path = require("path");
-import serve = require("webpack-serve");
+import Webpack = require("webpack");
+import WebpackDevServer = require("webpack-dev-server");
 
 import prepare from './prepare';
 import {atRoot} from "./util/resolvePaths";
@@ -32,22 +33,29 @@ async function dev(sourceDir, cliOptions = {}) {
   pagesWatcher.on('addDir', update);
   pagesWatcher.on('unlinkDir', update);
 
-  // resolve webpack config
-  const config = createBaseConfig(options);
+  // mount the dev server
+  const configChain = createBaseConfig(options);
+  // add some thing here.
+  const config = configChain.toConfig();
 
   const host = '0.0.0.0';
   const port = 8080;
-  const nonExistentDir = path.resolve(__dirname, "non-existent");
-  await serve(
-    {},
-    {
-      config: config.toConfig(),
-      content: [nonExistentDir],
-      host,
-      logLevel: "error",
-      port,
+  
+  // const nonExistentDir = path.resolve(__dirname, "non-existent");
+  const devServerOptions = {
+    host,
+    port,
+    stats: {
+      colors: true
     }
+  }
+  WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
+  const compiler = Webpack(config);
+  const server = new WebpackDevServer(
+    compiler,
+    devServerOptions
   );
+  await server.listen(port, host);
 
   opn(`http://${host}:${port}`);
 }

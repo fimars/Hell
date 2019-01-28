@@ -4,10 +4,14 @@
     "jsx": "react",
     "lib": ["esnext", "dom"],
     "target": "es5",
-    "allowJs": true
+    "allowJs": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./*"]
+    }
   },
   "files": [
-    "app/app.ts",
-    "app/markdown-module.d.ts"
+    "./app.ts",
+    "./markdown-module.d.ts"
   ]
 }

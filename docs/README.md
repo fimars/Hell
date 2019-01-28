@@ -19,7 +19,6 @@ tags: 教程
 
 *PS: 本例子的服务器系统是`ubuntu`系统，读者请需要根据实际使用的系统最顺手的包管理器。*
 
-
 ## 在服务器上需要做的事情
 
 包括以下几个步骤，了解的部分可跳过
@@ -28,12 +27,12 @@ tags: 教程
 2. 让服务器能够通过`git`获取到最新的博客源码
 3. 根据最新的博客源码，更新服务器上供访问的静态文件目录
 
-
 ### nginx安装
 
 ```bash
 sudo apt-get install nginx # 安装nginx
 ```
+
 安装完成之后，你就可以直接通过你服务器的地址直接访问到`/var/www/html`下这个nginx的默认站点了。也可以根据自己的情况选择使用其他Web服务。
 
 ### 新建git空仓库
@@ -41,6 +40,7 @@ sudo apt-get install nginx # 安装nginx
 如果服务器没办法直接访问到`git`仓库的话，以`github`为例子的[官方教程](https://help.github.com/articles/adding-a-new-ssh-key-to-your-github-account/)可以先看一下。
 
 新建一个git空仓库
+
 ```bash
 apt-get install git-core # 安装git
 
@@ -49,6 +49,7 @@ cd ~/blog.git && git init --bare
 ```
 
 设置git仓库钩子, 在`blog.git`目录下新建`hooks/post-receive`文件
+
 ```bash
 #!/bin/bash
 

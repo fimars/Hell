@@ -1,5 +1,4 @@
 import * as scrollIntoView from "scroll-into-view";
-import { $ } from "./dom";
 
 export async function fetchFile(url: string) {
     const resp = await fetch(url);
@@ -11,7 +10,7 @@ export async function fetchFile(url: string) {
 }
 
 export function jumpTo(id: string): void {
-    scrollIntoView($(id), { time: 800 });
+    scrollIntoView(document.getElementById(id), { time: 800 });
 }
 
 export function throwError(message: string): Error {

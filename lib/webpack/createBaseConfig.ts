@@ -1,8 +1,9 @@
 import HtmlWebpackPlugin = require("html-webpack-plugin");
+import webpack = require("webpack");
 import Config = require("webpack-chain");
+import MarkdownLoader = require("./markdownLoader"); // hack for compile
 
 import { atApp, atLib } from "../util/resolvePaths";
-import markdownLoader from './markdownLoader';
 
 export default function({
   sourceDir,
@@ -14,31 +15,28 @@ export default function({
     .entry("app")
     .add(atApp("app.ts"));
 
-  // TODO: remove this preset
-  config.set("mode", "development");
+  config.mode("development");
   config.devtool("source-map");
 
   // 支持TypeScript扩展
-  config.resolve.extensions
-    .add(".ts")
-    .add(".tsx")
-    .add(".js")
-    .add(".jsx")
-    .add(".md")
-    .add(".scss");
-
+  config.resolve.extensions.merge(
+    [".ts", ".tsx", ".js", ".jsx", ".md", ".scss"]
+  );
+  
   config.resolve.alias
     // TODO: lib可能用不上 will be removed
     .set("lib", atLib())
     // components
     .set("@", atApp())
-    .set('@source', sourceDir)
     .set("theme", atLib("default-theme"));
 
   const defaultHtmlTemplate = atApp("index.html");
   config
     .plugin("html")
     .use(HtmlWebpackPlugin, [{ template: defaultHtmlTemplate }]);
+  config
+    .plugin("hmr")
+    .use(webpack.HotModuleReplacementPlugin);
 
   function applyTypeScriptPipeline (rule) {
     rule
@@ -46,7 +44,7 @@ export default function({
       .loader("ts-loader")
       .options({
         appendTsxSuffixTo: [/\.md$/],
-        configFile: atLib("tsconfig.app.json")
+        configFile: atApp("tsconfig.json")
       });
   }
   // TypeScript

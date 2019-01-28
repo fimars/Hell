@@ -74,8 +74,8 @@ function resolveOptions(sourceDir) {
                                             data.frontmatter = frontmatter.data;
                                         }
                                         // TODO: 之后放到前端进行处理，支持更多的自定义功能。
-                                        if (frontmatter.excrept) {
-                                            data.excerpt = marked(frontmatter.excrept);
+                                        if (frontmatter.content) {
+                                            data.excerpt = marked(frontmatter.content);
                                         }
                                         return [2 /*return*/, data];
                                 }

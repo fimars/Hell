@@ -1,85 +1,41 @@
+import { siteData } from '@/.temp/siteData';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import * as Hell from '../types';
 
-import config from '../config';
-import { fetchFile } from '../lib/helper';
 
 import JumpMan from '../components/JumpMan';
 import PageLayout from '../components/PageLayout';
 import Toc from '../components/Toc';
+import NotFound from './NotFound';
 
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
-  docContent: any;
-  docHeadings: any[];
+  docContent: string;
 }
 export default class Page extends React.Component<PageProps, PageState> {
-  private toc: Hell.Heading[] = [];
-
-  constructor(props: PageProps) {
+  constructor(props) {
     super(props);
-    this.state = {
-      docContent: null,
-      docHeadings: []
-    };
-  }
-  get path() {
-    const { location: { pathname } } = this.props;
-    return this.formatPath(pathname);
-  }
-  public componentDidUpdate({ location: { pathname } }) {
-    if (this.formatPath(pathname + '') !== this.path) {
-      this.fetchData();
-    }
-  }
-  public componentDidMount() {
-    const { location: { search } } = this.props;
-    this.fetchData().then(() => {
-      // this.updateActiveId(id);
-    });
-  }
-  public async fetchData() {
-    const { history } = this.props;
-    this.toc = [];
-    try {
-      const { siteData: { pages } } = await import('@/.temp/siteData');
-      const docContent = require(`@source/Ch1.md`).default;
-      const docHeadings = pages[0].headers as any[];
-      this.setState({
-        docContent,
-        docHeadings
-      });
-    } catch (e) {
-      history.replace('/404');
-    }
+    this.state = { docContent: '' };
   }
   public render(): JSX.Element {
-    const { location } = this.props;
+    const { location: { pathname }, history } = this.props;
+    const currentPage = siteData.pages.find(page => page.file === pathname.slice(1));
     return (
       <PageLayout
         Side={
-          <JumpMan search={location.search}>
-            <Toc headings={this.state.docHeadings} />
+          <JumpMan search={this.props.location.search}>
+            <Toc headings={[]} />
           </JumpMan>
         }
         Content={
-          <div
+          currentPage
+          ? <div
             className="markdown-body section"
-          >
-            {  this.state.docContent ? this.state.docContent() : '' }
-          </div>
+            dangerouslySetInnerHTML={{__html: currentPage.excerpt || 'Coming Soon...'}}
+          />
+          : <NotFound />
         }
       />
     );
-  }
-
-  private formatPath(pathname: string): string {
-    const { index, path } = config.it;
-    // index
-    if (pathname === '/') {
-      pathname += index;
-    }
-    return path + pathname + '.md';
   }
 }

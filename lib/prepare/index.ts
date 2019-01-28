@@ -6,5 +6,6 @@ export default async function prepare (sourceDir) {
   
   await writeTemp('siteData.js', `export const siteData = ${JSON.stringify(options.siteData, null, 2)}`);
 
+
   return options;
 };

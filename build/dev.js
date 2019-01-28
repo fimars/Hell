@@ -38,15 +38,15 @@ exports.__esModule = true;
 var chalk_1 = require("chalk");
 var chokidar = require("chokidar");
 var opn = require("opn");
-var path = require("path");
-var serve = require("webpack-serve");
+var Webpack = require("webpack");
+var WebpackDevServer = require("webpack-dev-server");
 var prepare_1 = require("./prepare");
 var resolvePaths_1 = require("./util/resolvePaths");
 var createBaseConfig_1 = require("./webpack/createBaseConfig");
 function dev(sourceDir, cliOptions) {
     if (cliOptions === void 0) { cliOptions = {}; }
     return __awaiter(this, void 0, void 0, function () {
-        var options, update, pagesWatcher, config, host, port, nonExistentDir;
+        var options, update, pagesWatcher, configChain, config, host, port, devServerOptions, compiler, server;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -76,17 +76,21 @@ function dev(sourceDir, cliOptions) {
                     pagesWatcher.on('unlink', update);
                     pagesWatcher.on('addDir', update);
                     pagesWatcher.on('unlinkDir', update);
-                    config = createBaseConfig_1["default"](options);
+                    configChain = createBaseConfig_1["default"](options);
+                    config = configChain.toConfig();
                     host = '0.0.0.0';
                     port = 8080;
-                    nonExistentDir = path.resolve(__dirname, "non-existent");
-                    return [4 /*yield*/, serve({}, {
-                            config: config.toConfig(),
-                            content: [nonExistentDir],
-                            host: host,
-                            logLevel: "error",
-                            port: port
-                        })];
+                    devServerOptions = {
+                        host: host,
+                        port: port,
+                        stats: {
+                            colors: true
+                        }
+                    };
+                    WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
+                    compiler = Webpack(config);
+                    server = new WebpackDevServer(compiler, devServerOptions);
+                    return [4 /*yield*/, server.listen(port, host)];
                 case 2:
                     _a.sent();
                     opn("http://" + host + ":" + port);
