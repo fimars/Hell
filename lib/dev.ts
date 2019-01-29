@@ -44,12 +44,14 @@ async function dev(sourceDir, cliOptions = {}) {
   // const nonExistentDir = path.resolve(__dirname, "non-existent");
   const devServerOptions = {
     host,
+    hot: true,
     port,
     stats: {
       colors: true
     }
   }
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
+
   const compiler = Webpack(config);
   const server = new WebpackDevServer(
     compiler,

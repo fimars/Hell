@@ -1,3 +1,4 @@
+import ForkTSCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 import HtmlWebpackPlugin = require("html-webpack-plugin");
 import webpack = require("webpack");
 import Config = require("webpack-chain");
@@ -16,7 +17,7 @@ export default function({
     .add(atApp("app.ts"));
 
   config.mode("development");
-  config.devtool("source-map");
+  config.devtool("eval");
 
   // 支持TypeScript扩展
   config.resolve.extensions.merge(
@@ -37,32 +38,52 @@ export default function({
   config
     .plugin("hmr")
     .use(webpack.HotModuleReplacementPlugin);
+  config
+    .plugin("tscheck")
+    .use(ForkTSCheckerWebpackPlugin, [{ tsconfig: atApp("tsconfig.json") }]);
 
-  function applyTypeScriptPipeline (rule) {
-    rule
-      .use("ts-loader")
-      .loader("ts-loader")
-      .options({
-        appendTsxSuffixTo: [/\.md$/],
-        configFile: atApp("tsconfig.json")
-      });
-  }
+  //  TODO, try the babel with ts
   // TypeScript
   const tsRule = config.module
     .rule("typescript")
     .test(/\.tsx?$/);
-  applyTypeScriptPipeline(tsRule);
-  // md
-  const mdRule = config.module
-    .rule("markdown")
-    .test(/\.md$/);
 
-  applyTypeScriptPipeline(mdRule);
+  tsRule.use("babel")
+      .loader("babel-loader")
+      .options({
+        babelrc: false,
+        cacheDirectory: true,
+        plugins: [
+          ["@babel/plugin-proposal-class-properties", { loose: true }],
+          "react-hot-loader/babel"
+        ],
+        presets: [
+          [
+            "@babel/preset-env",
+            { targets: { browsers: "last 2 versions" } } // or whatever your project requires
+          ],
+          "@babel/preset-react",
+          "@babel/preset-typescript"
+        ]
+      })
+  // tsRule.use("typescript")
+  //     .loader("ts-loader")
+  //     .options({
+  //       appendTsxSuffixTo: [/\.md$/],
+  //       configFile: atApp("tsconfig.json")
+  //     });
+
+  // md, I don't need it now.
+  // const mdRule = config.module
+  //   .rule("markdown")
+  //   .test(/\.md$/);
+
+  // applyTypeScriptPipeline(mdRule);
   
-  mdRule
-    .use('markdown-loader')
-    .loader(require.resolve('./markdownLoader'))
-    .options({ sourceDir, markdown })
+  // mdRule
+  //   .use('markdown-loader')
+  //   .loader(require.resolve('./markdownLoader'))
+  //   .options({ sourceDir, markdown })
 
   // Scss
   const styleRule = config.module.rule("scss").test(/\.scss$/);

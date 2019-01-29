@@ -82,12 +82,14 @@ function dev(sourceDir, cliOptions) {
                     port = 8080;
                     devServerOptions = {
                         host: host,
+                        hot: true,
                         port: port,
                         stats: {
                             colors: true
                         }
                     };
                     WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
+                    console.log(config);
                     compiler = Webpack(config);
                     server = new WebpackDevServer(compiler, devServerOptions);
                     return [4 /*yield*/, server.listen(port, host)];
