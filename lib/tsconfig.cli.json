@@ -6,5 +6,5 @@
     "allowJs": true
   },
   "exclude": ["app", "default-theme"],
-  "files": ["./dev.ts"]
+  "files": ["./dev.ts", "./prod.ts"]
 }
