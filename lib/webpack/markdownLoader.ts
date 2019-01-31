@@ -1,4 +1,4 @@
-import { getOptions } from 'loader-utils';
+import { getOptions } from "loader-utils";
 import { parseFrontmatter } from "../util";
 
 export default function MarkdownLoader(src) {
@@ -8,7 +8,7 @@ export default function MarkdownLoader(src) {
   const content = frontmatter.content;
 
   const html = markdown(content);
-  const res = 
+  const res =
     `import * as React from 'react';\n` +
     `export default () => <div className='content' dangerouslySetInnerHTML={{ __html: \`${html}\` }}></div>;`;
   return res;

@@ -18,10 +18,10 @@ a {
     cursor: pointer;
     text-decoration: underline;
   }
+}
 
-  &.selected {
-    font-weight: 600;
-  }
+.selected {
+  font-weight: 600;
 }
 
 *::selection {

@@ -2,24 +2,10 @@
   border: $border-default;
   cursor: pointer;
 
-  &.icon {
-    $size: 16px;
-    @include transition;
-    @include size($size);
-    color: $typo-dark;
-    line-height: $size * .9;
-
-    &:hover,
-    &.selected {
-      border-color: currentColor;
-      color: $azure-radiance;
-    }
-  }
-
   &.link {
+    border: dashed;
     padding-left: 10px;
     padding-right: 10px;
-    border: dashed;
   }
   
   & + & {
@@ -28,6 +14,16 @@
 }
 
 .icon {
-  color: currentColor;
-  text-align: center;
+  $size: 16px;
+  @include transition;
+  @include size($size);
+  color: $typo-dark;
+  line-height: $size * 0.9;
+
+  &:hover,
+  &.selected {
+    border-color: currentColor;
+    color: $azure-radiance;
+  }
 }
+

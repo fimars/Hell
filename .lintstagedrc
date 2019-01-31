@@ -1,0 +1,7 @@
+{
+  "linters": {
+    "*.{ts,tsx}": ["prettier --write", "git add"],
+    "*.scss": ["stylelint --syntax=scss --fix", "git add"]
+  },
+  "ignore": ["**/_reset.scss", "**/_markdown.scss"]
+}

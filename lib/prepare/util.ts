@@ -1,6 +1,6 @@
-import fs = require('fs-extra');
+import fs = require("fs-extra");
 
-import { atApp } from '../util/resolvePaths' 
+import { atApp } from "../util/resolvePaths";
 
 const tempCache = new Map();
 export async function writeTemp(file: string, content: string | Buffer) {
