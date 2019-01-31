@@ -45,7 +45,7 @@ function prepare(sourceDir) {
                 case 0: return [4 /*yield*/, resolveOptions_1["default"](sourceDir)];
                 case 1:
                     options = _a.sent();
-                    return [4 /*yield*/, util_1.writeTemp('siteData.js', "export const siteData = " + JSON.stringify(options.siteData, null, 2))];
+                    return [4 /*yield*/, util_1.writeTemp("siteData.js", "export const siteData = " + JSON.stringify(options.siteData, null, 2))];
                 case 2:
                     _a.sent();
                     return [2 /*return*/, options];
@@ -54,4 +54,3 @@ function prepare(sourceDir) {
     });
 }
 exports["default"] = prepare;
-;

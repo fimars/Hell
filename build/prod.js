@@ -58,8 +58,7 @@ function prod(sourceDir, cliOptions) {
                         if (err) {
                             console.error(err);
                         }
-                        console.log(stats);
-                        console.log('\nProd site done.');
+                        console.log('\nProd site done. serve the /dist make a try.');
                     });
                     return [2 /*return*/];
             }

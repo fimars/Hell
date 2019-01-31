@@ -59,7 +59,10 @@ function resolveOptions(sourceDir) {
                                         filepath = path.resolve(sourceDir, file);
                                         data = {
                                             file: file,
-                                            key: "v-" + Math.random().toString(16).slice(2),
+                                            key: "v-" +
+                                                Math.random()
+                                                    .toString(16)
+                                                    .slice(2),
                                             path: filepath
                                         };
                                         return [4 /*yield*/, fs.readFile(filepath, "utf-8")];

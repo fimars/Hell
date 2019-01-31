@@ -3,13 +3,13 @@
   cursor: pointer;
 
   &.link {
-    border: dashed;
+    border: dashed 2px #d0d0d0;
     padding-left: 10px;
     padding-right: 10px;
   }
   
   & + & {
-    margin-left: 4px;
+    margin-left: 6px;
   }
 }
 

@@ -7,7 +7,7 @@ function extractHeaders(content, include, lexer) {
     var tokens = lexer(content);
     var headerTokens = tokens.filter(function (_a) {
         var type = _a.type;
-        return type === 'heading';
+        return type === "heading";
     });
     var headers = headerTokens.map(function (_a, headerIndex) {
         var depth = _a.depth, text = _a.text;
@@ -39,7 +39,7 @@ function parseFrontmatter(content) {
             toml: toml.parse.bind(toml)
         },
         excerpt: true,
-        excerpt_separator: '<!-- more -->'
+        excerpt_separator: "<!-- more -->"
     });
 }
 exports.parseFrontmatter = parseFrontmatter;
