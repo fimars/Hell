@@ -1,30 +1,32 @@
-.nav-label__item {
+.nav-label {
   line-height: 2.4;
 
   &.level-1 {
-    margin-bottom: 10px;
-    letter-spacing: 1.3px;
     font-weight: 300;
+    letter-spacing: 1.3px;
+    margin-bottom: 10px;
   }
+
   &.level-1,
   &.level-2.has-child {
     color: $typo-dark;
-    > a {
-      color: $typo-dark;
-    }
+  }
+
+  &.level-2.has-child>a {
+    color: $typo-dark;
   }
 
   &.level-3::before {
-    content: '-';
     color: $typo-dark;
-    position: absolute;
+    content: '-';
     margin-left: -12px;
+    position: absolute;
   }
+}
 
-  @for $i from 3 through 6 {
-    &.level-#{$i} {
-      padding-left: ($i - 2) * 12px;
-    }
+@for $i from 3 through 6 {
+  .nav-label.level-#{$i} {
+    padding-left: ($i - 2) * 12px;
   }
 }
 

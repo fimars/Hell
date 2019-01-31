@@ -1,41 +1,41 @@
-import ExtractCss = require('mini-css-extract-plugin');
-import Config = require('webpack-chain');
+import ExtractCss = require("mini-css-extract-plugin");
+import Config = require("webpack-chain");
 
-import { atApp, atLib, atRoot } from '../util/resolvePaths';
+import { atApp, atLib, atRoot } from "../util/resolvePaths";
 
 export default function({ sourceDir, markdown }) {
-  const isProd = process.env.NODE_ENV === 'production';
-  const outDir = atRoot('dist');
+  const isProd = process.env.NODE_ENV === "production";
+  const outDir = atRoot("dist");
 
   const config = new Config();
 
   config
-    .mode(isProd ? 'production' : 'development')
+    .mode(isProd ? "production" : "development")
     .output.path(outDir)
     .filename(
-      isProd ? 'assets/js/[name].[chunkhash:8].js' : 'assets/js/[name].js'
+      isProd ? "assets/js/[name].[chunkhash:8].js" : "assets/js/[name].js"
     );
   // .publicPath()
 
   if (!isProd) {
-    config.devtool('cheap-module-eval-source-map');
+    config.devtool("cheap-module-eval-source-map");
   }
 
   config.resolve.alias
-    .set('lib', atLib())
-    .set('@', atApp())
-    .set('theme', atLib('default-theme'))
+    .set("lib", atLib())
+    .set("@", atApp())
+    .set("theme", atLib("default-theme"))
     .end()
-    .extensions.merge(['.ts', '.tsx', '.js', '.jsx', '.md', '.scss'])
+    .extensions.merge([".ts", ".tsx", ".js", ".jsx", ".md", ".scss"])
     .end();
 
   config
-    .plugin('html')
-    .use(require('html-webpack-plugin'), [{ template: atApp('index.html') }]);
+    .plugin("html")
+    .use(require("html-webpack-plugin"), [{ template: atApp("index.html") }]);
   if (isProd) {
-    config.plugin('extract-css').use(ExtractCss, [
+    config.plugin("extract-css").use(ExtractCss, [
       {
-        filename: 'assets/css/styles.[chunkhash:8].css'
+        filename: "assets/css/styles.[chunkhash:8].css"
       }
     ]);
 
@@ -46,9 +46,9 @@ export default function({ sourceDir, markdown }) {
     config.optimization.splitChunks({
       cacheGroups: {
         styles: {
-          chunks: 'all',
+          chunks: "all",
           enforce: true,
-          name: 'styles',
+          name: "styles",
           // necessary to ensure async chunks are also extracted
           test: m => {
             return /css\/mini-extract/.test(m.type);
@@ -58,42 +58,42 @@ export default function({ sourceDir, markdown }) {
     });
   } else {
     config
-      .plugin('tscheck')
-      .use(require('fork-ts-checker-webpack-plugin'), [
-        { tsconfig: atApp('tsconfig.json') }
+      .plugin("tscheck")
+      .use(require("fork-ts-checker-webpack-plugin"), [
+        { tsconfig: atApp("tsconfig.json") }
       ]);
   }
 
   config.module
-    .rule('typescript')
+    .rule("typescript")
     .test(/\.tsx?$/)
-    .use('babel')
-    .loader('babel-loader')
+    .use("babel")
+    .loader("babel-loader")
     .options({
       babelrc: false,
       cacheDirectory: true,
       plugins: [
-        ['@babel/plugin-proposal-class-properties', { loose: true }],
-        'react-hot-loader/babel'
+        ["@babel/plugin-proposal-class-properties", { loose: true }],
+        "react-hot-loader/babel"
       ],
       presets: [
         [
-          '@babel/preset-env',
-          { targets: { browsers: 'last 2 versions' } } // or whatever your project requires
+          "@babel/preset-env",
+          { targets: { browsers: "last 2 versions" } } // or whatever your project requires
         ],
-        '@babel/preset-react',
-        '@babel/preset-typescript'
+        "@babel/preset-react",
+        "@babel/preset-typescript"
       ]
     });
 
-  const styleRule = config.module.rule('scss').test(/\.scss$/);
+  const styleRule = config.module.rule("scss").test(/\.scss$/);
   if (isProd) {
-    styleRule.use('extract-css-loader').loader(ExtractCss.loader);
+    styleRule.use("extract-css-loader").loader(ExtractCss.loader);
   } else {
-    styleRule.use('style-loader').loader('style-loader');
+    styleRule.use("style-loader").loader("style-loader");
   }
-  styleRule.use('css-loader').loader('css-loader');
-  styleRule.use('sass-loader').loader('sass-loader');
+  styleRule.use("css-loader").loader("css-loader");
+  styleRule.use("sass-loader").loader("sass-loader");
 
   return config;
 }

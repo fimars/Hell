@@ -1,15 +1,15 @@
-import { atApp } from '../util/resolvePaths';
-import createBaseConfig from './createBaseConfig';
+import { atApp } from "../util/resolvePaths";
+import createBaseConfig from "./createBaseConfig";
 
 export default function(ctx) {
   const config = createBaseConfig(ctx);
 
-  config.entry('app').add(atApp('app.ts'));
+  config.entry("app").add(atApp("app.ts"));
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === "production") {
     config
-      .plugin('optimize-css')
-      .use(require('optimize-css-assets-webpack-plugin'), [
+      .plugin("optimize-css")
+      .use(require("optimize-css-assets-webpack-plugin"), [
         {
           canPrint: false,
           cssProcessorOptions: {
@@ -20,7 +20,7 @@ export default function(ctx) {
         }
       ]);
   } else {
-    config.plugin('hmr').use(require('webpack/lib/HotModuleReplacementPlugin'));
+    config.plugin("hmr").use(require("webpack/lib/HotModuleReplacementPlugin"));
   }
   return config;
 }
