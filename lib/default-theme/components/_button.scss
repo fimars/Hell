@@ -15,6 +15,16 @@
       color: $azure-radiance;
     }
   }
+
+  &.link {
+    padding-left: 10px;
+    padding-right: 10px;
+    border: dashed;
+  }
+  
+  & + & {
+    margin-left: 4px;
+  }
 }
 
 .icon {
