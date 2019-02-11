@@ -37,7 +37,6 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var Webpack = require("webpack");
 var prepare_1 = require("./prepare");
-var resolvePaths_1 = require("./util/resolvePaths");
 var createClientConfig_1 = require("./webpack/createClientConfig");
 function prod(sourceDir, cliOptions) {
     if (cliOptions === void 0) { cliOptions = {}; }
@@ -66,5 +65,3 @@ function prod(sourceDir, cliOptions) {
     });
 }
 exports["default"] = prod;
-// TEST
-prod(resolvePaths_1.atRoot('docs'));

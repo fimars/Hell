@@ -41,7 +41,6 @@ var opn = require("opn");
 var Webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var prepare_1 = require("./prepare");
-var resolvePaths_1 = require("./util/resolvePaths");
 var createClientConfig_1 = require("./webpack/createClientConfig");
 function dev(sourceDir, cliOptions) {
     if (cliOptions === void 0) { cliOptions = {}; }
@@ -101,5 +100,3 @@ function dev(sourceDir, cliOptions) {
     });
 }
 exports["default"] = dev;
-// TEST
-dev(resolvePaths_1.atRoot('docs'));
