@@ -1,15 +1,15 @@
 {
+  "bin": "build/bin/index.js",
   "name": "helenae",
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
-    "cli:compile": "tsc -p ./lib/tsconfig.cli.json",
-    "dev:run": "node build/dev",
-    "dev": "run-s cli:compile dev:run",
-    "prod:run": "node build/prod",
-    "prod": "run-s cli:compile prod:run",
+    "dev": "run-s compile:core dev:run",
     "lint": "lint-staged",
-    "test": "jest --config='test/jest.config.json'"
+    "prod:docs": "run-s compile:core prod:run",
+    "compile:core": "tsc -p ./lib/tsconfig.core.json",
+    "dev:run": "node build/bin/hell dev ./docs",
+    "prod:run": "node build/bin/hell prod ./docs"
   },
   "main": "src/index.js",
   "repository": "https://github.com/fimars/Helenae.scss",
@@ -30,6 +30,7 @@
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
     "chokidar": "^2.0.4",
+    "commander": "^2.19.0",
     "css-loader": "^2.1.0",
     "fork-ts-checker-webpack-plugin": "^0.5.2",
     "fs-extra": "^7.0.1",

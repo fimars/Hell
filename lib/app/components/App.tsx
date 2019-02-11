@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { hot } from 'react-hot-loader/root';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import * as React from "react";
+import { hot } from "react-hot-loader/root";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 
-import NavBar from './NavBar';
-import NotFound from './NotFound';
-import Page from './Page';
+import NavBar from "./NavBar";
+import Page from "./Page";
 
 let App = class extends React.PureComponent {
   public render() {
@@ -19,9 +18,9 @@ let App = class extends React.PureComponent {
       </Router>
     );
   }
-}
+};
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === "development") {
   App = hot(App);
 }
 
