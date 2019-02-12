@@ -37,6 +37,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var chalk_1 = require("chalk");
 var chokidar = require("chokidar");
+var path = require("path");
+var opn = require("opn");
 var Webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var prepare_1 = require("./prepare");
@@ -77,10 +79,14 @@ function dev(sourceDir, cliOptions) {
                     devServerOptions = {
                         host: host,
                         hot: true,
+                        historyApiFallback: {
+                            disableDotRule: true
+                        },
                         port: port,
                         stats: {
                             colors: true
-                        }
+                        },
+                        contentBase: path.join(__dirname, "public")
                     };
                     WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
                     compiler = Webpack(config);
@@ -89,7 +95,7 @@ function dev(sourceDir, cliOptions) {
                 case 2:
                     _a.sent();
                     // opn remove
-                    console.log("Please Open http://" + host + ":" + port);
+                    opn("http://" + host + ":" + port);
                     return [2 /*return*/];
             }
         });

@@ -4,15 +4,18 @@ import { Link } from "react-router-dom";
 
 const NavBarStyle = {
   width: "100%",
-  lineHeight: "40px",
-  display: "flex",
-  padding: "40px"
+  backgroundColor: "#000",
+  display: "flex"
+};
+const NavStyle = {
+  padding: "20px",
+  color: "#fff"
 };
 
 export default () => (
   <div style={NavBarStyle}>
     {siteData.pages.map((page, idx) => (
-      <Link key={idx} to={page.file} className="button link">
+      <Link key={idx} to={page.file} style={NavStyle}>
         <div>{page.file}</div>
       </Link>
     ))}

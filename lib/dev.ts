@@ -1,11 +1,11 @@
 import chalk from "chalk";
 import chokidar = require("chokidar");
+import path = require("path");
 import opn = require("opn");
 import Webpack = require("webpack");
 import WebpackDevServer = require("webpack-dev-server");
 
 import prepare from "./prepare";
-import { atRoot } from "./util/resolvePaths";
 import createClientConfig from "./webpack/createClientConfig";
 
 async function dev(sourceDir, cliOptions = {}) {
@@ -42,10 +42,14 @@ async function dev(sourceDir, cliOptions = {}) {
   const devServerOptions = {
     host,
     hot: true,
+    historyApiFallback: {
+      disableDotRule: true
+    },
     port,
     stats: {
       colors: true
-    }
+    },
+    contentBase: path.join(__dirname, "public")
   };
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
 
@@ -54,7 +58,7 @@ async function dev(sourceDir, cliOptions = {}) {
   await server.listen(port, host);
 
   // opn remove
-  console.log(`Please Open http://${host}:${port}`);
+  opn(`http://${host}:${port}`);
 }
 
 export default dev;

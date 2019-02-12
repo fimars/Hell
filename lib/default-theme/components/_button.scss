@@ -1,12 +1,6 @@
 .button {
   border: $border-default;
   cursor: pointer;
-
-  &.link {
-    border: dashed 2px #d0d0d0;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
   
   & + & {
     margin-left: 6px;
