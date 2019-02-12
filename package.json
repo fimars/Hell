@@ -1,7 +1,7 @@
 {
   "bin": "build/bin/hell.js",
   "name": "@he11/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "theme",
   "scripts": {
     "dev": "run-s compile:core dev:run",

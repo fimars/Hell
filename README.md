@@ -6,8 +6,9 @@
 
 ```bash
 # 通过docs文件夹下的.md文件生成内容
-@he11/core dev <dir> # 本地服务
-npm run prod # 生成静态文件
+# CLI 工具后续会完善
+npx @he11/core dev <dir> # 本地服务
+npx @he11/core run prod # 生成静态文件
 ```
 
 ## License
