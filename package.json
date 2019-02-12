@@ -1,6 +1,6 @@
 {
   "bin": "build/bin/hell.js",
-  "name": "@hell/core",
+  "name": "@he11/core",
   "version": "0.1.0",
   "description": "theme",
   "scripts": {
