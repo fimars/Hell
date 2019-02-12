@@ -1,6 +1,6 @@
 {
-  "bin": "build/bin/index.js",
-  "name": "helenae",
+  "bin": "build/bin/hell.js",
+  "name": "hell",
   "version": "1.0.0",
   "description": "theme",
   "scripts": {
@@ -8,10 +8,11 @@
     "lint": "lint-staged",
     "prod:docs": "run-s compile:core prod:run",
     "compile:core": "tsc -p ./lib/tsconfig.core.json",
+    "compile:watch": "tsc -p ./lib/tsconfig.core.json -w",
     "dev:run": "node build/bin/hell dev ./docs",
     "prod:run": "node build/bin/hell prod ./docs"
   },
-  "main": "src/index.js",
+  "main": "build/bin/hell.js",
   "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",

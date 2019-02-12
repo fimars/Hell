@@ -53,7 +53,8 @@ async function dev(sourceDir, cliOptions = {}) {
   const server = new WebpackDevServer(compiler, devServerOptions);
   await server.listen(port, host);
 
-  opn(`http://${host}:${port}`);
+  // opn remove
+  console.log(`Please Open http://${host}:${port}`);
 }
 
 export default dev;

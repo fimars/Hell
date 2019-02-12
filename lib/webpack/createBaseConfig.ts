@@ -1,3 +1,4 @@
+import path = require("path");
 import ExtractCss = require("mini-css-extract-plugin");
 import Config = require("webpack-chain");
 
@@ -5,11 +6,14 @@ import { atApp, atLib, atRoot } from "../util/resolvePaths";
 
 export default function({ sourceDir, markdown }) {
   const isProd = process.env.NODE_ENV === "production";
-  const outDir = atRoot("dist");
+  const outDir = path.resolve(process.cwd(), "dist");
+
+  console.log(outDir);
 
   const config = new Config();
 
   config
+    .context(atRoot())
     .mode(isProd ? "production" : "development")
     .output.path(outDir)
     .filename(
@@ -21,6 +25,9 @@ export default function({ sourceDir, markdown }) {
     config.devtool("cheap-module-eval-source-map");
   }
 
+  const absoluteNodeModulePath = atRoot("node_modules");
+  console.log(absoluteNodeModulePath);
+
   config.resolve.alias
     .set("lib", atLib())
     .set("@", atApp())
@@ -31,7 +38,9 @@ export default function({ sourceDir, markdown }) {
 
   config
     .plugin("html")
-    .use(require("html-webpack-plugin"), [{ template: atApp("index.html") }]);
+    .use(require("html-webpack-plugin"), [
+      { template: atApp("index.template.html") }
+    ]);
   if (isProd) {
     config.plugin("extract-css").use(ExtractCss, [
       {
@@ -57,11 +66,14 @@ export default function({ sourceDir, markdown }) {
       }
     });
   } else {
-    config
-      .plugin("tscheck")
-      .use(require("fork-ts-checker-webpack-plugin"), [
-        { tsconfig: atApp("tsconfig.json") }
-      ]);
+    config.plugin("tscheck").use(require("fork-ts-checker-webpack-plugin"), [
+      {
+        tsconfig: atApp("tsconfig.json"),
+        compilerOptions: {
+          typeRoots: [atRoot("node_modules/@types")]
+        }
+      }
+    ]);
   }
 
   config.module
@@ -71,6 +83,7 @@ export default function({ sourceDir, markdown }) {
     .loader("babel-loader")
     .options({
       babelrc: false,
+      cwd: atRoot(),
       cacheDirectory: true,
       plugins: [
         ["@babel/plugin-proposal-class-properties", { loose: true }],
@@ -94,6 +107,5 @@ export default function({ sourceDir, markdown }) {
   }
   styleRule.use("css-loader").loader("css-loader");
   styleRule.use("sass-loader").loader("sass-loader");
-
   return config;
 }

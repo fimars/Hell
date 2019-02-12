@@ -1,5 +1,5 @@
-// DEV, PROD, HELP
-// .hjson setting, output, context etc...
+#!/usr/bin/env node
+
 import program = require("commander");
 import dev from "../dev";
 import prod from "../prod";
