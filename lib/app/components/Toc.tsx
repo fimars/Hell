@@ -16,8 +16,9 @@ class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
     });
   }
   private getLinkProps({ id, text }: Hell.Heading) {
+    const clearText = text.replace(/\(.*\)/, "");
     return {
-      dangerouslySetInnerHTML: { __html: text },
+      dangerouslySetInnerHTML: { __html: clearText },
       replace: false,
       to: "#" + encodeURIComponent(id)
     };
