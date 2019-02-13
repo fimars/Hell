@@ -4,6 +4,7 @@ import Config = require("webpack-chain");
 
 import { atApp, atLib, atRoot } from "../util/resolvePaths";
 
+// TODO: resolveOptions Type
 export default function({ sourceDir, markdown }) {
   const isProd = process.env.NODE_ENV === "production";
   const outDir = path.resolve(process.cwd(), "dist");

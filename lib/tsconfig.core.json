@@ -3,7 +3,6 @@
     "outDir": "../build",
     "module": "commonjs",
     "lib": ["es6"],
-    "allowJs": true,
     "skipLibCheck": true
   },
   "exclude": ["app", "default-theme"],

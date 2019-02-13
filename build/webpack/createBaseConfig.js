@@ -4,6 +4,7 @@ var path = require("path");
 var ExtractCss = require("mini-css-extract-plugin");
 var Config = require("webpack-chain");
 var resolvePaths_1 = require("../util/resolvePaths");
+// TODO: resolveOptions Type
 function default_1(_a) {
     var sourceDir = _a.sourceDir, markdown = _a.markdown;
     var isProd = process.env.NODE_ENV === "production";
