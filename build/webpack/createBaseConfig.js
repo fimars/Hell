@@ -1,14 +1,18 @@
 "use strict";
 exports.__esModule = true;
+var path = require("path");
 var ExtractCss = require("mini-css-extract-plugin");
 var Config = require("webpack-chain");
 var resolvePaths_1 = require("../util/resolvePaths");
+// TODO: resolveOptions Type
 function default_1(_a) {
     var sourceDir = _a.sourceDir, markdown = _a.markdown;
     var isProd = process.env.NODE_ENV === "production";
-    var outDir = resolvePaths_1.atRoot("dist");
+    var outDir = path.resolve(process.cwd(), "dist");
+    console.log(outDir);
     var config = new Config();
     config
+        .context(resolvePaths_1.atRoot())
         .mode(isProd ? "production" : "development")
         .output.path(outDir)
         .filename(isProd ? "assets/js/[name].[chunkhash:8].js" : "assets/js/[name].js");
@@ -16,6 +20,8 @@ function default_1(_a) {
     if (!isProd) {
         config.devtool("cheap-module-eval-source-map");
     }
+    var absoluteNodeModulePath = resolvePaths_1.atRoot("node_modules");
+    console.log(absoluteNodeModulePath);
     config.resolve.alias
         .set("lib", resolvePaths_1.atLib())
         .set("@", resolvePaths_1.atApp())
@@ -25,7 +31,9 @@ function default_1(_a) {
         .end();
     config
         .plugin("html")
-        .use(require("html-webpack-plugin"), [{ template: resolvePaths_1.atApp("index.html") }]);
+        .use(require("html-webpack-plugin"), [
+        { template: resolvePaths_1.atApp("index.template.html") }
+    ]);
     if (isProd) {
         config.plugin("extract-css").use(ExtractCss, [
             {
@@ -51,10 +59,13 @@ function default_1(_a) {
         });
     }
     else {
-        config
-            .plugin("tscheck")
-            .use(require("fork-ts-checker-webpack-plugin"), [
-            { tsconfig: resolvePaths_1.atApp("tsconfig.json") }
+        config.plugin("tscheck").use(require("fork-ts-checker-webpack-plugin"), [
+            {
+                tsconfig: resolvePaths_1.atApp("tsconfig.json"),
+                compilerOptions: {
+                    typeRoots: [resolvePaths_1.atRoot("node_modules/@types")]
+                }
+            }
         ]);
     }
     config.module
@@ -64,6 +75,7 @@ function default_1(_a) {
         .loader("babel-loader")
         .options({
         babelrc: false,
+        cwd: resolvePaths_1.atRoot(),
         cacheDirectory: true,
         plugins: [
             ["@babel/plugin-proposal-class-properties", { loose: true }],

@@ -37,6 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 exports.__esModule = true;
 var chalk_1 = require("chalk");
 var chokidar = require("chokidar");
+var path = require("path");
 var opn = require("opn");
 var Webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
@@ -49,10 +50,8 @@ function dev(sourceDir, cliOptions) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    console.log('\nExtracting site metadata...');
-                    return [4 /*yield*/, prepare_1["default"](sourceDir)
-                        // setup watchers to update options and dynamically generated files
-                    ];
+                    console.log("\nExtracting site metadata...");
+                    return [4 /*yield*/, prepare_1["default"](sourceDir)];
                 case 1:
                     options = _a.sent();
                     update = function () {
@@ -64,28 +63,30 @@ function dev(sourceDir, cliOptions) {
                             console.error(chalk_1["default"].red(err.stack), false);
                         });
                     };
-                    pagesWatcher = chokidar.watch([
-                        '**/*.md'
-                    ], {
+                    pagesWatcher = chokidar.watch(["**/*.md"], {
                         cwd: sourceDir,
                         ignoreInitial: true
                     });
-                    pagesWatcher.on('add', update);
-                    pagesWatcher.on('change', update);
-                    pagesWatcher.on('unlink', update);
-                    pagesWatcher.on('addDir', update);
-                    pagesWatcher.on('unlinkDir', update);
+                    pagesWatcher.on("add", update);
+                    pagesWatcher.on("change", update);
+                    pagesWatcher.on("unlink", update);
+                    pagesWatcher.on("addDir", update);
+                    pagesWatcher.on("unlinkDir", update);
                     configChain = createClientConfig_1["default"](options);
                     config = configChain.toConfig();
-                    host = '0.0.0.0';
+                    host = "0.0.0.0";
                     port = 8080;
                     devServerOptions = {
                         host: host,
                         hot: true,
+                        historyApiFallback: {
+                            disableDotRule: true
+                        },
                         port: port,
                         stats: {
                             colors: true
-                        }
+                        },
+                        contentBase: path.join(__dirname, "public")
                     };
                     WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
                     compiler = Webpack(config);
@@ -93,6 +94,7 @@ function dev(sourceDir, cliOptions) {
                     return [4 /*yield*/, server.listen(port, host)];
                 case 2:
                     _a.sent();
+                    // opn remove
                     opn("http://" + host + ":" + port);
                     return [2 /*return*/];
             }

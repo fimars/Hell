@@ -1,17 +1,18 @@
 {
-  "bin": "build/bin/index.js",
-  "name": "helenae",
-  "version": "1.0.0",
-  "description": "theme",
+  "bin": "build/bin/hell.js",
+  "name": "@he11/core",
+  "version": "0.2.0",
+  "description": "A doc tool base TypeScript and React",
+  "main": "build/bin/hell.js",
   "scripts": {
     "dev": "run-s compile:core dev:run",
     "lint": "lint-staged",
     "prod:docs": "run-s compile:core prod:run",
     "compile:core": "tsc -p ./lib/tsconfig.core.json",
+    "compile:watch": "tsc -p ./lib/tsconfig.core.json -w",
     "dev:run": "node build/bin/hell dev ./docs",
     "prod:run": "node build/bin/hell prod ./docs"
   },
-  "main": "src/index.js",
   "repository": "https://github.com/fimars/Helenae.scss",
   "author": "fimars <foru.fy@gmail.com>",
   "license": "MIT",

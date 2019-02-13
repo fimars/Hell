@@ -1,8 +1,8 @@
-import * as React from 'react';
-import * as Hell from '../types';
+import * as React from "react";
+import * as Hell from "../types";
 
-import { Link } from 'react-router-dom';
-import Heading from '../components/Heading';
+import { Link } from "react-router-dom";
+import Heading from "../components/Heading";
 
 class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
   public render() {
@@ -16,15 +16,11 @@ class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
     });
   }
   private getLinkProps({ id, text }: Hell.Heading) {
-    const selected = id === this.context.activeId;
+    const clearText = text.replace(/\(.*\)/, "");
     return {
-      className: selected ? 'selected' : '',
-      dangerouslySetInnerHTML: { __html: text },
-      onClick: () => {
-        this.context.updateActiveId(id);
-      },
-      replace: selected,
-      to: '?id=' + encodeURIComponent(id)
+      dangerouslySetInnerHTML: { __html: clearText },
+      replace: false,
+      to: "#" + encodeURIComponent(id)
     };
   }
 }

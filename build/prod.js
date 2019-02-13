@@ -45,8 +45,8 @@ function prod(sourceDir, cliOptions) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    process.env.NODE_ENV = 'production';
-                    console.log('\nExtracting site metadata...');
+                    process.env.NODE_ENV = "production";
+                    console.log("\nExtracting site metadata...");
                     return [4 /*yield*/, prepare_1["default"](sourceDir)];
                 case 1:
                     options = _a.sent();
@@ -54,10 +54,11 @@ function prod(sourceDir, cliOptions) {
                     config = configChain.toConfig();
                     compiler = Webpack(config);
                     compiler.run(function (err, stats) {
+                        console.log(stats.compilation.modules, stats.compilation.compiler.options);
                         if (err) {
                             console.error(err);
                         }
-                        console.log('\nProd site done. serve the /dist make a try.');
+                        console.log("\nProd site done. serve the /dist make a try.");
                     });
                     return [2 /*return*/];
             }

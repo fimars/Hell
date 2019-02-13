@@ -15,6 +15,7 @@ async function prod(sourceDir, cliOptions = {}) {
   const compiler = Webpack(config);
 
   compiler.run((err, stats) => {
+    console.log(stats.compilation.modules, stats.compilation.compiler.options);
     if (err) {
       console.error(err);
     }
