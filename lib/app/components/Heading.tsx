@@ -6,6 +6,12 @@ export default class Heading extends React.PureComponent<
 > {
   public render() {
     const { level, children } = this.props;
-    return <div className={`nav-label-item level-${level}`}>{children}</div>;
+    return (
+      <div
+        className={`nav-label-item level-${level} ${children && "has-child"}`}
+      >
+        {children}
+      </div>
+    );
   }
 }
