@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export default class PageLayout extends React.PureComponent<{
   Side: React.ReactNode;
@@ -12,7 +12,7 @@ export default class PageLayout extends React.PureComponent<{
           <div className="column-2">
             <div className="nav section">{Side}</div>
           </div>
-          <div className="column-8">{Content}</div>
+          <div className="column-10">{Content}</div>
         </div>
       </div>
     );

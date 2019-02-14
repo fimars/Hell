@@ -39,6 +39,7 @@ var fs = require("fs-extra");
 var globby = require("globby");
 var marked = require("marked");
 var path = require("path");
+var merge = require("lodash.merge");
 var index_1 = require("../util/index");
 function resolveOptions(sourceDir) {
     return __awaiter(this, void 0, void 0, function () {
@@ -47,7 +48,7 @@ function resolveOptions(sourceDir) {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    patterns = ["**/*.md", "!.vuepress", "!node_modules"];
+                    patterns = ["**/*.md", "!node_modules"];
                     return [4 /*yield*/, globby(patterns, { cwd: sourceDir })];
                 case 1:
                     pageFiles = _a.sent();
@@ -88,16 +89,27 @@ function resolveOptions(sourceDir) {
                     pagesData = _a.sent();
                     siteData = {
                         pages: pagesData,
-                        title: "siteTitle"
+                        title: "Welcome To HELL"
                     };
-                    options = {
+                    options = mergeCustomOption({
                         markdown: marked,
                         siteData: siteData,
                         sourceDir: sourceDir
-                    };
+                    });
                     return [2 /*return*/, options];
             }
         });
     });
 }
 exports["default"] = resolveOptions;
+function mergeCustomOption(options) {
+    var sourceDir = options.sourceDir;
+    var configPath = path.resolve(sourceDir, "hell.config.js");
+    if (fs.existsSync(configPath)) {
+        var customOptions = require(configPath);
+        return merge(options, customOptions);
+    }
+    else {
+        return options;
+    }
+}

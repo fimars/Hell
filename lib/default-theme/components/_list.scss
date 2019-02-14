@@ -16,6 +16,10 @@
     color: $typo-dark;
   }
 
+  &.level-3 {
+    padding-left: 12px;
+  }
+
   &.level-3::before {
     color: $typo-dark;
     content: '-';

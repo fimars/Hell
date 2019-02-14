@@ -2,4 +2,5 @@
   flex: 0 0 percentage($size / $columns);
   // `max-width` 避免内容超出
   max-width: percentage($size / $columns);
+  position: relative;
 }

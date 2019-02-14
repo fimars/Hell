@@ -1,7 +1,6 @@
 import Webpack = require("webpack");
 
 import prepare from "./prepare";
-import { atRoot } from "./util/resolvePaths";
 import createClientConfig from "./webpack/createClientConfig";
 
 async function prod(sourceDir, cliOptions = {}) {

@@ -2,6 +2,7 @@ import fs = require("fs-extra");
 import globby = require("globby");
 import marked = require("marked");
 import path = require("path");
+import merge = require("lodash.merge");
 
 import { extractHeaders, parseFrontmatter } from "../util/index";
 
@@ -15,7 +16,7 @@ interface PageData {
 }
 
 export default async function resolveOptions(sourceDir) {
-  const patterns = ["**/*.md", "!.vuepress", "!node_modules"];
+  const patterns = ["**/*.md", "!node_modules"];
   const pageFiles = await globby(patterns, { cwd: sourceDir });
 
   const pagesData = await Promise.all(
@@ -51,14 +52,25 @@ export default async function resolveOptions(sourceDir) {
 
   const siteData = {
     pages: pagesData,
-    title: "siteTitle"
+    title: "Welcome To HELL"
   };
 
-  const options = {
+  const options = mergeCustomOption({
     markdown: marked,
     siteData,
     sourceDir
-  };
+  });
 
   return options;
+}
+
+function mergeCustomOption(options) {
+  const { sourceDir } = options;
+  const configPath = path.resolve(sourceDir, "hell.config.js");
+  if (fs.existsSync(configPath)) {
+    const customOptions = require(configPath);
+    return merge(options, customOptions);
+  } else {
+    return options;
+  }
 }

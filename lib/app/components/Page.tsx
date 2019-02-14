@@ -7,8 +7,6 @@ import PageLayout from "../components/PageLayout";
 import Toc from "../components/Toc";
 import NotFound from "./NotFound";
 
-const IndexName = siteData.pages.length ? siteData.pages[0].file : "";
-
 export type PageProps = RouteComponentProps<any>;
 export interface PageState {
   docContent: string;
@@ -21,9 +19,16 @@ export default class Page extends React.Component<PageProps, PageState> {
   public componentDidMount() {
     const { history } = this.props;
     const currentPage = this.findCurrentPage();
+    // Set Index
     if (!currentPage) {
+      const getFirstPage = () =>
+        siteData.pages.length ? siteData.pages[0].file : "";
+      const IndexName = siteData.index || getFirstPage();
       history.replace(IndexName);
     }
+
+    // Set SiteTitle
+    document.title = siteData.title;
   }
   public render(): JSX.Element {
     const currentPage = this.findCurrentPage();

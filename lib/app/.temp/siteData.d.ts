@@ -1,1 +1,5 @@
-export const siteData: { pages: Array<any> };
+export const siteData: {
+  index: string;
+  pages: Array<any>;
+  title: string;
+};
