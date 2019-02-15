@@ -3,8 +3,9 @@
     "outDir": "../build",
     "module": "commonjs",
     "lib": ["es6"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "noImplicitAny": true
   },
   "exclude": ["app", "default-theme"],
-  "files": ["bin/hell.ts", "./dev.ts", "./prod.ts"]
+  "files": ["bin/hell.ts", "dev.ts", "prod.ts"]
 }

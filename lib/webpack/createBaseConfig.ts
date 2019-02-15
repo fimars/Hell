@@ -1,11 +1,10 @@
 import path = require("path");
-import ExtractCss = require("mini-css-extract-plugin");
 import Config = require("webpack-chain");
 
 import { atApp, atLib, atRoot } from "../util/resolvePaths";
 
 // TODO: resolveOptions Type
-export default function({ sourceDir, markdown }) {
+export default function({ sourceDir }: { sourceDir: string }) {
   const isProd = process.env.NODE_ENV === "production";
   const outDir = path.resolve(process.cwd(), "dist");
 
@@ -43,7 +42,7 @@ export default function({ sourceDir, markdown }) {
       { template: atApp("index.template.html") }
     ]);
   if (isProd) {
-    config.plugin("extract-css").use(ExtractCss, [
+    config.plugin("extract-css").use(require("mini-css-extract-plugin"), [
       {
         filename: "assets/css/styles.[chunkhash:8].css"
       }
@@ -60,7 +59,7 @@ export default function({ sourceDir, markdown }) {
           enforce: true,
           name: "styles",
           // necessary to ensure async chunks are also extracted
-          test: m => {
+          test: (m: { type: string }) => {
             return /css\/mini-extract/.test(m.type);
           }
         }
@@ -102,7 +101,9 @@ export default function({ sourceDir, markdown }) {
 
   const styleRule = config.module.rule("scss").test(/\.scss$/);
   if (isProd) {
-    styleRule.use("extract-css-loader").loader(ExtractCss.loader);
+    styleRule
+      .use("extract-css-loader")
+      .loader(require.resolve("mini-css-extract-plugin/src/loader"));
   } else {
     styleRule.use("style-loader").loader("style-loader");
   }

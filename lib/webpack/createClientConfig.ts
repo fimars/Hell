@@ -2,7 +2,7 @@ import { atApp } from "../util/resolvePaths";
 import Config = require("webpack-chain");
 import createBaseConfig from "./createBaseConfig";
 
-export default function(ctx): Config {
+export default function(ctx: any): Config {
   const config = createBaseConfig(ctx);
 
   config.entry("app").add(atApp("app.ts"));
