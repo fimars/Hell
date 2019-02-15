@@ -3,7 +3,7 @@ import Webpack = require("webpack");
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 
-async function prod(sourceDir, cliOptions = {}) {
+async function prod(sourceDir: string, cliOptions = {}) {
   process.env.NODE_ENV = "production";
 
   console.log("\nExtracting site metadata...");

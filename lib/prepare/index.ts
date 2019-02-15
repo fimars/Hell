@@ -1,7 +1,7 @@
 import resolveOptions from "./resolveOptions";
 import { writeTemp } from "./util";
 
-export default async function prepare(sourceDir) {
+export default async function prepare(sourceDir: string) {
   const options = await resolveOptions(sourceDir);
 
   await writeTemp(

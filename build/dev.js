@@ -55,10 +55,6 @@ function dev(sourceDir, cliOptions) {
                 case 1:
                     options = _a.sent();
                     update = function () {
-                        var args = [];
-                        for (var _i = 0; _i < arguments.length; _i++) {
-                            args[_i] = arguments[_i];
-                        }
                         prepare_1["default"](sourceDir)["catch"](function (err) {
                             console.error(chalk_1["default"].red(err.stack), false);
                         });

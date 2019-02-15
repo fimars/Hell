@@ -3,7 +3,6 @@ exports.__esModule = true;
 var matter = require("gray-matter");
 var toml = require("toml");
 function extractHeaders(content, include, lexer) {
-    if (include === void 0) { include = []; }
     var tokens = lexer(content);
     var headerTokens = tokens.filter(function (_a) {
         var type = _a.type;

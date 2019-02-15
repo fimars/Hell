@@ -1,12 +1,11 @@
 "use strict";
 exports.__esModule = true;
 var path = require("path");
-var ExtractCss = require("mini-css-extract-plugin");
 var Config = require("webpack-chain");
 var resolvePaths_1 = require("../util/resolvePaths");
 // TODO: resolveOptions Type
 function default_1(_a) {
-    var sourceDir = _a.sourceDir, markdown = _a.markdown;
+    var sourceDir = _a.sourceDir;
     var isProd = process.env.NODE_ENV === "production";
     var outDir = path.resolve(process.cwd(), "dist");
     console.log(outDir);
@@ -35,7 +34,7 @@ function default_1(_a) {
         { template: resolvePaths_1.atApp("index.template.html") }
     ]);
     if (isProd) {
-        config.plugin("extract-css").use(ExtractCss, [
+        config.plugin("extract-css").use(require("mini-css-extract-plugin"), [
             {
                 filename: "assets/css/styles.[chunkhash:8].css"
             }
@@ -92,7 +91,9 @@ function default_1(_a) {
     });
     var styleRule = config.module.rule("scss").test(/\.scss$/);
     if (isProd) {
-        styleRule.use("extract-css-loader").loader(ExtractCss.loader);
+        styleRule
+            .use("extract-css-loader")
+            .loader(require.resolve("mini-css-extract-plugin/src/loader"));
     }
     else {
         styleRule.use("style-loader").loader("style-loader");

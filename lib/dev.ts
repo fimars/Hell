@@ -8,12 +8,12 @@ import WebpackDevServer = require("webpack-dev-server");
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 
-async function dev(sourceDir, cliOptions = {}) {
+async function dev(sourceDir: string, cliOptions = {}) {
   console.log("\nExtracting site metadata...");
   const options = await prepare(sourceDir);
 
   // setup watchers to update options and dynamically generated files
-  const update = (...args) => {
+  const update = () => {
     prepare(sourceDir).catch(err => {
       console.error(chalk.red(err.stack), false);
     });

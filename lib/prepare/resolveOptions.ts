@@ -15,7 +15,17 @@ interface PageData {
   excerpt?: any;
 }
 
-export default async function resolveOptions(sourceDir) {
+interface HellOptions {
+  siteData: {
+    title?: string;
+    index?: string;
+    pages: PageData[];
+  };
+  markdown: any;
+  sourceDir: string;
+}
+
+export default async function resolveOptions(sourceDir: string) {
   const patterns = ["**/*.md", "!node_modules"];
   const pageFiles = await globby(patterns, { cwd: sourceDir });
 
@@ -64,7 +74,7 @@ export default async function resolveOptions(sourceDir) {
   return options;
 }
 
-function mergeCustomOption(options) {
+function mergeCustomOption(options: HellOptions) {
   const { sourceDir } = options;
   const configPath = path.resolve(sourceDir, "hell.config.js");
   if (fs.existsSync(configPath)) {
