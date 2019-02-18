@@ -10,3 +10,7 @@ export async function writeTemp(file: string, content: string | Buffer) {
     tempCache.set(file, content);
   }
 }
+
+export function isIndexFile(file: string) {
+  return /^(index|readme)\.md$/i.test(file);
+}

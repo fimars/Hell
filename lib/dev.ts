@@ -37,8 +37,6 @@ async function dev(sourceDir: string, cliOptions = {}) {
 
   const host = "0.0.0.0";
   const port = 8080;
-
-  // const nonExistentDir = path.resolve(__dirname, "non-existent");
   const devServerOptions = {
     host,
     hot: true,

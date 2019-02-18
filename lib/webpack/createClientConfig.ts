@@ -1,8 +1,10 @@
-import { atApp } from "../util/resolvePaths";
 import Config = require("webpack-chain");
+
+import { atApp } from "../util/resolvePaths";
+import { HellOptions } from "../prepare/resolveOptions";
 import createBaseConfig from "./createBaseConfig";
 
-export default function(ctx: any): Config {
+export default function(ctx: HellOptions): Config {
   const config = createBaseConfig(ctx);
 
   config.entry("app").add(atApp("app.ts"));

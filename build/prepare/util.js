@@ -57,3 +57,7 @@ function writeTemp(file, content) {
     });
 }
 exports.writeTemp = writeTemp;
+function isIndexFile(file) {
+    return /^(index|readme)\.md$/i.test(file);
+}
+exports.isIndexFile = isIndexFile;
