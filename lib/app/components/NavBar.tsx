@@ -15,8 +15,8 @@ const NavStyle = {
 export default () => (
   <div style={NavBarStyle}>
     {siteData.pages.map((page, idx) => (
-      <Link key={idx} to={page.file} style={NavStyle}>
-        <div>{page.file}</div>
+      <Link key={idx} to={page.path} style={NavStyle}>
+        <div>{page.path === "/" ? "HOME" : page.path.slice(1)}</div>
       </Link>
     ))}
   </div>

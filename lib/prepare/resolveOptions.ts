@@ -1,86 +1,81 @@
-import fs = require("fs-extra");
 import globby = require("globby");
-import marked = require("marked");
-import path = require("path");
-import merge = require("lodash.merge");
 
-import { extractHeaders, parseFrontmatter } from "../util/index";
+import { existsSync, readFileSync } from "fs-extra";
+import { resolve } from "path";
+import { parseFrontmatter } from "../util";
+import { isIndexFile } from "./util";
 
 interface PageData {
-  file: string;
-  key: string;
   path: string;
-  headers?: any;
-  frontmatter?: any;
-  excerpt?: any;
-}
-
-interface HellOptions {
-  siteData: {
-    title?: string;
-    index?: string;
-    pages: PageData[];
+  title?: string;
+  frontmatter?: {
+    [key: string]: string;
   };
-  markdown: any;
+}
+interface SiteConfig {
+  title: string;
+  description: string;
+  dest: string;
+  base: string;
+}
+export interface SiteData {
+  title: string;
+  description: string;
+  base: string;
+  pages: PageData[];
+}
+export interface HellOptions {
+  siteConfig: SiteConfig;
   sourceDir: string;
+  outDir: string;
+  publicPath: string;
+  pageFiles: string[];
+  siteData?: SiteData;
 }
 
 export default async function resolveOptions(sourceDir: string) {
-  const patterns = ["**/*.md", "!node_modules"];
-  const pageFiles = await globby(patterns, { cwd: sourceDir });
+  const configPath = resolve(sourceDir, "hell.config.js");
+  const siteConfig: SiteConfig = existsSync(configPath)
+    ? require(configPath)
+    : {};
 
-  const pagesData = await Promise.all(
-    pageFiles.map(async file => {
-      const filepath = path.resolve(sourceDir, file);
-      const data: PageData = {
-        file, // TODO: remove this attr after server side render the router file.
-        key:
-          "v-" +
-          Math.random()
-            .toString(16)
-            .slice(2),
-        path: filepath
-      };
-
-      const content = await fs.readFile(filepath, "utf-8");
-      const frontmatter = parseFrontmatter(content);
-
-      const headers = extractHeaders(frontmatter.content, [], marked.lexer);
-      if (headers.length) {
-        data.headers = headers;
-      }
-      if (Object.keys(frontmatter.data).length) {
-        data.frontmatter = frontmatter.data;
-      }
-      // TODO: 之后放到前端进行处理，支持更多的自定义功能。
-      if (frontmatter.content) {
-        data.excerpt = marked(frontmatter.content);
-      }
-      return data;
-    })
-  );
-
-  const siteData = {
-    pages: pagesData,
-    title: "Welcome To HELL"
+  const options: HellOptions = {
+    siteConfig,
+    sourceDir,
+    outDir: siteConfig.dest
+      ? resolve(siteConfig.dest)
+      : resolve(sourceDir, "dist"),
+    publicPath: siteConfig.base || "/public",
+    pageFiles: await globby(["**/*.md"], { cwd: sourceDir })
   };
 
-  const options = mergeCustomOption({
-    markdown: marked,
-    siteData,
-    sourceDir
+  const pagesData = options.pageFiles.map(file => {
+    const urlPath = isIndexFile(file) ? "/" : `/${file.replace(/\.md$/, "")}`;
+    const content = readFileSync(resolve(sourceDir, file), "utf-8");
+    const data: PageData = {
+      path: urlPath
+    };
+
+    // extract yaml frontmatter
+    const frontmatter = parseFrontmatter(content);
+    // infer title
+    const titleMath = frontmatter.content.trim().match(/^#+\s+(.*)/);
+    if (titleMath) {
+      data.title = titleMath[1];
+    }
+    delete frontmatter.content;
+    if (Object.keys(frontmatter.data).length) {
+      data.frontmatter = frontmatter.data;
+    }
+    return data;
   });
 
-  return options;
-}
+  options.siteData = {
+    title: siteConfig.title,
+    description: siteConfig.description,
+    base: siteConfig.base || "/",
+    pages: pagesData
+  };
 
-function mergeCustomOption(options: HellOptions) {
-  const { sourceDir } = options;
-  const configPath = path.resolve(sourceDir, "hell.config.js");
-  if (fs.existsSync(configPath)) {
-    const customOptions = require(configPath);
-    return merge(options, customOptions);
-  } else {
-    return options;
-  }
+  return options;
 }

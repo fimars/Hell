@@ -35,18 +35,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var resolveOptions_1 = require("./resolveOptions");
 var util_1 = require("./util");
+var resolveOptions_1 = require("./resolveOptions");
+var genRegistrationFile_1 = require("./genRegistrationFile");
 function prepare(sourceDir) {
     return __awaiter(this, void 0, void 0, function () {
-        var options;
+        var options, componentCode, dataCode;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, resolveOptions_1["default"](sourceDir)];
                 case 1:
                     options = _a.sent();
-                    return [4 /*yield*/, util_1.writeTemp("siteData.js", "export const siteData = " + JSON.stringify(options.siteData, null, 2))];
+                    return [4 /*yield*/, genRegistrationFile_1["default"](options)];
                 case 2:
+                    componentCode = _a.sent();
+                    dataCode = "export const siteData = " + JSON.stringify(options.siteData, null, 2);
+                    return [4 /*yield*/, util_1.writeTemp("siteData.js", [componentCode, dataCode].join("\n\n"))];
+                case 3:
                     _a.sent();
                     return [2 /*return*/, options];
             }

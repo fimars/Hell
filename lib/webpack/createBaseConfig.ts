@@ -1,14 +1,13 @@
-import path = require("path");
 import Config = require("webpack-chain");
+import markdown = require("marked");
+import "./markdownLoader"; // loader hacker
 
 import { atApp, atLib, atRoot } from "../util/resolvePaths";
+import { HellOptions } from "../prepare/resolveOptions";
 
-// TODO: resolveOptions Type
-export default function({ sourceDir }: { sourceDir: string }) {
+export default function(ctx: HellOptions) {
   const isProd = process.env.NODE_ENV === "production";
-  const outDir = path.resolve(process.cwd(), "dist");
-
-  console.log(outDir);
+  const outDir = ctx.siteConfig.dest;
 
   const config = new Config();
 
@@ -18,8 +17,8 @@ export default function({ sourceDir }: { sourceDir: string }) {
     .output.path(outDir)
     .filename(
       isProd ? "assets/js/[name].[chunkhash:8].js" : "assets/js/[name].js"
-    );
-  // .publicPath()
+    )
+    .publicPath(ctx.siteConfig.base);
 
   if (!isProd) {
     config.devtool("cheap-module-eval-source-map");
@@ -76,34 +75,48 @@ export default function({ sourceDir }: { sourceDir: string }) {
     ]);
   }
 
-  config.module
-    .rule("typescript")
-    .test(/\.tsx?$/)
-    .use("babel")
-    .loader("babel-loader")
-    .options({
-      babelrc: false,
-      cwd: atRoot(),
-      cacheDirectory: true,
-      plugins: [
-        ["@babel/plugin-proposal-class-properties", { loose: true }],
-        "react-hot-loader/babel"
-      ],
-      presets: [
-        [
-          "@babel/preset-env",
-          { targets: { browsers: "last 2 versions" } } // or whatever your project requires
+  const mdRule = config.module.rule("markdown").test(/\.md?$/);
+
+  const tsRule = config.module.rule("typescript").test(/\.tsx?$/);
+
+  [mdRule, tsRule].forEach(rule =>
+    rule
+      .use("babel")
+      .loader("babel-loader")
+      .options({
+        babelrc: false,
+        cwd: atRoot(),
+        cacheDirectory: true,
+        plugins: [
+          ["@babel/plugin-proposal-class-properties", { loose: true }],
+          "react-hot-loader/babel"
         ],
-        "@babel/preset-react",
-        "@babel/preset-typescript"
-      ]
-    });
+        presets: [
+          [
+            "@babel/preset-env",
+            { targets: { browsers: "last 2 versions" } } // or whatever your project requires
+          ],
+          "@babel/preset-react",
+          "@babel/preset-typescript"
+        ]
+      })
+      .end()
+  );
+
+  // handle the markdown part
+  mdRule
+    .use("easy-markdown-loader")
+    .loader(require.resolve("./markdownLoader"))
+    .options({
+      markdown
+    })
+    .end();
 
   const styleRule = config.module.rule("scss").test(/\.scss$/);
   if (isProd) {
     styleRule
       .use("extract-css-loader")
-      .loader(require.resolve("mini-css-extract-plugin/src/loader"));
+      .loader(require.resolve("mini-css-extract-plugin/dist/loader"));
   } else {
     styleRule.use("style-loader").loader("style-loader");
   }

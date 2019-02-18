@@ -35,61 +35,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var globby = require("globby");
-var fs_extra_1 = require("fs-extra");
 var path_1 = require("path");
-var util_1 = require("../util");
-var util_2 = require("./util");
-function resolveOptions(sourceDir) {
+var util_1 = require("./util");
+function genRegistrationFile(_a) {
+    var sourceDir = _a.sourceDir, pageFiles = _a.pageFiles;
     return __awaiter(this, void 0, void 0, function () {
-        var configPath, siteConfig, options, _a, pagesData;
+        function genImport(file) {
+            var name = toComponentName(file);
+            var absolutePath = path_1.resolve(sourceDir, file);
+            var code = name + ": lazy(() => import(" + JSON.stringify(absolutePath) + "))";
+            return code;
+        }
         return __generator(this, function (_b) {
-            switch (_b.label) {
-                case 0:
-                    configPath = path_1.resolve(sourceDir, "hell.config.js");
-                    siteConfig = fs_extra_1.existsSync(configPath)
-                        ? require(configPath)
-                        : {};
-                    _a = {
-                        siteConfig: siteConfig,
-                        sourceDir: sourceDir,
-                        outDir: siteConfig.dest
-                            ? path_1.resolve(siteConfig.dest)
-                            : path_1.resolve(sourceDir, "dist"),
-                        publicPath: siteConfig.base || "/public"
-                    };
-                    return [4 /*yield*/, globby(["**/*.md"], { cwd: sourceDir })];
-                case 1:
-                    options = (_a.pageFiles = _b.sent(),
-                        _a);
-                    pagesData = options.pageFiles.map(function (file) {
-                        var urlPath = util_2.isIndexFile(file) ? "/" : "/" + file.replace(/\.md$/, "");
-                        var content = fs_extra_1.readFileSync(path_1.resolve(sourceDir, file), "utf-8");
-                        var data = {
-                            path: urlPath
-                        };
-                        // extract yaml frontmatter
-                        var frontmatter = util_1.parseFrontmatter(content);
-                        // infer title
-                        var titleMath = frontmatter.content.trim().match(/^#+\s+(.*)/);
-                        if (titleMath) {
-                            data.title = titleMath[1];
-                        }
-                        delete frontmatter.content;
-                        if (Object.keys(frontmatter.data).length) {
-                            data.frontmatter = frontmatter.data;
-                        }
-                        return data;
-                    });
-                    options.siteData = {
-                        title: siteConfig.title,
-                        description: siteConfig.description,
-                        base: siteConfig.base || "/",
-                        pages: pagesData
-                    };
-                    return [2 /*return*/, options];
-            }
+            return [2 /*return*/, ("import React, { lazy } from 'react'\n" +
+                    ("export const PageComponents = {\n " + pageFiles
+                        .map(genImport)
+                        .join(",\n") + " \n};"))];
         });
     });
 }
-exports["default"] = resolveOptions;
+exports["default"] = genRegistrationFile;
+function toComponentName(file) {
+    var isIndex = util_1.isIndexFile(file);
+    var normalize = function (file) {
+        return "Page" +
+            file
+                .replace(/\.md$/, "")
+                .replace(/\/|\\/g, " ")
+                .split(" ")
+                .map(function (w) { return w[0].toUpperCase() + w.slice(1); })
+                .join("");
+    };
+    var normalizedName = isIndex ? "Index" : normalize(file);
+    return normalizedName;
+}
