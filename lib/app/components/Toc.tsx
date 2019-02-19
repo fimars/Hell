@@ -20,7 +20,7 @@ class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
     return {
       dangerouslySetInnerHTML: { __html: clearText },
       replace: false,
-      to: "#" + encodeURIComponent(id)
+      to: "#" + encodeURIComponent(clearText)
     };
   }
 }

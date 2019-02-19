@@ -1,4 +1,5 @@
 import Config = require("webpack-chain");
+import ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 import markdown = require("marked");
 import "./markdownLoader"; // loader hacker
 
@@ -65,12 +66,13 @@ export default function(ctx: HellOptions) {
       }
     });
   } else {
-    config.plugin("tscheck").use(require("fork-ts-checker-webpack-plugin"), [
+    config.plugin("tscheck").use(ForkTsCheckerWebpackPlugin, [
       {
         tsconfig: atApp("tsconfig.json"),
         compilerOptions: {
           typeRoots: [atRoot("node_modules/@types")]
-        }
+        },
+        workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE
       }
     ]);
   }

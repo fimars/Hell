@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var Config = require("webpack-chain");
+var ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 var markdown = require("marked");
 require("./markdownLoader"); // loader hacker
 var resolvePaths_1 = require("../util/resolvePaths");
@@ -56,12 +57,13 @@ function default_1(ctx) {
         });
     }
     else {
-        config.plugin("tscheck").use(require("fork-ts-checker-webpack-plugin"), [
+        config.plugin("tscheck").use(ForkTsCheckerWebpackPlugin, [
             {
                 tsconfig: resolvePaths_1.atApp("tsconfig.json"),
                 compilerOptions: {
                     typeRoots: [resolvePaths_1.atRoot("node_modules/@types")]
-                }
+                },
+                workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE
             }
         ]);
     }
