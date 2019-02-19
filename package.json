@@ -1,7 +1,7 @@
 {
   "bin": "build/bin/hell.js",
   "name": "@he11/core",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A doc tool base TypeScript and React",
   "main": "build/bin/hell.js",
   "scripts": {
