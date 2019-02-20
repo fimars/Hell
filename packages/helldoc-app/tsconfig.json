@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "sourceMap": true,
+    "jsx": "react",
+    "lib": ["dom"],
+    "target": "es5"
+  }
+}

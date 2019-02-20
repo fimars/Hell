@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.3](https://github.com/fimars/hell/releases/tag/v0.2.3) - 2019-02-20
+
+### Fixed
+
+- fix some app node_modules resolve error.
+
+### Changed
+
+- Use lerna hold the project now.
+
 ## [0.2.2](https://github.com/fimars/hell/releases/tag/v0.2.2) - 2019-02-19
 
 ### Added
