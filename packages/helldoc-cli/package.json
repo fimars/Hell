@@ -1,0 +1,25 @@
+{
+  "bin": "build/index.js",
+  "name": "@helldoc/cli",
+  "version": "0.2.3",
+  "description": "helldoc CLI",
+	"author": "fimars <foru.fy@gmail.com>",
+	"repository": "https://github.com/fimars/hell",
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+  },
+  "scripts": {
+    "tsc": "tsc"
+  },
+	"keywords": [
+		"hell",
+		"doc",
+		"react",
+		"typescript"
+	],
+	"dependencies": {
+		"@helldoc/core": "^1.0.0",
+		"commander": "^2.19.0"
+	}
+}
