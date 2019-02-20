@@ -1,7 +1,7 @@
 {
 	"bin": "build/index.js",
 	"name": "@helldoc/cli",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"description": "helldoc CLI",
 	"author": "fimars <foru.fy@gmail.com>",
 	"repository": "https://github.com/fimars/hell",
@@ -19,7 +19,7 @@
 		"typescript"
 	],
 	"dependencies": {
-		"@helldoc/core": "^0.2.4",
+		"@helldoc/core": "^0.2.5",
 		"commander": "^2.19.0"
 	}
 }
