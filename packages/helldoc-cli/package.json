@@ -19,7 +19,7 @@
 		"typescript"
 	],
 	"dependencies": {
-		"@helldoc/core": "^1.0.0",
+		"@helldoc/core": "^0.2.3",
 		"commander": "^2.19.0"
 	}
 }

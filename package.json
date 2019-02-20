@@ -26,7 +26,7 @@
   "scripts": {
     "bootstrap": "lerna bootstrap && yarn tsc",
     "dev": "node packages/helldoc-cli/build/index dev docs/",
-    "lint": "lint-staged",
+    "register-helldoc": "lerna exec --scope @helldoc/cli -- yarn link",
     "tsc": "lerna run tsc"
   },
   "husky": {
