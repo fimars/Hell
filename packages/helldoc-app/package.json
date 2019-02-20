@@ -1,13 +1,13 @@
 {
   "name": "@helldoc/app",
   "version": "0.2.3",
-	"description": "helldoc default app",
+  "description": "helldoc default app",
   "main": "src/index.tsx",
-	"author": "fimars <foru.fy@gmail.com>",
-	"repository": "https://github.com/fimars/hell",
-	"license": "MIT",
-	"publishConfig": {
-		"access": "public"
+  "author": "fimars <foru.fy@gmail.com>",
+  "repository": "https://github.com/fimars/hell",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "helldoc",
