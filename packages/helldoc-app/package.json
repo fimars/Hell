@@ -1,6 +1,6 @@
 {
   "name": "@helldoc/app",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "helldoc default app",
   "main": "src/index.tsx",
   "author": "fimars <foru.fy@gmail.com>",

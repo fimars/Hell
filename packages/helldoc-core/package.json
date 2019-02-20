@@ -1,6 +1,6 @@
 {
   "name": "@helldoc/core",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "helldoc core",
   "main": "build/index.js",
   "author": "fimars <foru.fy@gmail.com>",
@@ -24,7 +24,7 @@
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.1.0",
-    "@helldoc/app": "^0.2.3",
+    "@helldoc/app": "^0.2.4",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
     "chokidar": "^2.0.4",
