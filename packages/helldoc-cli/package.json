@@ -1,8 +1,10 @@
 {
-	"bin": "build/index.js",
-	"name": "@helldoc/cli",
+  "name": "@helldoc/cli",
 	"version": "0.2.5",
 	"description": "helldoc CLI",
+  "bin": {
+    "helldoc": "build/index.js"
+  },
 	"author": "fimars <foru.fy@gmail.com>",
 	"repository": "https://github.com/fimars/hell",
 	"license": "MIT",
