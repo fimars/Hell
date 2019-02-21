@@ -1,18 +1,25 @@
-# **WIP** hell
+# HellDoc
 
-**Do not use in a production environment**
+Yet another doc tool base TypeScript and React.
 
-用 TypeScript 写的静态文档工具
+**Do not use in a production environment Now.**
 
-## TL;DR
+## Getting Started
+
+Install HellDoc using `[npm](https://www.npmjs.com/)`:
 
 ```bash
-# 通过docs文件夹下的.md文件生成内容
-# CLI 工具后续会完善
-npx @he11/core dev <dir> # 本地服务
-npx @he11/core prod <dir> # 生成静态文件
+npm install @helldoc/cli -g
 ```
+
+Run the things on your docs dir:
+
+```bash
+helldoc dev <your-dir>
+```
+
+Enjoy!
 
 ## License
 
-> 本项目使用 MIT 开源协议
+HellDoc is [MIT licensed](https://github.com/fimars/Hell/blob/master/LICENSE).
