@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.7](https://github.com/fimars/hell/releases/tag/v0.2.7) - 2019-02-21
+
+### Fixed
+
+- fix another node_modules resolve error.
+
 ## [0.2.3](https://github.com/fimars/hell/releases/tag/v0.2.3) - 2019-02-20
 
 ### Fixed
