@@ -6,7 +6,7 @@ Yet another doc tool base TypeScript and React.
 
 ## Getting Started
 
-Install HellDoc using `[npm](https://www.npmjs.com/)`:
+Install HellDoc using [`npm`](https://www.npmjs.com/):
 
 ```bash
 npm install @helldoc/cli -g
