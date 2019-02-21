@@ -1,10 +1,15 @@
 import * as React from "react";
-import * as Hell from "../types";
-
 import { Link } from "react-router-dom";
 import Heading from "../components/Heading";
 
-class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
+export interface IHeading {
+  level: number;
+  text: string;
+  id: string;
+  parent?: string;
+}
+
+class Toc extends React.Component<{ headings: IHeading[] }, {}> {
   public render() {
     const { headings } = this.props;
     return headings.map((heading, idx) => {
@@ -15,7 +20,7 @@ class Toc extends React.Component<{ headings: Hell.Heading[] }, {}> {
       );
     });
   }
-  private getLinkProps({ text }: Hell.Heading) {
+  private getLinkProps({ text }: IHeading) {
     const clearText = text.replace(/\(.*\)/, "");
     return {
       dangerouslySetInnerHTML: { __html: clearText },

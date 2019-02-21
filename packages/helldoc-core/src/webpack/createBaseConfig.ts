@@ -8,7 +8,6 @@ import { HellOptions } from "../prepare/resolveOptions";
 import { resolveAppPath } from "../util";
 
 const contextPath = resolve(__dirname, "../../");
-console.log(contextPath);
 
 export default function(ctx: HellOptions) {
   const isProd = process.env.NODE_ENV === "production";
@@ -29,15 +28,16 @@ export default function(ctx: HellOptions) {
     config.devtool("cheap-module-eval-source-map");
   }
 
+  const modulePaths = getModulePaths();
+
   config.resolve
-    .symlinks(false)
-    .modules.add(resolveAppPath("node_modules"))
-    .add("node_modules")
-    .end()
-    .alias.set("components", resolveAppPath("src/components"))
+    .symlinks(true)
+    .alias.set("components", resolveAppPath("components"))
+    .set("siteData", resolve(ctx.sourceDir, "siteData"))
     .end()
     .extensions.merge([".ts", ".tsx", ".js", ".jsx", ".md", ".scss"])
-    .end();
+    .end()
+    .modules.merge(modulePaths);
 
   config
     .plugin("html")
@@ -72,7 +72,10 @@ export default function(ctx: HellOptions) {
     config.plugin("tscheck").use(ForkTsCheckerWebpackPlugin, [
       {
         tsconfig: resolveAppPath("tsconfig.json"),
-        workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE
+        workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
+        compilerOptions: {
+          typeRoots: modulePaths.map(path => resolve(path, "@types"))
+        }
       }
     ]);
   }
@@ -125,4 +128,8 @@ export default function(ctx: HellOptions) {
   styleRule.use("css-loader").loader("css-loader");
   styleRule.use("sass-loader").loader("sass-loader");
   return config;
+}
+
+function getModulePaths() {
+  return [resolve(process.cwd(), "node_modules")].concat(module.paths);
 }

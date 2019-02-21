@@ -4,6 +4,7 @@ import * as chokidar from "chokidar";
 import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
 import opn = require("opn");
+import portfinder = require("portfinder");
 
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
@@ -36,7 +37,7 @@ async function dev(sourceDir: string) {
   const config = configChain.toConfig();
 
   const host = "0.0.0.0";
-  const port = 8080;
+  const port = await portfinder.getPortPromise();
   const devServerOptions = {
     host,
     hot: true,

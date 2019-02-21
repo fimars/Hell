@@ -13,8 +13,7 @@ async function prod(sourceDir: string) {
   const config = configChain.toConfig();
   const compiler = Webpack(config);
 
-  compiler.run((err, stats) => {
-    console.log(stats.compilation.modules, stats.compilation.compiler.options);
+  compiler.run(err => {
     if (err) {
       console.error(err);
     }

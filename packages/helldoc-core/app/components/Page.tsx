@@ -1,4 +1,4 @@
-import { siteData, PageComponents } from "../.temp/siteData";
+import { siteData, PageComponents } from "siteData";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
 

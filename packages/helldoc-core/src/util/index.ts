@@ -48,6 +48,5 @@ export function parseFrontmatter(content: string) {
 }
 
 export function resolveAppPath(path: string) {
-  const appEntryPath = require.resolve("@helldoc/app");
-  return resolve(appEntryPath, "../../", path);
+  return resolve(__dirname, "../../app/", path);
 }

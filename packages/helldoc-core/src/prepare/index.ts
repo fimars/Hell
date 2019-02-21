@@ -1,6 +1,7 @@
 import { writeTemp } from "./util";
 import resolveOptions from "./resolveOptions";
 import genRegistrationFile from "./genRegistrationFile";
+import { resolve } from "path";
 
 export default async function prepare(sourceDir: string) {
   // 1. options
@@ -15,7 +16,10 @@ export default async function prepare(sourceDir: string) {
     null,
     2
   )}`;
-  await writeTemp("siteData.js", [componentCode, dataCode].join("\n\n"));
+  await writeTemp(
+    resolve(options.sourceDir, "siteData.js"),
+    [componentCode, dataCode].join("\n\n")
+  );
 
   return options;
 }

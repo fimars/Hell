@@ -1,9 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../../tsconfig.json",
   "compilerOptions": {
     "sourceMap": true,
     "jsx": "react",
     "lib": ["dom"],
     "target": "es5"
-  }
+  },
+  "files": ["app.tsx", "site-data.d.ts"]
 }

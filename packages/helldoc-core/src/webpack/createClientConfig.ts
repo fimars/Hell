@@ -7,7 +7,7 @@ import createBaseConfig from "./createBaseConfig";
 export default function(ctx: HellOptions): Config {
   const config = createBaseConfig(ctx);
 
-  config.entry("app").add(resolveAppPath("src/index.tsx"));
+  config.entry("app").add(resolveAppPath("app.tsx"));
 
   if (process.env.NODE_ENV === "production") {
     config

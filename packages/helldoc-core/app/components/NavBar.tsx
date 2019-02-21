@@ -1,4 +1,4 @@
-import { siteData } from "../.temp/siteData";
+import { siteData } from "siteData";
 import * as React from "react";
 import { Link } from "react-router-dom";
 

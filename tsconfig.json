@@ -4,6 +4,7 @@
     "declaration": true,
     "lib": ["esnext"],
     "skipLibCheck": true,
+    "moduleResolution": "node",
     "strict": true,
 
     /* Additional Checks */
@@ -12,9 +13,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "typeRoots": [
-      "node_modules/@types"
-    ]
+    "noFallthroughCasesInSwitch": true
   }
 }
