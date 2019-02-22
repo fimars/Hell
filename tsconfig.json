@@ -14,5 +14,6 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true
-  }
+  },
+  "exclude": ["**/__tests__/**/*", "**/build/**/*"]
 }
