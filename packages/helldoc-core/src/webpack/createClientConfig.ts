@@ -1,7 +1,7 @@
 import Config = require("webpack-chain");
 
 import { HellOptions } from "../prepare/resolveOptions";
-import { resolveAppPath } from "../util";
+import { resolveAppPath } from "./util";
 import createBaseConfig from "./createBaseConfig";
 
 export default function(ctx: HellOptions): Config {

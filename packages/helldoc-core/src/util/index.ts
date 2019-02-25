@@ -1,13 +1,11 @@
 import * as matter from "gray-matter";
-import * as toml from "toml";
-import { resolve } from "path";
 import { TokensList, Tokens } from "marked";
+import toml = require("toml");
 
 interface HellHeader extends Tokens.Heading {
   id?: string;
   parent?: HellHeader;
 }
-
 export function extractHeaders(content: string, lexer: any) {
   const tokens = lexer(content) as TokensList;
   const headerTokens = tokens.filter(
@@ -23,7 +21,6 @@ export function extractHeaders(content: string, lexer: any) {
   });
   return headers;
 }
-
 function findHeaderParent(depth: number, idx: number, headers: HellHeader[]) {
   for (; idx > 0; idx--) {
     const { depth: prevDepth, id: prevId, parent: prevParent } = headers[idx];
@@ -38,15 +35,11 @@ function findHeaderParent(depth: number, idx: number, headers: HellHeader[]) {
 }
 
 export function parseFrontmatter(content: string) {
-  return matter(content, {
+  return matter(content.trim(), {
     engines: {
       toml: toml.parse.bind(toml)
     },
     excerpt: true,
     excerpt_separator: "<!-- more -->"
   });
-}
-
-export function resolveAppPath(path: string) {
-  return resolve(__dirname, "../../app/", path);
 }

@@ -5,7 +5,7 @@ import markdown = require("marked");
 import "./markdownLoader"; // loader hacker
 
 import { HellOptions } from "../prepare/resolveOptions";
-import { resolveAppPath } from "../util";
+import { resolveAppPath } from "./util";
 
 const contextPath = resolve(__dirname, "../../");
 
