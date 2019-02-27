@@ -9,27 +9,28 @@ export default async function genRegistrationFile({
   function genImport(file: string) {
     const name = toComponentName(file);
     const absolutePath = resolve(sourceDir, file);
-    const code = `${name}: lazy(() => import(${JSON.stringify(absolutePath)}))`;
+    const code = `  "${name}": lazy(() => import(${JSON.stringify(
+      absolutePath
+    )}))`;
     return code;
   }
   return (
     `import React, { lazy } from 'react'\n` +
-    `export const PageComponents = {\n ${pageFiles
+    `export const PageComponents = {\n${pageFiles
       .map(genImport)
-      .join(",\n")} \n};`
+      .join(",\n")}\n};`
   );
 }
 
-function toComponentName(file: string) {
+export function toComponentName(file: string) {
   const isIndex = isIndexFile(file);
   const normalize = (file: string) =>
-    "Page" +
+    "a-" +
     file
       .replace(/\.md$/, "")
       .replace(/\/|\\/g, " ")
       .split(" ")
-      .map(w => w[0].toUpperCase() + w.slice(1))
       .join("");
-  const normalizedName: string = isIndex ? "Index" : normalize(file);
+  const normalizedName: string = isIndex ? "index" : normalize(file);
   return normalizedName;
 }

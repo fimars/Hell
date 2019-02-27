@@ -3,7 +3,6 @@ import { join } from "path";
 import * as chokidar from "chokidar";
 import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
-import opn = require("opn");
 import portfinder = require("portfinder");
 
 import prepare from "./prepare";
@@ -14,7 +13,8 @@ async function dev(sourceDir: string) {
   const options = await prepare(sourceDir);
 
   // setup watchers to update options and dynamically generated files
-  const update = () => {
+  const update = (file: string) => {
+    console.log(`\nReload due to ${file}`);
     prepare(sourceDir).catch(err => {
       console.error(chalk.red(err.stack), false);
     });
@@ -33,31 +33,43 @@ async function dev(sourceDir: string) {
 
   // mount the dev server
   const configChain = createClientConfig(options);
-  // add some thing here.
-  const config = configChain.toConfig();
-
   const host = "0.0.0.0";
   const port = await portfinder.getPortPromise();
-  const devServerOptions = {
+
+  configChain.plugin("helldoc-log").use(require("./webpack/DevLogPlugin"), [
+    {
+      displayHost: host,
+      port,
+      publicPath: options.siteConfig.base || "/"
+    }
+  ]);
+
+  const devServerOptions: WebpackDevServer.Configuration = {
     host,
     hot: true,
+    quiet: true,
+    headers: {
+      "access-control-allow-origin": "*"
+    },
+    watchOptions: {
+      ignored: [/node_modules/]
+    },
     historyApiFallback: {
       disableDotRule: true
     },
-    port,
-    stats: {
-      colors: true
-    },
     contentBase: join(__dirname, "public")
   };
+  const config = configChain.toConfig();
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
 
   const compiler = Webpack(config);
-  const server = new WebpackDevServer(compiler, devServerOptions);
-  await server.listen(port, host);
 
-  // opn remove
-  opn(`http://${host}:${port}`);
+  const server = new WebpackDevServer(compiler, devServerOptions);
+  server.listen(port, host, err => {
+    if (err) {
+      console.log(err);
+    }
+  });
 }
 
 export default dev;

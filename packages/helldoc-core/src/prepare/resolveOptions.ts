@@ -4,9 +4,11 @@ import { existsSync, readFileSync } from "fs-extra";
 import { resolve } from "path";
 import { parseFrontmatter } from "../util";
 import { isIndexFile } from "./util";
+import { toComponentName } from "./genRegistrationFile";
 
 interface PageData {
   path: string;
+  component: string;
   title?: string;
   frontmatter?: {
     [key: string]: string;
@@ -53,7 +55,8 @@ export default async function resolveOptions(sourceDir: string) {
     const urlPath = isIndexFile(file) ? "/" : `/${file.replace(/\.md$/, "")}`;
     const content = readFileSync(resolve(sourceDir, file), "utf-8");
     const data: PageData = {
-      path: urlPath
+      path: urlPath,
+      component: toComponentName(file)
     };
 
     // extract yaml frontmatter

@@ -21,23 +21,11 @@ export default class Page extends React.Component<PageProps, PageState> {
       return path === pathname;
     });
 
-    const modulePath = this.getComponentName(pathname);
-    const Article = existPage ? PageComponents[modulePath] : NotFound;
+    const Article = existPage ? PageComponents[existPage.component] : NotFound;
     return (
       <React.Suspense fallback={<div>Loading...</div>}>
         <Article />
       </React.Suspense>
     );
-  }
-  private getComponentName(path: string) {
-    return path === "/"
-      ? "Index"
-      : "Page" +
-          path
-            .slice(1)
-            .replace(/\/|\\/g, " ")
-            .split(" ")
-            .map(w => w[0].toUpperCase() + w.slice(1))
-            .join("");
   }
 }

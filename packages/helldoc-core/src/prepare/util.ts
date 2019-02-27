@@ -6,6 +6,13 @@ export async function writeTemp(file: string, content: string | Buffer) {
   if (cached !== content) {
     await fs.outputFile(file, content);
     tempCache.set(file, content);
+    // TODO: remove this hack and write a siteData webpack plugin
+    await new Promise(resolve => {
+      console.log("Writing the metadata...");
+      setTimeout(() => {
+        resolve(true);
+      }, 1000);
+    });
   }
 }
 

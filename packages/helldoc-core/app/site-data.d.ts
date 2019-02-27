@@ -1,6 +1,7 @@
 declare module "siteData" {
   interface PageData {
     path: string;
+    component: string;
     title?: string;
     frontmatter?: {
       [key: string]: string;

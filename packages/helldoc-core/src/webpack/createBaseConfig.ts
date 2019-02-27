@@ -40,6 +40,9 @@ export default function(ctx: HellOptions) {
     .modules.merge(modulePaths);
 
   config
+    .plugin("webpack-bar")
+    .use(require("webpackbar"))
+    .end()
     .plugin("html")
     .use(require("html-webpack-plugin"), [
       { template: resolveAppPath("index.template.html") }
@@ -73,6 +76,7 @@ export default function(ctx: HellOptions) {
       {
         tsconfig: resolveAppPath("tsconfig.json"),
         workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
+        silent: true,
         compilerOptions: {
           typeRoots: modulePaths.map(path => resolve(path, "@types"))
         }
