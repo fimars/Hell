@@ -1,6 +1,6 @@
 {
 	"name": "@helldoc/cli",
-	"version": "0.2.8",
+	"version": "0.2.9",
 	"description": "helldoc CLI",
 	"bin": {
 		"helldoc": "build/index.js"
@@ -21,7 +21,7 @@
 		"typescript"
 	],
 	"dependencies": {
-		"@helldoc/core": "^0.2.8",
+		"@helldoc/core": "^0.2.9",
 		"commander": "^2.19.0"
 	}
 }
