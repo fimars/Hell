@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.10](https://github.com/fimars/hell/releases/tag/v0.2.10) - 2019-02-28)
+
+### Fixed
+
+- fix `siteConfig.base` not work bug.
+
 ## [0.2.9](https://github.com/fimars/hell/releases/tag/v0.2.9) - 2019-02-28)
 
 ### Added
