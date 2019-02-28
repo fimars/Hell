@@ -16,7 +16,9 @@ export default function MarkdownLoader(
     `import * as React from 'react';`,
     `import PageLayout from 'components/PageLayout';`,
     `import Toc from 'components/Toc';`,
-    `const Article = () => <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: \`${html}\` }}></div>;`,
+    `const Article = () => <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: ${JSON.stringify(
+      html
+    )} }}></div>;`,
     `export default () => (
       <PageLayout
         Side={ <Toc headings={${JSON.stringify(headers)}} /> }

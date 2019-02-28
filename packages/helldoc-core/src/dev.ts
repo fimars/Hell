@@ -5,12 +5,21 @@ import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
 import portfinder = require("portfinder");
 
-import prepare from "./prepare";
+import prepare, { CLIOptions } from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 
-async function dev(sourceDir: string) {
+async function dev(sourceDir: string, cliOptions: CLIOptions) {
+  const { server, port, host } = await prepareDevServer(sourceDir, cliOptions);
+  server.listen(port, host, err => {
+    if (err) {
+      console.log(err);
+    }
+  });
+}
+
+async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   console.log("\nExtracting site metadata...");
-  const options = await prepare(sourceDir);
+  const options = await prepare(sourceDir, cliOptions);
 
   // setup watchers to update options and dynamically generated files
   const update = (file: string) => {
@@ -65,11 +74,11 @@ async function dev(sourceDir: string) {
   const compiler = Webpack(config);
 
   const server = new WebpackDevServer(compiler, devServerOptions);
-  server.listen(port, host, err => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  return {
+    server,
+    host,
+    port
+  };
 }
 
 export default dev;

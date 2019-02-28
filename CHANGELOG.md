@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.9](https://github.com/fimars/hell/releases/tag/v0.2.9) - 2019-02-28)
+
+### Added
+
+- add `-o, --output <dir>` cli options for set output dir.
+
+### Changed
+
+- Make the output of the `dev` directive more friendly.
+- Make the UE of docs app more friendly.
+
 ## [0.2.8](https://github.com/fimars/hell/releases/tag/v0.2.8) - 2019-02-21
 
 ### Added

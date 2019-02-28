@@ -11,7 +11,7 @@ const contextPath = resolve(__dirname, "../../");
 
 export default function(ctx: HellOptions) {
   const isProd = process.env.NODE_ENV === "production";
-  const outDir = ctx.siteConfig.dest;
+  const outDir = ctx.outDir;
 
   const config = new Config();
 
@@ -33,7 +33,7 @@ export default function(ctx: HellOptions) {
   config.resolve
     .symlinks(true)
     .alias.set("components", resolveAppPath("components"))
-    .set("siteData", resolve(ctx.sourceDir, "siteData"))
+    .set("siteData", resolveAppPath("@internal/siteData.js"))
     .end()
     .extensions.merge([".ts", ".tsx", ".js", ".jsx", ".md", ".scss"])
     .end()

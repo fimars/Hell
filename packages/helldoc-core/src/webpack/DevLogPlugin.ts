@@ -1,6 +1,5 @@
 import { Compiler } from "webpack";
 import chalk from "chalk";
-import { writeFileSync } from "fs";
 
 interface PluginOptions {
   [key: string]: string;
@@ -15,11 +14,6 @@ export = class DevLogPlugin {
   public apply(compiler: Compiler): void {
     let isFirst = true;
     compiler.hooks.done.tap("helldoc-log", stats => {
-      // debugger
-      const sstats = stats.toJson();
-      const result = JSON.stringify(sstats);
-      writeFileSync(new Date().getTime() + "-stats-log.json", result);
-
       clearScreen();
 
       const { displayHost, port, publicPath } = this.options;
@@ -52,5 +46,5 @@ export = class DevLogPlugin {
 };
 
 function clearScreen() {
-  // process.stdout.write('\x1Bc')
+  process.stdout.write("\x1Bc");
 }

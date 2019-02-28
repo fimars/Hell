@@ -5,6 +5,7 @@ import { resolve } from "path";
 import { parseFrontmatter } from "../util";
 import { isIndexFile } from "./util";
 import { toComponentName } from "./genRegistrationFile";
+import { CLIOptions } from ".";
 
 interface PageData {
   path: string;
@@ -19,6 +20,7 @@ interface SiteConfig {
   description: string;
   dest: string;
   base: string;
+  ignores?: string[];
 }
 export interface SiteData {
   title: string;
@@ -35,7 +37,10 @@ export interface HellOptions {
   siteData?: SiteData;
 }
 
-export default async function resolveOptions(sourceDir: string) {
+export default async function resolveOptions(
+  sourceDir: string,
+  cliOptions: CLIOptions
+) {
   const configPath = resolve(sourceDir, "hell.config.js");
   const siteConfig: SiteConfig = existsSync(configPath)
     ? require(configPath)
@@ -44,11 +49,16 @@ export default async function resolveOptions(sourceDir: string) {
   const options: HellOptions = {
     siteConfig,
     sourceDir,
-    outDir: siteConfig.dest
+    outDir: cliOptions.output
+      ? resolve(sourceDir, cliOptions.output)
+      : siteConfig.dest
       ? resolve(siteConfig.dest)
       : resolve(sourceDir, "dist"),
     publicPath: siteConfig.base || "/public",
-    pageFiles: await globby(["**/*.md"], { cwd: sourceDir })
+    pageFiles: await globby(["**/*.md"], {
+      cwd: sourceDir,
+      ignore: siteConfig.ignores
+    })
   };
 
   const pagesData = options.pageFiles.map(file => {

@@ -1,11 +1,18 @@
 import { writeTemp } from "./util";
 import resolveOptions from "./resolveOptions";
 import genRegistrationFile from "./genRegistrationFile";
-import { resolve } from "path";
+import { resolveAppPath } from "../webpack/util";
 
-export default async function prepare(sourceDir: string) {
+export interface CLIOptions {
+  output?: string;
+}
+
+export default async function prepare(
+  sourceDir: string,
+  cliOptions: CLIOptions = {}
+) {
   // 1. options
-  const options = await resolveOptions(sourceDir);
+  const options = await resolveOptions(sourceDir, cliOptions);
   // 2. registed router
   const componentCode = await genRegistrationFile(options);
   // 3. gen router files
@@ -17,7 +24,7 @@ export default async function prepare(sourceDir: string) {
     2
   )}`;
   await writeTemp(
-    resolve(options.sourceDir, "siteData.js"),
+    resolveAppPath("@internal/siteData.js"),
     [componentCode, dataCode].join("\n\n")
   );
 
