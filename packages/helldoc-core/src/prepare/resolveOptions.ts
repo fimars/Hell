@@ -54,7 +54,7 @@ export default async function resolveOptions(
       : siteConfig.dest
       ? resolve(siteConfig.dest)
       : resolve(sourceDir, "dist"),
-    publicPath: siteConfig.base || "/public",
+    publicPath: siteConfig.base || "/",
     pageFiles: await globby(["**/*.md"], {
       cwd: sourceDir,
       ignore: siteConfig.ignores

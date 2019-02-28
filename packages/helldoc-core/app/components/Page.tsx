@@ -20,8 +20,6 @@ export default class Page extends React.Component<PageProps, PageState> {
     const existPage = siteData.pages.find(({ path }) => {
       return path === pathname;
     });
-    console.log(siteData, PageComponents);
-    debugger;
 
     const Article = existPage ? PageComponents[existPage.component] : NotFound;
     return (

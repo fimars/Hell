@@ -66,6 +66,7 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
     historyApiFallback: {
       disableDotRule: true
     },
+    publicPath: options.publicPath,
     contentBase: join(__dirname, "public")
   };
   const config = configChain.toConfig();
