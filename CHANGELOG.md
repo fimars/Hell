@@ -1,5 +1,12 @@
 # Changelog
 
+## Unrelase
+
+### Added
+
+- add `siteConfig.head` for customer site header tags.
+- add WDS.contentBase and CopyPlugin to hold the static files.
+
 ## [0.2.10](https://github.com/fimars/hell/releases/tag/v0.2.10) - 2019-02-28)
 
 ### Fixed
