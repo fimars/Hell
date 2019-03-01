@@ -6,7 +6,8 @@ import portfinder = require("portfinder");
 
 import prepare, { CLIOptions } from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
-import { resolve } from "path";
+import { resolve, posix } from "path";
+import { existsSync } from "fs-extra";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
   const { server, port, host } = await prepareDevServer(sourceDir, cliOptions);
@@ -53,7 +54,10 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
     }
   ]);
 
+  const contentBase = resolve(sourceDir, "public");
   const devServerOptions: WebpackDevServer.Configuration = {
+    disableHostCheck: true,
+    compress: true,
     host,
     hot: true,
     quiet: true,
@@ -64,10 +68,16 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
       ignored: [/node_modules/]
     },
     historyApiFallback: {
-      disableDotRule: true
+      disableDotRule: true,
+      rewrites: [{ from: /./, to: posix.join(options.base, "index.html") }]
     },
-    publicPath: options.publicPath,
-    contentBase: resolve(sourceDir, "public")
+    contentBase,
+    publicPath: options.base,
+    before(app) {
+      if (existsSync(contentBase)) {
+        app.use(options.base, require("express").static(contentBase));
+      }
+    }
   };
   const config = configChain.toConfig();
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);

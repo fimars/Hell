@@ -35,7 +35,7 @@ export interface HellOptions {
   siteConfig: SiteConfig;
   sourceDir: string;
   outDir: string;
-  publicPath: string;
+  base: string;
   pageFiles: string[];
   siteData?: SiteData;
 }
@@ -57,7 +57,7 @@ export default async function resolveOptions(
       : siteConfig.dest
       ? resolve(siteConfig.dest)
       : resolve(sourceDir, "dist"),
-    publicPath: siteConfig.base || "/",
+    base: siteConfig.base || "/",
     pageFiles: await globby(["**/*.md"], {
       cwd: sourceDir,
       ignore: siteConfig.ignores || []

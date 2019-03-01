@@ -22,7 +22,7 @@ export default function(ctx: HellOptions) {
     .filename(
       isProd ? "assets/js/[name].[chunkhash:8].js" : "assets/js/[name].js"
     )
-    .publicPath(ctx.publicPath);
+    .publicPath(ctx.base);
 
   if (!isProd) {
     config.devtool("cheap-module-eval-source-map");
