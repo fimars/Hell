@@ -15,11 +15,14 @@ interface PageData {
     [key: string]: string;
   };
 }
+
+export type Tag = [string, { [key: string]: string | number }, string];
 interface SiteConfig {
   title: string;
   description: string;
   dest: string;
   base: string;
+  head: Tag[];
   ignores?: string[];
 }
 export interface SiteData {

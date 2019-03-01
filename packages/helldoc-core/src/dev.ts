@@ -1,5 +1,4 @@
 import chalk from "chalk";
-import { join } from "path";
 import * as chokidar from "chokidar";
 import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
@@ -7,6 +6,7 @@ import portfinder = require("portfinder");
 
 import prepare, { CLIOptions } from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
+import { resolve } from "path";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
   const { server, port, host } = await prepareDevServer(sourceDir, cliOptions);
@@ -30,7 +30,7 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   };
 
   //  watch add/remove of files
-  const pagesWatcher = chokidar.watch(["**/*.md"], {
+  const pagesWatcher = chokidar.watch(["**/*.md", "hell.config.js"], {
     cwd: sourceDir,
     ignoreInitial: true
   });
@@ -67,7 +67,7 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
       disableDotRule: true
     },
     publicPath: options.publicPath,
-    contentBase: join(__dirname, "public")
+    contentBase: resolve(sourceDir, "public")
   };
   const config = configChain.toConfig();
   WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);

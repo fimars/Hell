@@ -9,6 +9,12 @@ export default function(ctx: HellOptions): Config {
 
   config.entry("app").add(resolveAppPath("app.tsx"));
 
+  config.plugin("head").use(require("./HeadPlugin"), [
+    {
+      tags: ctx.siteConfig.head || []
+    }
+  ]);
+
   if (process.env.NODE_ENV === "production") {
     config
       .plugin("optimize-css")
