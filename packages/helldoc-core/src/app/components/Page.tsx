@@ -14,6 +14,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     document.title = siteData.title || "Welcome to Hell";
   }
   public render(): JSX.Element {
+    console.log(siteData, PageComponents);
     const {
       location: { pathname }
     } = this.props;

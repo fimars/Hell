@@ -1,11 +1,9 @@
 import { resolve } from "path";
 import Config = require("webpack-chain");
-import ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 import markdown = require("marked");
-import "./markdownLoader"; // loader hacker
 
 import { HellOptions } from "../prepare/resolveOptions";
-import { resolveAppPath } from "./util";
+import { resolveAppPath, resolveAssetsPath } from "./util";
 
 const contextPath = resolve(__dirname, "../../");
 
@@ -34,8 +32,9 @@ export default function(ctx: HellOptions) {
     .symlinks(true)
     .alias.set("components", resolveAppPath("components"))
     .set("siteData", resolveAppPath("@internal/siteData.js"))
+    .set("@assets", resolveAssetsPath())
     .end()
-    .extensions.merge([".ts", ".tsx", ".js", ".jsx", ".md", ".scss"])
+    .extensions.merge([".js", ".jsx", ".md", ".scss"])
     .end()
     .modules.merge(modulePaths);
 
@@ -45,7 +44,7 @@ export default function(ctx: HellOptions) {
     .end()
     .plugin("html")
     .use(require("html-webpack-plugin"), [
-      { template: resolveAppPath("index.template.html") }
+      { template: resolveAssetsPath("index.template.html") }
     ]);
   if (isProd) {
     config.plugin("extract-css").use(require("mini-css-extract-plugin"), [
@@ -71,24 +70,13 @@ export default function(ctx: HellOptions) {
         }
       }
     });
-  } else {
-    config.plugin("tscheck").use(ForkTsCheckerWebpackPlugin, [
-      {
-        tsconfig: resolveAppPath("tsconfig.json"),
-        workers: ForkTsCheckerWebpackPlugin.TWO_CPUS_FREE,
-        silent: true,
-        compilerOptions: {
-          typeRoots: modulePaths.map(path => resolve(path, "@types"))
-        }
-      }
-    ]);
   }
 
   const mdRule = config.module.rule("markdown").test(/\.md?$/);
 
-  const tsRule = config.module.rule("typescript").test(/\.tsx?$/);
+  const babelRule = config.module.rule("babel").test(/\.js?$/);
 
-  [mdRule, tsRule].forEach(rule =>
+  [mdRule, babelRule].forEach(rule =>
     rule
       .use("babel")
       .loader("babel-loader")
@@ -98,15 +86,15 @@ export default function(ctx: HellOptions) {
         cacheDirectory: true,
         plugins: [
           ["@babel/plugin-proposal-class-properties", { loose: true }],
-          "react-hot-loader/babel"
+          "react-hot-loader/babel",
+          "@babel/plugin-syntax-dynamic-import"
         ],
         presets: [
           [
             "@babel/preset-env",
             { targets: { browsers: "last 2 versions" } } // or whatever your project requires
           ],
-          "@babel/preset-react",
-          "@babel/preset-typescript"
+          "@babel/preset-react"
         ]
       })
       .end()

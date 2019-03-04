@@ -7,7 +7,7 @@ import createBaseConfig from "./createBaseConfig";
 export default function(ctx: HellOptions): Config {
   const config = createBaseConfig(ctx);
 
-  config.entry("app").add(resolveAppPath("app.tsx"));
+  config.entry("app").add(resolveAppPath("app"));
 
   config.plugin("head").use(require("./HeadPlugin"), [
     {

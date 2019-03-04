@@ -2,7 +2,8 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "build"
-  },
-  "exclude": ["app", "build", "node_modules"]
+    "outDir": "build",
+    "jsx": "react",
+    "lib": ["dom"]
+  }
 }
