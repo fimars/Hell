@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:10.15.2
+    steps: 
+      - checkout
+      - run: yarn bootstrap
+
+      - save_cache:
+          paths:
+          - node_modules
+          key: v1-yarn-deps-{{ checksum "package.json" }}
+
+      - run: yarn test
