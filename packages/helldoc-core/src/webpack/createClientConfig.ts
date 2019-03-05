@@ -29,6 +29,7 @@ export default function(ctx: HellCtx): Config {
         }
       ]);
   } else {
+    config.plugin("time-fix").use(require("time-fix-plugin"));
     config.plugin("hmr").use(require("webpack/lib/HotModuleReplacementPlugin"));
   }
   return config;

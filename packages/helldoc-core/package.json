@@ -50,6 +50,7 @@
     "react-router-dom": "^4.3.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "time-fix-plugin": "^2.0.5",
     "toml": "^2.3.5",
     "webpack": "^4.29.0",
     "webpack-chain": "^5.2.0",
