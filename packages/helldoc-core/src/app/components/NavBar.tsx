@@ -1,4 +1,4 @@
-import { siteData } from "siteData";
+import siteData from "@internal/site-data";
 import * as React from "react";
 import { Link } from "react-router-dom";
 

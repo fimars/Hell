@@ -1,11 +1,11 @@
 import { resolve } from "path";
-import { HellOptions } from "./resolveOptions";
+import { HellCtx } from "./resolveOptions";
 import { isIndexFile } from "./util";
 
 export default async function genRegistrationFile({
   sourceDir,
   pageFiles
-}: HellOptions) {
+}: HellCtx) {
   function genImport(file: string) {
     const name = toComponentName(file);
     const absolutePath = resolve(sourceDir, file);
@@ -16,9 +16,7 @@ export default async function genRegistrationFile({
   }
   return (
     `import React, { lazy } from 'react'\n` +
-    `export const PageComponents = {\n${pageFiles
-      .map(genImport)
-      .join(",\n")}\n};`
+    `export default {\n${pageFiles.map(genImport).join(",\n")}\n};`
   );
 }
 

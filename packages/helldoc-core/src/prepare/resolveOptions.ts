@@ -3,7 +3,7 @@ import globby = require("globby");
 import { existsSync, readFileSync } from "fs-extra";
 import { resolve } from "path";
 import { parseFrontmatter } from "../util";
-import { isIndexFile } from "./util";
+import { isIndexFile, createTemp } from "./util";
 import { toComponentName } from "./genRegistrationFile";
 import { CLIOptions } from ".";
 
@@ -31,13 +31,15 @@ export interface SiteData {
   base: string;
   pages: PageData[];
 }
-export interface HellOptions {
+export interface HellCtx {
   siteConfig: SiteConfig;
   sourceDir: string;
   outDir: string;
   base: string;
   pageFiles: string[];
   siteData?: SiteData;
+  tempPath: string;
+  writeTemp: any;
 }
 
 export default async function resolveOptions(
@@ -49,7 +51,9 @@ export default async function resolveOptions(
     ? require(configPath)
     : {};
 
-  const options: HellOptions = {
+  const { writeTemp, tempPath } = createTemp();
+
+  const ctx: HellCtx = {
     siteConfig,
     sourceDir,
     outDir: cliOptions.output
@@ -61,10 +65,12 @@ export default async function resolveOptions(
     pageFiles: await globby(["**/*.md"], {
       cwd: sourceDir,
       ignore: siteConfig.ignores || []
-    })
+    }),
+    writeTemp,
+    tempPath
   };
 
-  const pagesData = options.pageFiles.map(file => {
+  const pagesData = ctx.pageFiles.map(file => {
     const urlPath = isIndexFile(file) ? "/" : `/${file.replace(/\.md$/, "")}`;
     const content = readFileSync(resolve(sourceDir, file), "utf-8");
     const data: PageData = {
@@ -86,12 +92,12 @@ export default async function resolveOptions(
     return data;
   });
 
-  options.siteData = {
+  ctx.siteData = {
     title: siteConfig.title,
     description: siteConfig.description,
     base: siteConfig.base || "/",
     pages: pagesData
   };
 
-  return options;
+  return ctx;
 }

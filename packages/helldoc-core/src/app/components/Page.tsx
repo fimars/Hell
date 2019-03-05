@@ -1,4 +1,5 @@
-import { siteData, PageComponents } from "siteData";
+import pages from "@internal/pages";
+import siteData from "@internal/site-data";
 import * as React from "react";
 import { RouteComponentProps } from "react-router";
 
@@ -14,7 +15,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     document.title = siteData.title || "Welcome to Hell";
   }
   public render(): JSX.Element {
-    console.log(siteData, PageComponents);
+    console.log(siteData, pages);
     const {
       location: { pathname }
     } = this.props;
@@ -22,10 +23,10 @@ export default class Page extends React.Component<PageProps, PageState> {
       return path === pathname;
     });
 
-    const Article = existPage ? PageComponents[existPage.component] : NotFound;
+    const Content = existPage ? pages[existPage.component] : NotFound;
     return (
       <React.Suspense fallback={<div>Loading...</div>}>
-        <Article />
+        <Content />
       </React.Suspense>
     );
   }

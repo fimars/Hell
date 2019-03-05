@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import NavBar from "./NavBar";
 import Page from "./Page";
-import { siteData } from "siteData";
+import siteData from "@internal/site-data";
 
 let App = class extends React.PureComponent {
   public render() {

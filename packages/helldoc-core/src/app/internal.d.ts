@@ -1,4 +1,4 @@
-declare module "siteData" {
+declare module "@internal/site-data" {
   interface PageData {
     path: string;
     component: string;
@@ -13,7 +13,10 @@ declare module "siteData" {
     base: string;
     pages: PageData[];
   }
-
-  export const siteData: SiteData;
-  export const PageComponents: { [key: string]: any };
+  const siteData: SiteData;
+  export default siteData;
+}
+declare module "@internal/pages" {
+  const pages: { [key: string]: any };
+  export default pages;
 }

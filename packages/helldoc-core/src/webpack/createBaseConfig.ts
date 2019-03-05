@@ -2,12 +2,12 @@ import { resolve } from "path";
 import Config = require("webpack-chain");
 import markdown = require("marked");
 
-import { HellOptions } from "../prepare/resolveOptions";
+import { HellCtx } from "../prepare/resolveOptions";
 import { resolveAppPath, resolveAssetsPath } from "./util";
 
 const contextPath = resolve(__dirname, "../../");
 
-export default function(ctx: HellOptions) {
+export default function(ctx: HellCtx) {
   const isProd = process.env.NODE_ENV === "production";
   const outDir = ctx.outDir;
 
@@ -31,7 +31,7 @@ export default function(ctx: HellOptions) {
   config.resolve
     .symlinks(true)
     .alias.set("components", resolveAppPath("components"))
-    .set("siteData", resolveAppPath("@internal/siteData.js"))
+    .set("@internal", resolve(ctx.tempPath, "internal"))
     .set("@assets", resolveAssetsPath())
     .end()
     .extensions.merge([".js", ".jsx", ".md", ".scss"])
