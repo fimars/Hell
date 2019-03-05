@@ -11,11 +11,12 @@ export interface PageState {
   docContent: string;
 }
 export default class Page extends React.Component<PageProps, PageState> {
-  public componentDidMount() {
-    document.title = siteData.title || "Welcome to Hell";
-  }
+  public componentDidUpdate() {}
   public render(): JSX.Element {
-    console.log(siteData, pages);
+    // Set Site
+    document.title = siteData.title || "Welcome to Hell";
+
+    // Render Content
     const {
       location: { pathname }
     } = this.props;

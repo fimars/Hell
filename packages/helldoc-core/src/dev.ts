@@ -6,7 +6,7 @@ import portfinder = require("portfinder");
 
 import prepare, { CLIOptions } from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
-import { resolve, posix } from "path";
+import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
@@ -25,6 +25,15 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   // setup watchers to update options and dynamically generated files
   const update = (file: string) => {
     console.log(`\nReload due to ${file}`);
+
+    // hack
+    if (!isAbsolute(file)) {
+      file = resolve(sourceDir, file);
+    }
+    if (file.endsWith(".js")) {
+      delete require.cache[file];
+    }
+
     prepare(sourceDir).catch(err => {
       console.error(chalk.red(err.stack), false);
     });

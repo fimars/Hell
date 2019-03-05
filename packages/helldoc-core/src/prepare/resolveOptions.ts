@@ -42,6 +42,8 @@ export interface HellCtx {
   writeTemp: any;
 }
 
+const { writeTemp, tempPath } = createTemp();
+
 export default async function resolveOptions(
   sourceDir: string,
   cliOptions: CLIOptions
@@ -50,8 +52,6 @@ export default async function resolveOptions(
   const siteConfig: SiteConfig = existsSync(configPath)
     ? require(configPath)
     : {};
-
-  const { writeTemp, tempPath } = createTemp();
 
   const ctx: HellCtx = {
     siteConfig,
