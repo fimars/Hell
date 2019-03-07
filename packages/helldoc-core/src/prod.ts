@@ -1,9 +1,10 @@
 import * as Webpack from "webpack";
 
-import prepare, { CLIOptions } from "./prepare";
+import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 import { resolve } from "path";
 import { existsSync } from "fs-extra";
+import { CLIOptions } from "./types";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";

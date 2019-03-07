@@ -1,11 +1,11 @@
 import { resolve } from "path";
-import { HellCtx } from "./resolveOptions";
 import { isIndexFile } from "./util";
+import { AppContext } from "../types";
 
 export default async function genRegistrationFile({
   sourceDir,
   pageFiles
-}: HellCtx) {
+}: AppContext) {
   function genImport(file: string) {
     const name = toComponentName(file);
     const absolutePath = resolve(sourceDir, file);

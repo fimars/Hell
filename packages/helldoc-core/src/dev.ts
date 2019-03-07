@@ -4,18 +4,26 @@ import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
 import portfinder = require("portfinder");
 
-import prepare, { CLIOptions } from "./prepare";
+import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
+import { CLIOptions } from "./types";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
-  const { server, port, host } = await prepareDevServer(sourceDir, cliOptions);
-  server.listen(port, host, err => {
-    if (err) {
-      console.log(err);
-    }
-  });
+  try {
+    const { server, port, host } = await prepareDevServer(
+      sourceDir,
+      cliOptions
+    );
+    server.listen(port, host, err => {
+      if (err) {
+        console.log(err);
+      }
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {

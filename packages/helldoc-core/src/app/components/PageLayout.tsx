@@ -9,10 +9,15 @@ export default class PageLayout extends React.PureComponent<{
     return (
       <div>
         <div className="columns">
-          <div className="column-2">
+          <div className="side">
             <div className="nav section">{Side}</div>
           </div>
-          <div className="column-10">{Content}</div>
+          <div
+            className="content"
+            style={{ width: "calc(100% - 220px)", float: "left" }}
+          >
+            {Content}
+          </div>
         </div>
       </div>
     );

@@ -12,6 +12,9 @@ declare module "@internal/site-data" {
     description: string;
     base: string;
     pages: PageData[];
+    themeConfig: {
+      nav: any[];
+    };
   }
   const siteData: SiteData;
   export default siteData;

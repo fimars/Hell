@@ -1,9 +1,6 @@
 import resolveOptions from "./resolveOptions";
 import genRegistrationFile from "./genRegistrationFile";
-
-export interface CLIOptions {
-  output?: string;
-}
+import { CLIOptions } from "../types";
 
 export default async function prepare(
   sourceDir: string,

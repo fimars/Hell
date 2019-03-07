@@ -2,12 +2,12 @@ import { resolve } from "path";
 import Config = require("webpack-chain");
 import markdown = require("marked");
 
-import { HellCtx } from "../prepare/resolveOptions";
 import { resolveAppPath, resolveAssetsPath } from "./util";
+import { AppContext } from "../types";
 
 const contextPath = resolve(__dirname, "../../");
 
-export default function(ctx: HellCtx) {
+export default function(ctx: AppContext) {
   const isProd = process.env.NODE_ENV === "production";
   const outDir = ctx.outDir;
 

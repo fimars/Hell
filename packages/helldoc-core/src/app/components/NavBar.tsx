@@ -2,21 +2,28 @@ import siteData from "@internal/site-data";
 import * as React from "react";
 import { Link } from "react-router-dom";
 
-const NavBarStyle = {
+const NavBarStyle: React.CSSProperties = {
+  padding: "0 20px",
+  display: "flex",
+  boxSizing: "border-box",
   width: "100%",
-  backgroundColor: "#000",
-  display: "flex"
+  boxShadow: "0 0 4px 0 rgba(0, 0, 0, .14)",
+  borderTop: "4px solid #606060",
+  fontWeight: 600,
+  fontSize: "14px"
 };
-const NavStyle = {
-  padding: "20px",
-  color: "#fff"
+const NavStyle: React.CSSProperties = {
+  lineHeight: "54px",
+  paddingLeft: "18px",
+  paddingRight: "18px",
+  color: "#000"
 };
 
 export default () => (
   <div style={NavBarStyle}>
-    {siteData.pages.map((page, idx) => (
-      <Link key={idx} to={page.path} style={NavStyle}>
-        <div>{page.path === "/" ? "HOME" : page.path.slice(1)}</div>
+    {siteData.themeConfig.nav.map(({ text, link }, idx) => (
+      <Link key={idx} to={link} style={NavStyle}>
+        <div>{text}</div>
       </Link>
     ))}
   </div>

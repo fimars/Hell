@@ -1,46 +1,10 @@
-import globby = require("globby");
-
 import { existsSync, readFileSync } from "fs-extra";
 import { resolve } from "path";
 import { parseFrontmatter } from "../util";
 import { isIndexFile, createTemp } from "./util";
 import { toComponentName } from "./genRegistrationFile";
-import { CLIOptions } from ".";
-
-interface PageData {
-  path: string;
-  component: string;
-  title?: string;
-  frontmatter?: {
-    [key: string]: string;
-  };
-}
-
-export type Tag = [string, { [key: string]: string | number }, string];
-interface SiteConfig {
-  title: string;
-  description: string;
-  dest: string;
-  base: string;
-  head: Tag[];
-  ignores?: string[];
-}
-export interface SiteData {
-  title: string;
-  description: string;
-  base: string;
-  pages: PageData[];
-}
-export interface HellCtx {
-  siteConfig: SiteConfig;
-  sourceDir: string;
-  outDir: string;
-  base: string;
-  pageFiles: string[];
-  siteData?: SiteData;
-  tempPath: string;
-  writeTemp: any;
-}
+import { SiteConfig, AppContext, PageData, CLIOptions } from "../types";
+import globby = require("globby");
 
 const { writeTemp, tempPath } = createTemp();
 
@@ -53,7 +17,7 @@ export default async function resolveOptions(
     ? require(configPath)
     : {};
 
-  const ctx: HellCtx = {
+  const ctx: AppContext = {
     siteConfig,
     sourceDir,
     outDir: cliOptions.output
@@ -80,6 +44,7 @@ export default async function resolveOptions(
 
     // extract yaml frontmatter
     const frontmatter = parseFrontmatter(content);
+
     // infer title
     const titleMath = frontmatter.content.trim().match(/^#+\s+(.*)/);
     if (titleMath) {
@@ -93,10 +58,12 @@ export default async function resolveOptions(
   });
 
   ctx.siteData = {
-    title: siteConfig.title,
-    description: siteConfig.description,
+    title: siteConfig.title || "Welcome~",
+    description:
+      siteConfig.description || "A Doc Web Application base HellDoc.",
     base: siteConfig.base || "/",
-    pages: pagesData
+    pages: pagesData,
+    themeConfig: siteConfig.themeConfig
   };
 
   return ctx;

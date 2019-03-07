@@ -1,3 +1,9 @@
 module.exports = {
-  title: "Hell Docs"
-}
+  title: "Hell Docs",
+  themeConfig: {
+    nav: [
+      { text: "Home", link: "/" },
+      { text: "CHANGELOG", link: "/CHANGELOG" }
+    ]
+  }
+};
