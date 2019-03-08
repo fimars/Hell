@@ -9,6 +9,7 @@ const NavBarStyle: React.CSSProperties = {
   width: "100%",
   boxShadow: "0 0 4px 0 rgba(0, 0, 0, .14)",
   borderTop: "4px solid #606060",
+  borderBottom: "1px solid #eee",
   fontWeight: 600,
   fontSize: "14px"
 };

@@ -9,3 +9,11 @@
 .nav {
   margin-right: 0;
 }
+
+.content {
+  flex: 1;
+
+  >.markdown-body {
+    max-width: 746px;
+  }
+}
