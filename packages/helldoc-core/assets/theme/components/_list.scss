@@ -1,5 +1,5 @@
 .nav-label-item {
-  line-height: 2.4;
+  line-height: 1.6;
   
   &.level-1 {
     font-weight: 300;
@@ -16,16 +16,10 @@
     color: $typo-dark;
   }
 
-  &.level-3 {
-    padding-left: 12px;
-  }
+}
 
-  &.level-3::before {
-    color: $typo-dark;
-    content: '-';
-    margin-left: -12px;
-    position: absolute;
-  }
+.nav-label-item + .nav-label-item {
+  margin-top: 16px;
 }
 
 @for $i from 3 through 6 {

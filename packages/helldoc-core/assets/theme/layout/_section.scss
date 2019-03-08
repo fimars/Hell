@@ -1,7 +1,11 @@
 .section {
-  margin: $block-out-spacer;
+  margin: 32px $block-out-spacer;
 
   & + & {
     margin-top: $block-out-spacer * 1.5;
   }
+}
+
+.nav {
+  margin-right: 0;
 }
