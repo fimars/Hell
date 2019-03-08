@@ -22,7 +22,7 @@ const NavStyle: React.CSSProperties = {
 
 export default () => (
   <div style={NavBarStyle}>
-    {siteData.themeConfig.nav.map(({ text, link }, idx) => (
+    {(siteData.themeConfig.nav || []).map(({ text, link }, idx) => (
       <Link key={idx} to={link} style={NavStyle}>
         <div>{text}</div>
       </Link>
