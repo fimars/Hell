@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.12](https://github.com/fimars/hell/releases/tag/v0.2.12) - 2019-03-11)
+## [0.2.12](https://github.com/fimars/hell/releases/tag/v0.2.12) - 2019-03-11
 
 ### Added
 
@@ -10,7 +10,7 @@
 
 - fix `siteConfig.dest` resolve path error.
 
-## [0.2.11](https://github.com/fimars/hell/releases/tag/v0.2.11) - 2019-03-08)
+## [0.2.11](https://github.com/fimars/hell/releases/tag/v0.2.11) - 2019-03-08
 
 ### Added
 
@@ -22,13 +22,13 @@
 
 - modify some WDS config about serve static files.
 
-## [0.2.10](https://github.com/fimars/hell/releases/tag/v0.2.10) - 2019-02-28)
+## [0.2.10](https://github.com/fimars/hell/releases/tag/v0.2.10) - 2019-02-28
 
 ### Fixed
 
 - fix `siteConfig.base` not work bug.
 
-## [0.2.9](https://github.com/fimars/hell/releases/tag/v0.2.9) - 2019-02-28)
+## [0.2.9](https://github.com/fimars/hell/releases/tag/v0.2.9) - 2019-02-28
 
 ### Added
 
