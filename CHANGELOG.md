@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.12](https://github.com/fimars/hell/releases/tag/v0.2.12) - 2019-03-11)
+
+### Added
+
+- set `@helldoc/cli` default sourceDir value as `process.cwd`;
+
+### Fixed
+
+- fix `siteConfig.dest` resolve path error.
+
 ## [0.2.11](https://github.com/fimars/hell/releases/tag/v0.2.11) - 2019-03-08)
 
 ### Added
