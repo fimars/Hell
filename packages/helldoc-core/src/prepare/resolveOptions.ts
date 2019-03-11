@@ -23,7 +23,7 @@ export default async function resolveOptions(
     outDir: cliOptions.output
       ? resolve(sourceDir, cliOptions.output)
       : siteConfig.dest
-      ? resolve(siteConfig.dest)
+      ? resolve(sourceDir, siteConfig.dest)
       : resolve(sourceDir, "dist"),
     base: siteConfig.base || "/",
     pageFiles: await globby(["**/*.md"], {
