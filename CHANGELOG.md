@@ -2,6 +2,12 @@
 
 ## [0.2.12](https://github.com/fimars/hell/releases/tag/v0.2.12) - 2019-03-11
 
+### Fixed
+
+- add default render rule for `@app/NavBar`, avoid `themeConfig.nav` miss error
+
+## [0.2.12](https://github.com/fimars/hell/releases/tag/v0.2.12) - 2019-03-11
+
 ### Added
 
 - set `@helldoc/cli` default sourceDir value as `process.cwd`;
