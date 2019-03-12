@@ -20,12 +20,25 @@ const NavStyle: React.CSSProperties = {
   color: "#000"
 };
 
-export default () => (
-  <div style={NavBarStyle}>
-    {(siteData.themeConfig.nav || []).map(({ text, link }, idx) => (
-      <Link key={idx} to={link} style={NavStyle}>
-        <div>{text}</div>
-      </Link>
-    ))}
-  </div>
-);
+export default function NavBar() {
+  const navs = resolveNavs();
+  return (
+    <div style={NavBarStyle}>
+      {navs.map(({ text, link }, idx) => (
+        <Link key={idx} to={link} style={NavStyle}>
+          <div>{text}</div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function resolveNavs() {
+  if (siteData && siteData.themeConfig) {
+    return siteData.themeConfig.nav || [];
+  } else {
+    return siteData.pages
+      .filter(page => page.title)
+      .map(page => ({ text: page.title, link: page.path }));
+  }
+}
