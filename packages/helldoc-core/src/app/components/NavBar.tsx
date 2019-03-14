@@ -1,44 +1,78 @@
 import siteData from "@internal/site-data";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import actions from "../reduxActions/actions";
 
-const NavBarStyle: React.CSSProperties = {
-  padding: "0 20px",
-  display: "flex",
-  boxSizing: "border-box",
-  width: "100%",
-  boxShadow: "0 0 4px 0 rgba(0, 0, 0, .14)",
-  borderTop: "4px solid #606060",
-  borderBottom: "1px solid #eee",
-  fontWeight: 600,
-  fontSize: "14px"
-};
-const NavStyle: React.CSSProperties = {
-  lineHeight: "54px",
-  paddingLeft: "18px",
-  paddingRight: "18px",
-  color: "#000"
-};
+class NavBar extends React.Component<{
+  sidebarControl: (value: boolean) => void;
+  sideBarDisplay: boolean;
+}> {
+  resolveNavs() {
+    if (siteData && siteData.themeConfig) {
+      return siteData.themeConfig.nav || [];
+    } else {
+      return siteData.pages
+        .filter(page => page.title)
+        .map(page => ({ text: page.title, link: page.path }));
+    }
+  }
 
-export default function NavBar() {
-  const navs = resolveNavs();
-  return (
-    <div style={NavBarStyle}>
-      {navs.map(({ text, link }, idx) => (
-        <Link key={idx} to={link} style={NavStyle}>
-          <div>{text}</div>
-        </Link>
-      ))}
-    </div>
-  );
-}
+  barMeunClick() {
+    this.props.sidebarControl(true);
+  }
 
-function resolveNavs() {
-  if (siteData && siteData.themeConfig) {
-    return siteData.themeConfig.nav || [];
-  } else {
-    return siteData.pages
-      .filter(page => page.title)
-      .map(page => ({ text: page.title, link: page.path }));
+  componentWillMount() {
+    window.addEventListener("resize", (e: any) => {
+      if (e.target.innerWidth > 719) {
+        this.props.sidebarControl(false);
+      }
+    });
+  }
+
+  render() {
+    const navs = this.resolveNavs();
+    return (
+      <div className="navbarstyle">
+        <i
+          className="fas fa-bars mobile-bar"
+          onClick={() => {
+            this.props.sidebarControl(!this.props.sideBarDisplay);
+          }}
+        />
+        {this.props.sideBarDisplay ? (
+          <div
+            className="side-mask"
+            onClick={() => this.props.sidebarControl(false)}
+          />
+        ) : (
+          ""
+        )}
+        {navs.map(({ text, link }, idx) => (
+          <Link key={idx} to={link} className="navstyle">
+            <div>{text}</div>
+          </Link>
+        ))}
+      </div>
+    );
   }
 }
+
+const stroeFetch = (store: { sideBarDisplay: boolean; store: {} }) => {
+  return {
+    sideBarDisplay: store.sideBarDisplay
+  };
+};
+
+const mapDispatchToProps = (dispatch: (state: any) => any) => {
+  return {
+    sidebarControl: (state: boolean) => {
+      dispatch(actions.sidebarControl(state));
+    }
+  };
+};
+
+export default connect(
+  stroeFetch,
+  mapDispatchToProps
+)(NavBar);

@@ -12,6 +12,11 @@
 
 .content {
   flex: 1;
+  margin-left: 18rem;
+
+  @media screen and (max-width:719px) {
+    margin-left: 0;
+  }
 
   >.markdown-body {
     max-width: 746px;

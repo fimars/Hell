@@ -51,3 +51,7 @@ export interface AppContext {
 export interface CLIOptions {
   output?: string;
 }
+
+export interface stateTypes {
+  sideBarDisplay: boolean;
+}
