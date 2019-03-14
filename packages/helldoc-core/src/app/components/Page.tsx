@@ -6,10 +6,13 @@ import { RouteComponentProps } from "react-router";
 // import Toc from "../components/Toc";
 import NotFound from "./NotFound";
 
-export type PageProps = RouteComponentProps<any>;
+export interface PageProps extends RouteComponentProps<any> {
+  sideBarDisplay: boolean;
+}
 export interface PageState {
   docContent: string;
 }
+
 export default class Page extends React.Component<PageProps, PageState> {
   public componentDidUpdate() {}
   public render(): JSX.Element {

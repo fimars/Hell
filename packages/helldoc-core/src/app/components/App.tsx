@@ -1,6 +1,10 @@
 import * as React from "react";
 import { hot } from "react-hot-loader/root";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+
+import reduce from "../reduxReducer/reducer";
 
 import NavBar from "./NavBar";
 import Page from "./Page";
@@ -9,14 +13,16 @@ import siteData from "@internal/site-data";
 let App = class extends React.PureComponent {
   public render() {
     return (
-      <Router basename={siteData.base}>
-        <>
-          <NavBar />
-          <Switch>
-            <Route component={Page} />
-          </Switch>
-        </>
-      </Router>
+      <Provider store={createStore(reduce)}>
+        <Router basename={siteData.base}>
+          <>
+            <NavBar />
+            <Switch>
+              <Route component={Page} />
+            </Switch>
+          </>
+        </Router>
+      </Provider>
     );
   }
 };
