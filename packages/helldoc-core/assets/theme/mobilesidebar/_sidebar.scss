@@ -1,7 +1,7 @@
 $main-color: rgb(120, 24, 105);
 
 %item-paddinger {
-  padding: 0.15rem 0 0.15rem 1.5rem;
+  padding: 0.5rem 0 0.5rem 1.5rem;
 }
 
 %item-wrap-paddinger {
@@ -65,15 +65,24 @@ $main-color: rgb(120, 24, 105);
 //   }
 // }
 
-.navstyle {
-  @extend %item-paddinger;
-  display: block;
-  font-size: 1.3rem;
-  line-height: 2.5rem;
-  text-decoration: none;
+// .navstyle {
+//   @extend %item-paddinger;
+//   display: block;
+//   font-size: 1.3rem;
+//   line-height: 2.5rem;
+//   text-decoration: none;
 
-  :hover {
-    color: $main-color;
+//   :hover {
+//     color: $main-color;
+//   }
+// }
+
+.sidebar-top .navstyle {
+  @extend %item-paddinger;
+  font-size: 1.1rem;
+  line-height: 1.25rem;
+  @media screen and (max-width: 719px) {
+    display: block;
   }
 }
 
@@ -83,4 +92,5 @@ $main-color: rgb(120, 24, 105);
 
 .nav-label-item {
   @extend %item-paddinger;
+  font-size: 0.8125rem;
 }
