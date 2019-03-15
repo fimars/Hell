@@ -31,6 +31,10 @@ $main-color: rgb(120, 24, 105);
   top: 0;
   width: 18rem;
   z-index: 1;
+
+  @media screen and (max-width: 959px) {
+    width: 16.4rem;
+  }
   @media screen and (max-width: 719px) {
     transform: translateX(-100%);
     transition: transform 0.2s ease;
