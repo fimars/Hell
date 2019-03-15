@@ -1,7 +1,7 @@
 $main-color: rgb(120, 24, 105);
 
 %item-paddinger {
-  padding: 0.15rem 0 0.15rem 1.5rem;
+  padding: 0.5rem 0 0.5rem 1.5rem;
 }
 
 %item-wrap-paddinger {
@@ -20,7 +20,8 @@ $main-color: rgb(120, 24, 105);
 }
 
 .side {
-  background-color: #eaecef;
+  background-color: #fff;
+  border-right: 1px solid #eaecef;
   bottom: 0;
   left: 0;
   margin-top: 55px;
@@ -30,6 +31,10 @@ $main-color: rgb(120, 24, 105);
   top: 0;
   width: 18rem;
   z-index: 1;
+  
+  @media screen and (max-width: 959px) {
+    width: 16.4rem;
+  }
   @media screen and (max-width: 719px) {
     transform: translateX(-100%);
     transition: transform 0.2s ease;
@@ -54,26 +59,14 @@ $main-color: rgb(120, 24, 105);
   }
 }
 
-// .sidebar-top .navstyle {
-//   @extend %item-paddinger;
-//   display: block;
-//   text-decoration: none;
-//   font-size: 1.3rem;
-//   line-height: 2.5rem;
-//   :hover {
-//     color: $main-color;
-//   }
-// }
-
-.navstyle {
-  @extend %item-paddinger;
-  display: block;
-  font-size: 1.3rem;
-  line-height: 2.5rem;
-  text-decoration: none;
-
-  :hover {
-    color: $main-color;
+.sidebar-top {
+  .navstyle {
+    @extend %item-paddinger;
+    font-size: 1.1rem;
+    line-height: 1.25rem;
+    @media screen and (max-width: 719px) {
+      display: block;
+    }
   }
 }
 
@@ -83,4 +76,7 @@ $main-color: rgb(120, 24, 105);
 
 .nav-label-item {
   @extend %item-paddinger;
+  font-size: 0.8125rem;
+  padding-bottom: 0;
+  padding-top: 0;
 }

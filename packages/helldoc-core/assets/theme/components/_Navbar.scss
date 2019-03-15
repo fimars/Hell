@@ -1,3 +1,6 @@
+$main-color: rgb(120, 24, 105);
+$mobile-max-width: 719px;
+
 .navbarstyle {
   background-color: #fff;
   border-bottom: 1px solid rgb(238, 238, 238);
@@ -19,9 +22,30 @@
   line-height: 54px;
   padding-left: 18px;
   padding-right: 18px;
-  @media screen and (max-width:719px) {
+  text-decoration: none;
+  @media screen and (max-width: $mobile-max-width) {
     display: none;
   }
+}
+
+.mobile-bar {
+  color: #000;
+  cursor: pointer;
+  display: none;
+  font-size: 20px;
+  line-height: 54px;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+  z-index: 15;
+  @media screen and (max-width: $mobile-max-width) {
+    display: block;
+  }
+}
+
+
+.navstyle:hover {
+  color: $main-color;
+  text-decoration: none;
 }
 
 .side-mask {
