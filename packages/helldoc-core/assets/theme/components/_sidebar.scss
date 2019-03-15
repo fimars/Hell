@@ -55,29 +55,6 @@ $main-color: rgb(120, 24, 105);
   }
 }
 
-// .sidebar-top .navstyle {
-//   @extend %item-paddinger;
-//   display: block;
-//   text-decoration: none;
-//   font-size: 1.3rem;
-//   line-height: 2.5rem;
-//   :hover {
-//     color: $main-color;
-//   }
-// }
-
-// .navstyle {
-//   @extend %item-paddinger;
-//   display: block;
-//   font-size: 1.3rem;
-//   line-height: 2.5rem;
-//   text-decoration: none;
-
-//   :hover {
-//     color: $main-color;
-//   }
-// }
-
 .sidebar-top {
   .navstyle {
     @extend %item-paddinger;
@@ -96,4 +73,6 @@ $main-color: rgb(120, 24, 105);
 .nav-label-item {
   @extend %item-paddinger;
   font-size: 0.8125rem;
+  padding-bottom: 0;
+  padding-top: 0;
 }
