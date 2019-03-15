@@ -77,12 +77,14 @@ $main-color: rgb(120, 24, 105);
 //   }
 // }
 
-.sidebar-top .navstyle {
-  @extend %item-paddinger;
-  font-size: 1.1rem;
-  line-height: 1.25rem;
-  @media screen and (max-width: 719px) {
-    display: block;
+.sidebar-top {
+  .navstyle {
+    @extend %item-paddinger;
+    font-size: 1.1rem;
+    line-height: 1.25rem;
+    @media screen and (max-width: 719px) {
+      display: block;
+    }
   }
 }
 
