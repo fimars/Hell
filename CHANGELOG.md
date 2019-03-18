@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.3.0](https://github.com/fimars/hell/releases/tag/v0.3.0) - 2019-03-18
+
+### Added
+
+- add sidebar mobile support by [this PR](https://github.com/fimars/Hell/pull/14)
+
 ## [0.2.12](https://github.com/fimars/hell/releases/tag/v0.2.12) - 2019-03-11
 
 ### Fixed
