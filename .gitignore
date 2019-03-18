@@ -5,7 +5,6 @@
 .temp
 *.swp
 *~
-eixt
 
 /node_modules
 
