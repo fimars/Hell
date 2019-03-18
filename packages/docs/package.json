@@ -6,6 +6,7 @@
   "repository": "https://github.com/fimars/hell",
   "license": "MIT",
   "dependencies": {
-    "@helldoc/cli": "^0.2.11"
-  }
+    "@helldoc/cli": "^0.3.0"
+  },
+  "version": "0.3.0"
 }
