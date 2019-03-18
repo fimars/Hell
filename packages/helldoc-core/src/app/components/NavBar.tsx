@@ -40,6 +40,7 @@ class NavBar extends React.Component<{
             this.props.sidebarControl(!this.props.sideBarDisplay);
           }}
         />
+
         {this.props.sideBarDisplay ? (
           <div
             className="side-mask"
