@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import actions from "../reduxActions/actions";
 
+import Search from "./Search";
+import Mask from "./sideMask";
+
 class NavBar extends React.Component<{
   sidebarControl: (value: boolean) => void;
   sideBarDisplay: boolean;
@@ -34,26 +37,28 @@ class NavBar extends React.Component<{
     const navs = this.resolveNavs();
     return (
       <div className="navbarstyle">
-        <i
-          className="fas fa-bars mobile-bar"
-          onClick={() => {
-            this.props.sidebarControl(!this.props.sideBarDisplay);
-          }}
+        <div className="nav-left">
+          <i
+            className="fas fa-bars mobile-bar"
+            onClick={() => {
+              console.log("control");
+              this.props.sidebarControl(!this.props.sideBarDisplay);
+            }}
+          />
+
+          {navs.map(({ text, link }, idx) => (
+            <Link key={idx} to={link} className="navstyle">
+              <div>{text}</div>
+            </Link>
+          ))}
+        </div>
+
+        <Mask
+          sideBarDisplay={this.props.sideBarDisplay}
+          sidebarControl={this.props.sidebarControl}
         />
 
-        {this.props.sideBarDisplay ? (
-          <div
-            className="side-mask"
-            onClick={() => this.props.sidebarControl(false)}
-          />
-        ) : (
-          ""
-        )}
-        {navs.map(({ text, link }, idx) => (
-          <Link key={idx} to={link} className="navstyle">
-            <div>{text}</div>
-          </Link>
-        ))}
+        <Search />
       </div>
     );
   }
