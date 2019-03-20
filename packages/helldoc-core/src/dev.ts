@@ -60,7 +60,7 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
 
   // mount the dev server
   const configChain = createClientConfig(options);
-  const host = "0.0.0.0";
+  const host = "localhost";
   const port = await portfinder.getPortPromise();
 
   configChain.plugin("helldoc-log").use(require("./webpack/DevLogPlugin"), [
