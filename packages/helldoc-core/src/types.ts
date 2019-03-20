@@ -1,9 +1,17 @@
 export type Tag = [string, { [key: string]: string | number }, string];
 
+export interface TocHead {
+  id: string;
+  level: number;
+  parent?: string | null;
+  text: string;
+}
+
 export interface PageData {
   path: string;
   component: string;
   title?: string;
+  headers?: TocHead[];
   frontmatter?: {
     [key: string]: string;
   };

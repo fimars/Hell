@@ -1,10 +1,11 @@
 import { existsSync, readFileSync } from "fs-extra";
 import { resolve } from "path";
-import { parseFrontmatter } from "../util";
+import { parseFrontmatter, extractHeaders } from "../util";
 import { isIndexFile, createTemp } from "./util";
 import { toComponentName } from "./genRegistrationFile";
 import { SiteConfig, AppContext, PageData, CLIOptions } from "../types";
 import globby = require("globby");
+import marked = require("marked");
 
 const { writeTemp, tempPath } = createTemp();
 
@@ -49,6 +50,9 @@ export default async function resolveOptions(
     const titleMath = frontmatter.content.trim().match(/^#+\s+(.*)/);
     if (titleMath) {
       data.title = titleMath[1];
+    }
+    if (content) {
+      data.headers = extractHeaders(content, marked.lexer);
     }
     delete frontmatter.content;
     if (Object.keys(frontmatter.data).length) {
