@@ -45,3 +45,50 @@ $main-color: rgb(120, 24, 105);
   line-height: 54px;
   position: absolute;
 }
+
+.search-results {
+  background-color: #fff;
+  border: 1px solid #eaecef;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  margin-top: -6px;
+  padding: 5px 8px;
+  position: absolute;
+  right: 0;
+  width: 20rem;
+  @media screen and (max-width: 20rem) {
+    width: 16rem;
+  }
+}
+
+.result-item {
+  border-radius: 8px;
+  cursor: pointer;
+  display: block;
+  line-height: 1.8rem;
+  text-align: start;
+
+  a {
+    margin: 5px 8px;
+    text-decoration: none;
+  }
+}
+
+.result-item:hover {
+  background-color: #eee;
+
+  a {
+    color: $main-color;
+  }
+}
+
+.full {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+
+

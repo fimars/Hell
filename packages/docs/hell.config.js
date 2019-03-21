@@ -8,7 +8,7 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: "Get Start", link: "/" },
-      { text: 'Gen', link: 'GenGen'}
+      { text: 'Gen', link: '/GenGen'}
     ]
   }
 };
