@@ -1,6 +1,6 @@
 {
   "name": "@helldoc/core",
-  "version": "0.2.13",
+  "version": "0.3.0",
   "description": "helldoc core",
   "main": "build/index.js",
   "author": "fimars <foru.fy@gmail.com>",
@@ -23,9 +23,6 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
-    "@types/react": "^16.8.4",
-    "@types/react-dom": "^16.8.2",
-    "@types/react-router-dom": "^4.3.1",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
     "chokidar": "^2.0.4",
@@ -58,6 +55,9 @@
     "webpackbar": "^3.1.5"
   },
   "devDependencies": {
+    "@types/react": "^16.8.4",
+    "@types/react-dom": "^16.8.2",
+    "@types/react-router-dom": "^4.3.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@types/chokidar": "^1.7.5",
     "@types/fs-extra": "^5.0.5",

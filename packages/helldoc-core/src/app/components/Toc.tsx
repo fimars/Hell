@@ -1,7 +1,7 @@
 import * as React from "react";
 import Heading from "../components/Heading";
-import siteData from "@internal/site-data";
 import { Link } from "react-router-dom";
+import { resolveNavs } from "../util";
 
 export interface IHeading {
   level: number;
@@ -19,7 +19,7 @@ class Toc extends React.Component<
 > {
   public render() {
     const { headings } = this.props;
-    const navs = this.resolveNavs();
+    const navs = resolveNavs();
     return (
       <div
         className={`sidebar fullwidth ${this.props.sideBarDisplay &&
@@ -51,15 +51,6 @@ class Toc extends React.Component<
       replace: false,
       to: "#" + encodeURIComponent(clearText)
     };
-  }
-  resolveNavs() {
-    if (siteData && siteData.themeConfig) {
-      return siteData.themeConfig.nav || [];
-    } else {
-      return siteData.pages
-        .filter(page => page.title)
-        .map(page => ({ text: page.title, link: page.path }));
-    }
   }
 }
 
