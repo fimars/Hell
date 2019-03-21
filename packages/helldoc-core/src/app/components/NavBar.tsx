@@ -1,44 +1,29 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import actions from "../reduxActions/actions";
-import { resolveNavs } from "../util";
+import { navs } from "../data/navs";
+import actions from "../store/actions";
 
-class NavBar extends React.Component<{
+interface NavBarProps {
   sidebarControl: (value: boolean) => void;
   sideBarDisplay: boolean;
-}> {
-  barMeunClick() {
-    this.props.sidebarControl(true);
-  }
+}
 
-  componentWillMount() {
-    window.addEventListener("resize", (e: any) => {
-      if (e.target.innerWidth > 719) {
-        this.props.sidebarControl(false);
-      }
-    });
+class NavBar extends React.Component<NavBarProps> {
+  constructor(props: NavBarProps) {
+    super(props);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.resizeListener = this.resizeListener.bind(this);
   }
-
   render() {
-    const navs = resolveNavs();
     return (
       <div className="navbarstyle">
-        <i
-          className="fas fa-bars mobile-bar"
-          onClick={() => {
-            this.props.sidebarControl(!this.props.sideBarDisplay);
-          }}
-        />
+        <i className="fas fa-bars mobile-bar" onClick={this.toggleSidebar} />
 
-        {this.props.sideBarDisplay ? (
-          <div
-            className="side-mask"
-            onClick={() => this.props.sidebarControl(false)}
-          />
-        ) : (
-          ""
+        {this.props.sideBarDisplay && (
+          <div className="side-mask" onClick={this.toggleSidebar} />
         )}
+
         {navs.map(({ text, link }, idx) => (
           <Link key={idx} to={link} className="navstyle">
             <div>{text}</div>
@@ -47,8 +32,23 @@ class NavBar extends React.Component<{
       </div>
     );
   }
+  componentWillMount() {
+    window.addEventListener("resize", this.resizeListener);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.resizeListener);
+  }
+  private toggleSidebar() {
+    this.props.sidebarControl(!this.props.sideBarDisplay);
+  }
+  private resizeListener() {
+    if (window.innerWidth > 719) {
+      this.props.sidebarControl(false);
+    }
+  }
 }
 
+// TODO: extract the types interface
 const stroeFetch = (store: { sideBarDisplay: boolean; store: {} }) => {
   return {
     sideBarDisplay: store.sideBarDisplay

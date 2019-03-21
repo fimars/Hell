@@ -1,3 +1,9 @@
+.main,
+.side {
+  height: calc(100vh - 55px);
+  overflow-y: auto;
+}
+
 .section {
   margin: 32px $block-out-spacer;
 
@@ -12,10 +18,9 @@
 
 .content {
   flex: 1;
-  margin-left: 18rem;
 
   @media screen and (max-width:719px) {
-    margin-left: 0;
+    margin-left: -$side-width;
   }
 
   >.markdown-body {

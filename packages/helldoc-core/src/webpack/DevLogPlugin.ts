@@ -27,7 +27,7 @@ export = class DevLogPlugin {
           )}` +
             ` finished in ${Number(stats.endTime) -
               Number(stats.startTime)} ms! ` +
-            (isFirst ? "" : `${chalk.gray(`(${displayUrl})`)}`) +
+            (isFirst ? "" : `${chalk.gray(`( ${displayUrl} )`)}`) +
             "  \n"
         );
       }

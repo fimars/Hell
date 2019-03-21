@@ -1,13 +1,9 @@
 import * as React from "react";
 
-export default class Heading extends React.Component<{ level: number }, {}> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      sidebarShown: false
-    };
-  }
+interface HeadingProps {
+  level: number;
+}
+export default class Heading extends React.Component<HeadingProps> {
   public render() {
     const { level, children } = this.props;
     return (

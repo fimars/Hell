@@ -1,6 +1,6 @@
 import siteData from "@internal/site-data";
 
-export function resolveNavs() {
+function resolveNavs() {
   if (siteData && siteData.themeConfig) {
     return siteData.themeConfig.nav || [];
   } else {
@@ -9,3 +9,4 @@ export function resolveNavs() {
       .map(page => ({ text: page.title, link: page.path }));
   }
 }
+export const navs = resolveNavs();

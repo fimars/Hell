@@ -4,18 +4,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 
-import reduce from "../reduxReducer/reducer";
+import { sidebarReducer } from "../store/reducer";
 
 import NavBar from "./NavBar";
 import Page from "./Page";
 import siteData from "@internal/site-data";
 
-console.log(siteData);
-
 let App = class extends React.PureComponent {
   public render() {
     return (
-      <Provider store={createStore(reduce)}>
+      <Provider store={createStore(sidebarReducer)}>
         <Router basename={siteData.base}>
           <>
             <NavBar />
