@@ -22,18 +22,12 @@ $main-color: rgb(120, 24, 105);
 .side {
   background-color: #fff;
   border-right: 1px solid #eaecef;
-  bottom: 0;
-  left: 0;
-  margin-top: 55px;
-  overflow-y: scroll;
   overflow-y: auto;
-  position: fixed;
-  top: 0;
   width: 18rem;
   z-index: 1;
   
   @media screen and (max-width: 959px) {
-    width: 16.4rem;
+    width: $side-width;
   }
   @media screen and (max-width: 719px) {
     transform: translateX(-100%);
@@ -44,10 +38,6 @@ $main-color: rgb(120, 24, 105);
 
 .sidebar-open {
   transform: translateX(0);
-}
-
-.nav.section {
-  margin: 0;
 }
 
 .sidebar-top {

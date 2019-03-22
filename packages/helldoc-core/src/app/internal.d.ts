@@ -2,7 +2,7 @@ declare module "@internal/site-data" {
   interface PageData {
     path: string;
     component: string;
-    title?: string;
+    title: string;
     frontmatter?: {
       [key: string]: string;
     };

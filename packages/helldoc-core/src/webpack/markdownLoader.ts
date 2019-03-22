@@ -14,13 +14,13 @@ export default function MarkdownLoader(
   // TODO: rewrite
   const res = [
     `import * as React from 'react';`,
-    `import PageLayout from 'components/PageLayout';`,
+    `import Layout from 'components/Layout';`,
     `import Toc from 'components/Toc';`,
     `const Article = () => <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: ${JSON.stringify(
       html
     )} }}></div>;`,
     `export default () => (
-      <PageLayout
+      <Layout
         Side={ <Toc headings={${JSON.stringify(headers)}} /> }
         Content={ <Article /> }
       />
