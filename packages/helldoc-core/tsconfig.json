@@ -4,6 +4,6 @@
     "rootDir": "src",
     "outDir": "build",
     "jsx": "react",
-    "lib": ["dom"]
+    "lib": ["dom", "esnext"]
   }
 }

@@ -9,12 +9,19 @@ interface Result {
   subTitle?: string;
 }
 
+interface head {
+  subTitle?: string;
+  path: string;
+  mainTitle: string;
+  parentPath: string;
+}
+
 class Search extends React.Component<
   {},
   {
     fullWidth: boolean;
     keyword: string;
-    results: Array<Result>;
+    results: Array<head>;
     onFocus: boolean;
   }
 > {
@@ -25,18 +32,7 @@ class Search extends React.Component<
       fullWidth: false,
       onFocus: false,
       keyword: "",
-      results: [
-        {
-          link: "/hell",
-          mainTitle: "Get Start",
-          subTitle: "快速开始"
-        },
-        {
-          link: "/hell/1",
-          mainTitle: "Get Start",
-          subTitle: "快速开始"
-        }
-      ]
+      results: []
     };
     this.inputRef = React.createRef();
   }
@@ -45,9 +41,7 @@ class Search extends React.Component<
     if (window.innerWidth <= 545 && !this.state.fullWidth) {
       this.setState({ fullWidth: true });
       const node = this.inputRef.current;
-      if (node) {
-        node.focus();
-      }
+      node && node.focus();
     }
   }
 
@@ -57,58 +51,79 @@ class Search extends React.Component<
     }
   }
 
-  searching() {
-    const searchInHeaders = () => {
-      return siteData.pages.map(({ headers, path }) => {
-        let toReturn = {
-          subTitle: "",
-          path: ""
-        };
+  search() {
+    const searchHeaders = () => {
+      return siteData.pages.flatMap(({ headers, path }) => {
+        let toReturn: head[] = [];
         headers.forEach(({ text }) => {
-          if (text.indexOf(this.state.keyword) > -1) {
-            toReturn.subTitle = text;
-            toReturn.path = path + `#${text}`;
+          if (
+            text
+              .toLowerCase()
+              .indexOf(this.state.keyword.trim().toLowerCase()) > -1
+          ) {
+            toReturn.push({
+              subTitle: text,
+              path: path + `#${text}`,
+              mainTitle: "",
+              parentPath: path
+            });
           }
         });
-        // if(toReturn.subTitle && toReturn.path) {
         return toReturn;
-        // }
       });
     };
 
-    const searchInNav = (headers: any[] | null, navString: string) => {
-      if (Array.isArray(headers)) {
-        // if found keyowrd in headers
-        headers.map(head => {
-          siteData.themeConfig.nav.forEach(({ link, text }) => {
-            if (link === head.link) {
-              head.maintitle = text;
-            }
-          });
-          return head;
-        });
-      } else {
-        siteData.themeConfig.nav.map(({ link, text }) => {
-          if (text.indexof(navString) > -1) {
-            return {
+    const searchNav = (headers: head[]) => {
+      const navSearch = (head: head | null) => {
+        let toReturn: head[] = [];
+        siteData.themeConfig.nav.forEach(({ link, text }) => {
+          if (
+            text
+              .toLowerCase()
+              .indexOf(this.state.keyword.trim().toLowerCase()) > -1
+          ) {
+            toReturn.push({
               mainTitle: text,
-              link: link
-            };
+              path: link,
+              parentPath: link
+            });
+          }
+
+          if (head && head.parentPath === link) {
+            head.mainTitle = text;
+            toReturn.push(head);
           }
         });
-      }
+
+        return toReturn;
+      };
+
+      return headers.length
+        ? headers.flatMap(head => {
+            return navSearch(head);
+          })
+        : navSearch(null);
     };
 
-    let headers = searchInHeaders();
-    console.log(headers);
-    // if(headers.length) {
-    //   headers.map(({path})=> {
-    //     return searchInNav(path);
-    //   });
-    // } else {
+    let headers = searchHeaders();
+    const results = searchNav(headers);
+    this.setState({ results: results });
+  }
 
-    //   searchInNav(null, this.state.keyword);
-    // }
+  miniInput(e: any) {
+    if (
+      e.relatedTarget.nodeName === "A" &&
+      e.relatedTarget.offsetParent.nodeName === "UL"
+    ) {
+      this.setState({ keyword: "" });
+    } else {
+      this.setState({ onFocus: false });
+      this.miniWidth();
+    }
+  }
+
+  userInputing(e: React.FormEvent<HTMLInputElement>) {
+    this.setState({ keyword: e.currentTarget.value }, this.search);
   }
 
   render() {
@@ -124,22 +139,17 @@ class Search extends React.Component<
         <input
           ref={this.inputRef}
           type="text"
-          onBlur={() => {
-            this.setState({ onFocus: false });
-            this.miniWidth();
-          }}
+          onBlur={e => this.miniInput(e)}
           value={this.state.keyword}
-          onChange={e => {
-            this.setState({ keyword: e.target.value.trim() }, this.searching);
-          }}
+          onChange={e => this.userInputing(e)}
           className={`${this.state.fullWidth ? "full-width-input" : ""}`}
         />
-        {this.state.onFocus && this.state.keyword !== "" && (
+        {this.state.onFocus && (
           <ul className="search-results">
-            {this.state.results.map((item: Result) => {
+            {this.state.results.map((item: head) => {
               return (
-                <li key={item.link} className="result-item">
-                  <Link to={item.link} className="full">
+                <li key={item.path} className="result-item">
+                  <Link to={item.path} className="full link-link">
                     <span>{item.mainTitle}</span>
                     <span>{item.subTitle ? ` > ${item.subTitle}` : ``}</span>
                   </Link>

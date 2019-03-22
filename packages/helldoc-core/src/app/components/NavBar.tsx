@@ -31,7 +31,6 @@ class NavBar extends React.Component<{
           <i
             className="fas fa-bars mobile-bar"
             onClick={() => {
-              console.log("control");
               this.props.sidebarControl(!this.props.sideBarDisplay);
             }}
           />
