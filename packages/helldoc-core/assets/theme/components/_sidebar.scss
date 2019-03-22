@@ -27,7 +27,7 @@ $main-color: rgb(120, 24, 105);
   z-index: 1;
   
   @media screen and (max-width: 959px) {
-    width: $side-height;
+    width: $side-width;
   }
   @media screen and (max-width: 719px) {
     transform: translateX(-100%);

@@ -20,7 +20,7 @@
   flex: 1;
 
   @media screen and (max-width:719px) {
-    margin-left: -$side-height;
+    margin-left: -$side-width;
   }
 
   >.markdown-body {
