@@ -21,10 +21,7 @@ class Toc extends React.Component<
     const { headings } = this.props;
     const navs = resolveNavs();
     return (
-      <div
-        className={`sidebar fullwidth ${this.props.sideBarDisplay &&
-          `sidebar-open`}`}
-      >
+      <div className={`sidebar fullwidth`}>
         <div className="sidebar-top fullwidth">
           {navs.map(({ text, link }, idx) => (
             <Link key={idx} to={link} className="navstyle">
