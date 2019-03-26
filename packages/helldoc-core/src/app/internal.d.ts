@@ -3,6 +3,7 @@ declare module "@internal/site-data" {
     path: string;
     component: string;
     title: string;
+    headers: headers[];
     frontmatter?: {
       [key: string]: string;
     };
@@ -15,6 +16,12 @@ declare module "@internal/site-data" {
     themeConfig: {
       nav: any[];
     };
+  }
+  interface headers {
+    id: string;
+    level: number;
+    parent: any;
+    text: string;
   }
   const siteData: SiteData;
   export default siteData;

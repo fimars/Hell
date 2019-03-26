@@ -4,14 +4,13 @@ $mobile-max-width: 719px;
 .navbarstyle {
   background-color: #fff;
   border-bottom: 1px solid rgb(238, 238, 238);
-  // border-top: 4px solid rgb(96, 96, 96);
-  // box-shadow: rgba(0, 0, 0, 0.14) 0 0 4px 0;
   box-sizing: border-box;
   display: flex;
+  flex-direction: row;
   font-size: 14px;
   font-weight: 600;
+  justify-content: space-between;
   padding: 0 20px;
-  width: 100%;
 }
 
 .navstyle {
@@ -23,6 +22,10 @@ $mobile-max-width: 719px;
   @media screen and (max-width: $mobile-max-width) {
     display: none;
   }
+}
+
+.nav-left {
+  display: flex;
 }
 
 .mobile-bar {

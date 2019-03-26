@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { navs } from "../data/navs";
 import actions from "../store/actions";
 
+import Search from "./Search";
+import Mask from "./SideMask";
+
 interface NavBarProps {
   sidebarControl: (value: boolean) => void;
   sideBarDisplay: boolean;
@@ -18,17 +21,22 @@ class NavBar extends React.Component<NavBarProps> {
   render() {
     return (
       <div className="navbarstyle">
-        <i className="fas fa-bars mobile-bar" onClick={this.toggleSidebar} />
+        <div className="nav-left">
+          <i className="fas fa-bars mobile-bar" onClick={this.toggleSidebar} />
 
-        {this.props.sideBarDisplay && (
-          <div className="side-mask" onClick={this.toggleSidebar} />
-        )}
+          {navs.map(({ text, link }, idx) => (
+            <Link key={idx} to={link} className="navstyle">
+              <div>{text}</div>
+            </Link>
+          ))}
+        </div>
 
-        {navs.map(({ text, link }, idx) => (
-          <Link key={idx} to={link} className="navstyle">
-            <div>{text}</div>
-          </Link>
-        ))}
+        <Mask
+          sideBarDisplay={this.props.sideBarDisplay}
+          sidebarControl={this.props.sidebarControl}
+        />
+
+        <Search />
       </div>
     );
   }
