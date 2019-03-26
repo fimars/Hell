@@ -10,19 +10,6 @@ interface HeadingData {
   parent?: string;
 }
 
-interface TocProps {
-  headings: HeadingData[];
-  sideBarDisplay: boolean;
-}
-
-function SideNavs() {
-  return navs.map(({ text, link }) => (
-    <Link key={text} to={link} className="navstyle">
-      <div>{text}</div>
-    </Link>
-  ));
-}
-
 interface HeadingLinkProps {
   heading: HeadingData;
 }
@@ -46,22 +33,41 @@ class HeadingLink extends React.PureComponent<HeadingLinkProps> {
   }
 }
 
+function SidebarTop() {
+  return (
+    <div className="sidebar-top">
+      {navs.map(({ text, link }) => (
+        <Link key={text} to={link} className="navstyle">
+          <div>{text}</div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+interface SidebarBottomProps {
+  headings: HeadingData[];
+}
+function SidebarBottom({ headings }: SidebarBottomProps) {
+  return (
+    <div className="sibar-bottom">
+      {headings.map(heading => (
+        <HeadingLink heading={heading} key={heading.id} />
+      ))}
+    </div>
+  );
+}
+
+interface TocProps {
+  headings: HeadingData[];
+  sideBarDisplay: boolean;
+}
 class Toc extends React.Component<TocProps> {
   public render() {
     const { headings } = this.props;
     return (
-      <div
-        className={`sidebar fullwidth ${this.props.sideBarDisplay &&
-          `sidebar-open`}`}
-      >
-        <div className="sidebar-top fullwidth">{SideNavs()}</div>
-        <div className="sibar-bottom fullwidth">
-          {headings.map(heading => (
-            <Heading key={heading.id} level={heading.level}>
-              <HeadingLink heading={heading} key={heading.id} />
-            </Heading>
-          ))}
-        </div>
+      <div className="sidebar">
+        <SidebarTop />
+        <SidebarBottom headings={headings} />
       </div>
     );
   }

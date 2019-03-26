@@ -61,7 +61,11 @@ $main-color: rgb(120, 24, 105);
 }
 
 .sibar-bottom {
-  padding: 1.8rem 0;
+  padding: 1.8rem 1rem;
+  @media screen and (max-width: 959px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .nav-label-item {
