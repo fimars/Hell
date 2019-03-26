@@ -5,13 +5,13 @@ class Mask extends React.PureComponent<{
   sidebarControl: (arg0: boolean) => void;
 }> {
   render() {
-    return this.props.sideBarDisplay ? (
-      <div
-        className="side-mask"
-        onClick={() => this.props.sidebarControl(false)}
-      />
-    ) : (
-      ""
+    return (
+      this.props.sideBarDisplay && (
+        <div
+          className="side-mask"
+          onClick={() => this.props.sidebarControl(false)}
+        />
+      )
     );
   }
 }

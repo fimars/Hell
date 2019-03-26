@@ -26,7 +26,7 @@ class NavBar extends React.Component<{
   render() {
     const navs = resolveNavs();
     return (
-      <div className="navbarstyle">
+      <div className="navbar">
         <div className="nav-left">
           <i
             className="fas fa-bars mobile-bar"
