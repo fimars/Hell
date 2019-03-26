@@ -2,7 +2,9 @@ import * as React from "react";
 
 import { Link } from "react-router-dom";
 import siteData from "@internal/site-data";
-import { TocHead as header } from "../../types";
+
+const navData = siteData.themeConfig.nav;
+const pageData = siteData.pages;
 
 interface head {
   subTitle?: string;
@@ -11,18 +13,22 @@ interface head {
   parentPath: string;
 }
 
-interface SearchResultItemProps {
-  item: head;
-  onClick: () => void;
+interface SearchResultProps {
+  results: head[];
+  onItemClick: () => void;
 }
-function SearchResultItem({ item, onClick }: SearchResultItemProps) {
+function SearchResult({ results, onItemClick }: SearchResultProps) {
   return (
-    <li key={item.path} className="result-item">
-      <Link to={item.path} onClick={onClick} className="full link-link">
-        <span>{item.mainTitle}</span>
-        <span>{item.subTitle ? ` > ${item.subTitle}` : ``}</span>
-      </Link>
-    </li>
+    <ul className="search-results">
+      {results.map((item: head) => (
+        <li key={item.path} className="result-item">
+          <Link to={item.path} onClick={onItemClick} className="full link-link">
+            <span>{item.mainTitle}</span>
+            <span>{item.subTitle ? ` > ${item.subTitle}` : ``}</span>
+          </Link>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -43,11 +49,6 @@ class Search extends React.Component<{}, SearchState> {
       results: []
     };
     this.inputRef = React.createRef();
-
-    this.onTouchSearchBox = this.onTouchSearchBox.bind(this);
-    this.onLeaveSearchBox = this.onLeaveSearchBox.bind(this);
-    this.userInputing = this.userInputing.bind(this);
-    this.clearState = this.clearState.bind(this);
   }
 
   render() {
@@ -65,34 +66,33 @@ class Search extends React.Component<{}, SearchState> {
           id="searchInput"
         />
         {hasResult && (
-          <ul className="search-results">
-            {this.state.results.map((item: head) => (
-              <SearchResultItem item={item} onClick={this.clearState} />
-            ))}
-          </ul>
+          <SearchResult
+            results={this.state.results}
+            onItemClick={this.resetState}
+          />
         )}
       </div>
     );
   }
 
-  onTouchSearchBox() {
+  onTouchSearchBox = () => {
     this.setState({ onFocus: true });
     this.isFullWidth();
-  }
-  onLeaveSearchBox() {
+  };
+  onLeaveSearchBox = () => {
     if (isMobileSize()) {
       this.setState({ fullWidth: false });
     }
-  }
-  userInputing(e: React.FormEvent<HTMLInputElement>) {
+  };
+  userInputing = (e: React.FormEvent<HTMLInputElement>) => {
     this.setState({ keyword: e.currentTarget.value }, this.search);
-  }
-  clearState() {
+  };
+  resetState = () => {
     this.setState({
       keyword: "",
       onFocus: false
     });
-  }
+  };
 
   isFullWidth() {
     const shouldUseFullWidth = isMobileSize() && !this.state.fullWidth;
@@ -102,7 +102,6 @@ class Search extends React.Component<{}, SearchState> {
       node && node.focus();
     }
   }
-
   search() {
     let headers = this.searchPagesHeaders();
     if (headers.length) {
@@ -115,30 +114,22 @@ class Search extends React.Component<{}, SearchState> {
     });
   }
   searchPagesHeaders() {
-    let headerResult: head[] = [];
-    siteData.pages.forEach(page => {
-      page.headers.forEach((header: header) => {
-        const isMatchResult =
-          header.text
-            .toLowerCase()
-            .indexOf(this.state.keyword.trim().toLowerCase()) > -1 &&
-          this.state.keyword !== "";
-        if (isMatchResult) {
-          const newHeaderResult = {
-            subTitle: header.text,
-            path: `${page.path}#${header.text}`,
-            parentPath: page.path,
-            mainTitle: ""
-          };
-          headerResult.push(newHeaderResult);
-        }
-      });
-    });
+    const headerResult: head[] = pageData.reduce((result: head[], page) => {
+      const matchHeaders = page.headers
+        .filter(this.isMatchItem)
+        .map(header => ({
+          subTitle: header.text,
+          path: `${page.path}#${header.text}`,
+          parentPath: page.path,
+          mainTitle: ""
+        }));
+      return result.concat(matchHeaders);
+    }, []);
     return headerResult;
   }
   addMainTitle(headers: head[]) {
     headers.forEach(head => {
-      siteData.themeConfig.nav.forEach(({ text, link }) => {
+      navData.forEach(({ text, link }) => {
         if (head.parentPath === link) {
           head.mainTitle = text;
         }
@@ -146,23 +137,20 @@ class Search extends React.Component<{}, SearchState> {
     });
   }
   searchNavs() {
-    let navResults: head[] = [];
-    siteData.themeConfig.nav.forEach((nav: { text: string; link: string }) => {
-      const isMatchResult =
-        nav.text
-          .toLowerCase()
-          .indexOf(this.state.keyword.trim().toLowerCase()) > -1 &&
-        this.state.keyword !== "";
-      if (isMatchResult) {
-        navResults.push({
-          path: nav.link,
-          parentPath: nav.link,
-          mainTitle: nav.text
-        });
-      }
-    });
+    const navResults: head[] = navData.filter(this.isMatchItem).map(nav => ({
+      path: nav.link,
+      parentPath: nav.link,
+      mainTitle: nav.text
+    }));
     return navResults;
   }
+
+  isMatchItem = (item: { text: string }) => {
+    return (
+      item.text.toLowerCase().indexOf(this.state.keyword.trim().toLowerCase()) >
+        -1 && this.state.keyword !== ""
+    );
+  };
 }
 
 function isMobileSize() {

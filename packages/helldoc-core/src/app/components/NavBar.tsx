@@ -7,6 +7,23 @@ import actions from "../store/actions";
 import Search from "./Search";
 import Mask from "./SideMask";
 
+interface NavsProps {
+  onIconClick: () => void;
+}
+function Navs(props: NavsProps) {
+  return (
+    <div className="nav-left">
+      <i className="fas fa-bars mobile-bar" onClick={props.onIconClick} />
+
+      {navs.map(({ text, link }, idx) => (
+        <Link key={idx} to={link} className="navstyle">
+          <div>{text}</div>
+        </Link>
+      ))}
+    </div>
+  );
+}
+
 interface NavBarProps {
   sidebarControl: (value: boolean) => void;
   sideBarDisplay: boolean;
@@ -15,27 +32,15 @@ interface NavBarProps {
 class NavBar extends React.Component<NavBarProps> {
   constructor(props: NavBarProps) {
     super(props);
-    this.toggleSidebar = this.toggleSidebar.bind(this);
-    this.resizeListener = this.resizeListener.bind(this);
   }
   render() {
     return (
       <div className="navbarstyle">
-        <div className="nav-left">
-          <i className="fas fa-bars mobile-bar" onClick={this.toggleSidebar} />
-
-          {navs.map(({ text, link }, idx) => (
-            <Link key={idx} to={link} className="navstyle">
-              <div>{text}</div>
-            </Link>
-          ))}
-        </div>
-
+        <Navs onIconClick={this.toggleSidebar} />
         <Mask
           sideBarDisplay={this.props.sideBarDisplay}
           sidebarControl={this.props.sidebarControl}
         />
-
         <Search />
       </div>
     );
@@ -46,14 +51,14 @@ class NavBar extends React.Component<NavBarProps> {
   componentWillUnmount() {
     window.removeEventListener("resize", this.resizeListener);
   }
-  private toggleSidebar() {
+  toggleSidebar = () => {
     this.props.sidebarControl(!this.props.sideBarDisplay);
-  }
-  private resizeListener() {
+  };
+  resizeListener = () => {
     if (window.innerWidth > 719) {
       this.props.sidebarControl(false);
     }
-  }
+  };
 }
 
 // TODO: extract the types interface

@@ -1,19 +1,20 @@
 import * as React from "react";
 
-class Mask extends React.PureComponent<{
+interface MaskProps {
   sideBarDisplay: boolean;
-  sidebarControl: (arg0: boolean) => void;
-}> {
+  sidebarControl: (val: boolean) => void;
+}
+class Mask extends React.PureComponent<MaskProps> {
   render() {
     return (
       this.props.sideBarDisplay && (
-        <div
-          className="side-mask"
-          onClick={() => this.props.sidebarControl(false)}
-        />
+        <div className="side-mask" onClick={this.closeSideBar} />
       )
     );
   }
+  closeSideBar = () => {
+    this.props.sidebarControl(false);
+  };
 }
 
 export default Mask;
