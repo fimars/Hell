@@ -1,25 +1,54 @@
 import * as React from "react";
 import Heading from "../components/Heading";
 import { Link } from "react-router-dom";
-import { resolveNavs } from "../util";
+import { navs } from "../data/navs";
 
-export interface IHeading {
+interface HeadingData {
   level: number;
   text: string;
   id: string;
   parent?: string;
 }
 
-class Toc extends React.Component<
-  {
-    headings: IHeading[];
-    sideBarDisplay: boolean;
-  },
-  {}
-> {
+interface TocProps {
+  headings: HeadingData[];
+  sideBarDisplay: boolean;
+}
+
+function SideNavs() {
+  return navs.map(({ text, link }) => (
+    <Link key={text} to={link} className="navstyle">
+      <div>{text}</div>
+    </Link>
+  ));
+}
+
+interface HeadingLinkProps {
+  heading: HeadingData;
+}
+class HeadingLink extends React.PureComponent<HeadingLinkProps> {
+  render() {
+    const { heading } = this.props;
+    return (
+      <Heading level={heading.level}>
+        <Link {...this.getLinkProps(heading)} />
+      </Heading>
+    );
+  }
+
+  private getLinkProps({ text }: HeadingData) {
+    const clearText = text.replace(/\(.*\)/, "");
+    return {
+      dangerouslySetInnerHTML: { __html: clearText },
+      replace: false,
+      to: "#" + encodeURIComponent(clearText)
+    };
+  }
+}
+
+class Toc extends React.Component<TocProps> {
   public render() {
     const { headings } = this.props;
-    const navs = resolveNavs();
     return (
       <div className={`sidebar fullwidth`}>
         <div className="sidebar-top fullwidth">
@@ -30,24 +59,14 @@ class Toc extends React.Component<
           ))}
         </div>
         <div className="sibar-bottom fullwidth">
-          {headings.map((heading, idx) => {
-            return (
-              <Heading key={idx} level={heading.level}>
-                <Link {...this.getLinkProps(heading)} />
-              </Heading>
-            );
-          })}
+          {headings.map(heading => (
+            <Heading key={heading.id} level={heading.level}>
+              <HeadingLink heading={heading} key={heading.id} />
+            </Heading>
+          ))}
         </div>
       </div>
     );
-  }
-  private getLinkProps({ text }: IHeading) {
-    const clearText = text.replace(/\(.*\)/, "");
-    return {
-      dangerouslySetInnerHTML: { __html: clearText },
-      replace: false,
-      to: "#" + encodeURIComponent(clearText)
-    };
   }
 }
 

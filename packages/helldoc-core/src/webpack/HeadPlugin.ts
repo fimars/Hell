@@ -14,7 +14,7 @@ export = class HeadPlugin {
   apply(compiler: Compiler) {
     compiler.hooks.compilation.tap("helldoc-site-head", compilation => {
       (compilation.hooks as any).htmlWebpackPluginAlterAssetTags.tapAsync(
-        "vuepress-site-data",
+        "helldoc-site-data",
         (data: any, cb: any) => {
           try {
             this.tags.forEach(tag => {

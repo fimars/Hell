@@ -28,6 +28,7 @@ export default class Page extends React.Component<PageProps, PageState> {
     });
 
     const Content = existPage ? pages[existPage.component] : NotFound;
+    // TODO: extract sidebar out
     return (
       <React.Suspense fallback={<div>Loading...</div>}>
         <Content />
