@@ -3,19 +3,6 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import siteData from "@internal/site-data";
 
-// interface Result {
-//   link: string;
-//   mainTitle: string;
-//   subTitle?: string;
-// }
-
-interface header {
-  id: string;
-  level: number;
-  parent?: any;
-  text: string;
-}
-
 interface head {
   subTitle?: string;
   path: string;
@@ -37,7 +24,7 @@ class Search extends React.Component<
     super(props);
     this.state = {
       fullWidth: false,
-      onFocus: true,
+      onFocus: false,
       keyword: "",
       results: []
     };
@@ -59,87 +46,78 @@ class Search extends React.Component<
   }
 
   search() {
-    let headers = this.searchPagesHeaders();
-    if (headers.length) {
-      this.addMainTitle(headers);
-    } else {
-      headers = this.searchNavs();
-    }
-    this.setState({
-      results: headers
-    });
-  }
-
-  searchPagesHeaders() {
-    let headerResult: head[] = [];
-    siteData.pages.forEach(page => {
-      page.headers.forEach((header: header) => {
-        if (
-          header.text
-            .toLowerCase()
-            .indexOf(this.state.keyword.trim().toLowerCase()) > -1 &&
-          this.state.keyword !== ""
-        ) {
-          headerResult.push({
-            subTitle: header.text,
-            path: `${page.path}#${header.text}`,
-            parentPath: page.path,
-            mainTitle: ""
-          });
-        }
-      });
-    });
-    return headerResult;
-  }
-
-  addMainTitle(headers: head[]) {
-    headers.forEach((head: head) => {
-      siteData.themeConfig.nav.forEach(({ text, link }) => {
-        if (head.parentPath === link) {
-          head.mainTitle = text;
-        }
-      });
-    });
-  }
-
-  searchNavs() {
-    let navResults: head[] = [];
-    siteData.themeConfig.nav.forEach((nav: { text: string; link: string }) => {
-      if (
-        nav.text
-          .toLowerCase()
-          .indexOf(this.state.keyword.trim().toLowerCase()) > -1 &&
-        this.state.keyword !== ""
-      ) {
-        navResults.push({
-          path: nav.link,
-          parentPath: nav.link,
-          mainTitle: nav.text
+    const searchHeaders = () => {
+      return siteData.pages.flatMap(({ headers, path }) => {
+        let toReturn: head[] = [];
+        headers.forEach(({ text }) => {
+          if (
+            text
+              .toLowerCase()
+              .indexOf(this.state.keyword.trim().toLowerCase()) > -1
+          ) {
+            toReturn.push({
+              subTitle: text,
+              path: path + `#${text}`,
+              mainTitle: "",
+              parentPath: path
+            });
+          }
         });
-      }
-    });
-    return navResults;
+        return toReturn;
+      });
+    };
+
+    const searchNav = (headers: head[]) => {
+      const navSearch = (head: head | null) => {
+        let toReturn: head[] = [];
+        siteData.themeConfig.nav.forEach(({ link, text }) => {
+          if (
+            text
+              .toLowerCase()
+              .indexOf(this.state.keyword.trim().toLowerCase()) > -1
+          ) {
+            toReturn.push({
+              mainTitle: text,
+              path: link,
+              parentPath: link
+            });
+          }
+
+          if (head && head.parentPath === link) {
+            head.mainTitle = text;
+            toReturn.push(head);
+          }
+        });
+
+        return toReturn;
+      };
+
+      return headers.length
+        ? headers.flatMap(head => {
+            return navSearch(head);
+          })
+        : navSearch(null);
+    };
+
+    let headers = searchHeaders();
+    const results = searchNav(headers);
+    this.setState({ results: results });
   }
 
-  miniInput(e: React.FocusEvent) {
-    if (!e.relatedTarget) {
+  miniInput(e: any) {
+    if (
+      e.relatedTarget.nodeName === "A" &&
+      e.relatedTarget.offsetParent.nodeName === "UL"
+    ) {
+      this.setState({ keyword: "" });
+    } else {
       this.setState({ onFocus: false });
       this.miniWidth();
     }
-    // else if(e.relatedTarget && (e.relatedTarget as HTMLElement).className === "full link-link") {
-
-    // }
   }
 
   userInputing(e: React.FormEvent<HTMLInputElement>) {
     this.setState({ keyword: e.currentTarget.value }, this.search);
-  }
-
-  linkClick() {
-    this.setState({
-      keyword: "",
-      onFocus: false
-    });
   }
 
   render() {
@@ -159,18 +137,13 @@ class Search extends React.Component<
           value={this.state.keyword}
           onChange={e => this.userInputing(e)}
           className={`${this.state.fullWidth ? "full-width-input" : ""}`}
-          id="searchInput"
         />
-        {this.state.onFocus && this.state.keyword.trim() && (
+        {this.state.onFocus && (
           <ul className="search-results">
             {this.state.results.map((item: head) => {
               return (
                 <li key={item.path} className="result-item">
-                  <Link
-                    to={item.path}
-                    onClick={() => this.linkClick()}
-                    className="full link-link"
-                  >
+                  <Link to={item.path} className="full link-link">
                     <span>{item.mainTitle}</span>
                     <span>{item.subTitle ? ` > ${item.subTitle}` : ``}</span>
                   </Link>

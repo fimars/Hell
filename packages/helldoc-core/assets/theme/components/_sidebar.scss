@@ -7,7 +7,6 @@ $main-color: rgb(120, 24, 105);
 %item-wrap-paddinger {
   padding: 1.2rem 0 0.75rem;
 }
-  
 
 .fullwidth {
   width: 100%;
@@ -27,13 +26,11 @@ $main-color: rgb(120, 24, 105);
   margin-top: 55px;
   overflow-y: scroll;
   overflow-y: auto;
-  position: fixed;
-  top: 0;
   width: 18rem;
   z-index: 1;
   
   @media screen and (max-width: 959px) {
-    width: 16.4rem;
+    width: $side-width;
   }
   @media screen and (max-width: 719px) {
     transform: translateX(-100%);
@@ -46,10 +43,6 @@ $main-color: rgb(120, 24, 105);
   transform: translateX(0);
 }
 
-.nav.section {
-  margin: 0;
-}
-
 .sidebar-top {
   @extend %item-wrap-paddinger;
   border-bottom: 1px solid #eaecef;
@@ -59,14 +52,12 @@ $main-color: rgb(120, 24, 105);
   }
 }
 
-.sidebar-top {
-  .navstyle {
-    @extend %item-paddinger;
-    font-size: 1.1rem;
-    line-height: 1.25rem;
-    @media screen and (max-width: 719px) {
-      display: block;
-    }
+.sidebar-top .navbar {
+  @extend %item-paddinger;
+  font-size: 1.1rem;
+  line-height: 1.25rem;
+  @media screen and (max-width: 719px) {
+    display: block;
   }
 }
 
