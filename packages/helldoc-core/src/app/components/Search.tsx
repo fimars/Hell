@@ -44,7 +44,7 @@ class Search extends React.Component<{}, SearchState> {
     super(props);
     this.state = {
       fullWidth: false,
-      onFocus: true,
+      onFocus: false,
       keyword: "",
       results: []
     };
@@ -59,7 +59,7 @@ class Search extends React.Component<{}, SearchState> {
         <input
           ref={this.inputRef}
           type="text"
-          onBlur={this.onLeaveSearchBox}
+          onBlur={e => this.onLeaveSearchBox(e)}
           value={this.state.keyword}
           onChange={this.userInputing}
           className={`${this.state.fullWidth ? "full-width-input" : ""}`}
@@ -79,9 +79,12 @@ class Search extends React.Component<{}, SearchState> {
     this.setState({ onFocus: true });
     this.isFullWidth();
   };
-  onLeaveSearchBox = () => {
-    if (isMobileSize()) {
-      this.setState({ fullWidth: false });
+  onLeaveSearchBox = (e: React.FocusEvent) => {
+    if (!e.relatedTarget) {
+      if (isMobileSize()) {
+        this.setState({ fullWidth: false });
+      }
+      this.setState({ onFocus: false });
     }
   };
   userInputing = (e: React.FormEvent<HTMLInputElement>) => {
