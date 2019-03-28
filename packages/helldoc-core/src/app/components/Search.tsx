@@ -44,7 +44,7 @@ class Search extends React.Component<{}, SearchState> {
     super(props);
     this.state = {
       fullWidth: false,
-      onFocus: true,
+      onFocus: false,
       keyword: "",
       results: []
     };
@@ -79,9 +79,10 @@ class Search extends React.Component<{}, SearchState> {
     this.setState({ onFocus: true });
     this.isFullWidth();
   };
-  onLeaveSearchBox = () => {
-    if (isMobileSize()) {
-      this.setState({ fullWidth: false });
+  onLeaveSearchBox = (e: React.FocusEvent) => {
+    if (!e.relatedTarget) {
+      isMobileSize() && this.setState({ fullWidth: false });
+      this.setState({ onFocus: false });
     }
   };
   userInputing = (e: React.FormEvent<HTMLInputElement>) => {

@@ -35,7 +35,7 @@ class NavBar extends React.Component<NavBarProps> {
   }
   render() {
     return (
-      <div className="navbarstyle">
+      <div className="navbar">
         <Navs onIconClick={this.toggleSidebar} />
         <Mask
           sideBarDisplay={this.props.sideBarDisplay}
