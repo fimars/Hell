@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/fimars/hell/releases/tag/v0.3.1) - 2019-03-29
+
+### Added
+
+- add search-bar component #16 #17
+- add markdown code highlight support #19
+
 ## [0.3.0](https://github.com/fimars/hell/releases/tag/v0.3.0) - 2019-03-18
 
 ### Added
