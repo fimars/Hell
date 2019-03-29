@@ -1,12 +1,12 @@
-import { getOptions } from "loader-utils";
 import { loader } from "webpack";
 import { parseFrontmatter, extractHeaders } from "../util";
+import md from "../markdown";
 
 export default function MarkdownLoader(
   this: loader.LoaderContext,
   source: string
 ) {
-  const { markdown } = getOptions(this);
+  const markdown = md();
   const frontmatter = parseFrontmatter(source);
 
   const headers = extractHeaders(frontmatter.content, markdown.lexer);

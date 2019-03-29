@@ -1,6 +1,5 @@
 import { resolve } from "path";
 import Config = require("webpack-chain");
-import markdown = require("marked");
 
 import { resolveAppPath, resolveAssetsPath } from "./util";
 import { AppContext } from "../types";
@@ -98,15 +97,14 @@ export default function(ctx: AppContext) {
         ]
       })
       .end()
+      .exclude.add(/node_modules/)
+      .end()
   );
 
   // handle the markdown part
   mdRule
     .use("easy-markdown-loader")
     .loader(require.resolve("./markdownLoader"))
-    .options({
-      markdown
-    })
     .end();
 
   const styleRule = config.module.rule("scss").test(/\.scss$/);

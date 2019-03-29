@@ -424,7 +424,7 @@ Repo: https://github.com/sindresorhus/github-markdown-css
   padding-right: 20px;
 }
 
-.markdown-body code {
+.markdown-body :not(pre) > code {
   color: $electric-violet;
   font-size: 0.9em;
   margin: 0;
@@ -433,21 +433,14 @@ Repo: https://github.com/sindresorhus/github-markdown-css
   &::after { content: '`'; }
 }
 
-.markdown-body pre {
-  word-wrap: normal;
-}
 
 .markdown-body pre>code {
-  background: transparent;
   border: 0;
   font-size: 100%;
   margin: 0;
   padding: 0;
   white-space: pre;
   word-break: normal;
-
-  &::before,
-  &::after { content: ''; }
 }
 
 .markdown-body .highlight {
@@ -462,21 +455,12 @@ Repo: https://github.com/sindresorhus/github-markdown-css
 .markdown-body .highlight pre,
 .markdown-body pre {
   border: $border-default;
+  word-wrap: normal;
   line-height: 2;
   overflow: auto;
   padding: 20px 16px;
 }
 
-.markdown-body pre code {
-  background-color: transparent;
-  border: 0;
-  display: inline;
-  line-height: inherit;
-  margin: 0;
-  overflow: visible;
-  padding: 0;
-  word-wrap: normal;
-}
 
 .markdown-body .full-commit .btn-outline:not(:disabled):hover {
   border-color: #005cc5;
