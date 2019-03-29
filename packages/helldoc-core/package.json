@@ -1,6 +1,6 @@
 {
   "name": "@helldoc/core",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "helldoc core",
   "main": "build/index.js",
   "author": "fimars <foru.fy@gmail.com>",
