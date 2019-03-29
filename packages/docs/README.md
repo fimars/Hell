@@ -2,9 +2,14 @@
 
 ## 快速开始
 
-1. `npm install @helldoc/cli -g` 安装 HellDoc
-2. `echo '# Hello World' > README.md` 新建一个 README.md 文件
-3. `helldoc dev` 启动
+```bash
+# 1. 安装 HellDoc
+npm install @helldoc/cli -g
+# 2. 新建一个 README.md 文件
+`echo '# Hello World' > README.md`
+# 3. Enjoy
+`helldoc dev`
+```
 
 开始体验吧。
 
