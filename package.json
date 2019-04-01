@@ -32,9 +32,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "dependencies": {
-    "react-redux": "^6.0.1",
-    "redux": "^4.0.1"
   }
 }
