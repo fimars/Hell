@@ -7,13 +7,7 @@ import { AppContext } from "../types";
 export default function(ctx: AppContext): Config {
   const config = createBaseConfig(ctx);
 
-  config.entry("app").add(resolveAppPath("app"));
-
-  config.plugin("head").use(require("./HeadPlugin"), [
-    {
-      tags: ctx.siteConfig.head || []
-    }
-  ]);
+  config.entry("client").add(resolveAppPath("client"));
 
   if (process.env.NODE_ENV === "production") {
     config

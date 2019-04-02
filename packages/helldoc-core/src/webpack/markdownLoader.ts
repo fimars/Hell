@@ -6,6 +6,10 @@ export default function MarkdownLoader(
   this: loader.LoaderContext,
   source: string
 ) {
+  return markdownToReact(source);
+}
+
+export function markdownToReact(source: string) {
   const markdown = md();
   const frontmatter = parseFrontmatter(source);
 

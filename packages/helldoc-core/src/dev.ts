@@ -9,6 +9,7 @@ import createClientConfig from "./webpack/createClientConfig";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
 import { CLIOptions } from "./types";
+import { resolveAssetsPath } from "./webpack/util";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
   try {
@@ -28,7 +29,7 @@ async function dev(sourceDir: string, cliOptions: CLIOptions) {
 
 async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   console.log("\nExtracting site metadata...");
-  const options = await prepare(sourceDir, cliOptions);
+  const ctx = await prepare(sourceDir, cliOptions);
 
   // setup watchers to update options and dynamically generated files
   const update = (file: string) => {
@@ -59,15 +60,27 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   pagesWatcher.on("unlinkDir", update);
 
   // mount the dev server
-  const configChain = createClientConfig(options);
+  const configChain = createClientConfig(ctx);
   const host = "localhost";
   const port = await portfinder.getPortPromise();
+
+  configChain
+    .plugin("html")
+    .use(require("html-webpack-plugin"), [
+      { template: resolveAssetsPath("index.template.html") }
+    ]);
+
+  configChain.plugin("head").use(require("./webpack/HeadPlugin"), [
+    {
+      tags: ctx.siteConfig.head || []
+    }
+  ]);
 
   configChain.plugin("helldoc-log").use(require("./webpack/DevLogPlugin"), [
     {
       displayHost: host,
       port,
-      publicPath: options.siteConfig.base || "/"
+      publicPath: ctx.siteConfig.base || "/"
     }
   ]);
 
@@ -86,13 +99,13 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
     },
     historyApiFallback: {
       disableDotRule: true,
-      rewrites: [{ from: /./, to: posix.join(options.base, "index.html") }]
+      rewrites: [{ from: /./, to: posix.join(ctx.base, "index.html") }]
     },
     contentBase,
-    publicPath: options.base,
+    publicPath: ctx.base,
     before(app) {
       if (existsSync(contentBase)) {
-        app.use(options.base, require("express").static(contentBase));
+        app.use(ctx.base, require("express").static(contentBase));
       }
     }
   };

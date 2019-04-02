@@ -45,7 +45,7 @@ class NavBar extends React.Component<NavBarProps> {
       </div>
     );
   }
-  componentWillMount() {
+  componentDidMount() {
     window.addEventListener("resize", this.resizeListener);
   }
   componentWillUnmount() {

@@ -30,3 +30,8 @@ declare module "@internal/pages" {
   const pages: { [key: string]: any };
   export default pages;
 }
+declare module NodeJS {
+  interface Global {
+    RUNTIME_DIST_PATH: string;
+  }
+}
