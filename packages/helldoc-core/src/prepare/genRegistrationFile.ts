@@ -5,11 +5,6 @@ export default async function genRegistrationFile({
   sourceDir,
   pageFiles
 }: AppContext) {
-  // function genImport(file: string) {
-  //   const name = toComponentName(file);
-  //   const code = `import ${name} from ${JSON.stringify(absolutePath)};`;
-  //   return code;
-  // }
   function genRoutes(file: string) {
     const name = toComponentName(file);
     const absolutePath = resolve(sourceDir, file);
@@ -18,7 +13,6 @@ export default async function genRegistrationFile({
   }
   return (
     `import React, { lazy } from 'react'\n` +
-    // `${pageFiles.map(genImport).join("\n")}\n` +
     `export default {\n  ${pageFiles.map(genRoutes).join(",\n  ")}\n};`
   );
 }

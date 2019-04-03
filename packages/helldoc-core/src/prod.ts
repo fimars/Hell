@@ -2,11 +2,11 @@ import * as Webpack from "webpack";
 import * as fs from "fs-extra";
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
+import createServerConfig from "./webpack/createServerConfig";
 
 import { CLIOptions, AppContext } from "./types";
 import { resolve } from "path";
 import { existsSync, emptyDir } from "fs-extra";
-import createServerConfig from "./webpack/createServerConfig";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";
@@ -19,7 +19,7 @@ async function prod(sourceDir: string, cliOptions: CLIOptions) {
   await compile(client);
   await compile(server);
 
-  genStaticHTMLFiles(ctx.outDir);
+  genStaticHTMLFiles(ctx);
 }
 export default prod;
 
@@ -40,11 +40,12 @@ function resolveClientConfig(sourceDir: string, ctx: AppContext) {
   return chainClient.toConfig();
 }
 
-function genStaticHTMLFiles(outDir: string) {
-  const resolveOutDir = (path: string) => resolve(outDir, path);
-  require(resolveOutDir("scripts/ssr.js")); // run the server script
-  // clear
+function genStaticHTMLFiles(ctx: AppContext) {
+  const resolveOutDir = (path: string) => resolve(ctx.outDir, path);
+  fs.writeJSONSync(resolveOutDir("head.manifest.json"), ctx.siteConfig.head);
+  require(resolveOutDir("scripts/ssr.js"));
   fs.removeSync(resolveOutDir("scripts"));
+  fs.removeSync(resolveOutDir("head.manifest.json"));
   fs.removeSync(resolveOutDir("manifest.json"));
 }
 
