@@ -19,12 +19,15 @@ async function prod(sourceDir: string, cliOptions: CLIOptions) {
 
   const server = resolveServerConfig(options);
   const client = resolveClientConfig(sourceDir, options);
-  await Promise.all([compile(client), compile(server)]);
+  await compile(client);
+  await compile(server);
 
-  const ssrScriptPath = resolve(options.outDir, "scripts/ssr.js");
-  require(ssrScriptPath); // run the server script
+  const resolveOutDir = (path: string) => resolve(options.outDir, path);
+  require(resolveOutDir("scripts/ssr.js")); // run the server script
 
-  fs.removeSync(ssrScriptPath);
+  // clear
+  fs.removeSync(resolveOutDir("scripts"));
+  fs.removeSync(resolveOutDir("manifest.json"));
 }
 export default prod;
 

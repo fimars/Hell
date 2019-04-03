@@ -55,6 +55,7 @@
     "webpack": "^4.29.0",
     "webpack-chain": "^5.2.0",
     "webpack-dev-server": "^3.1.14",
+    "webpack-manifest-plugin": "^2.0.4",
     "webpackbar": "^3.1.5"
   },
   "devDependencies": {

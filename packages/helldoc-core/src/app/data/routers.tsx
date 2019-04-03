@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
-import NavBar from "./components/NavBar";
-import Base from "./components/Base";
-import NotFound from "./components/NotFound";
+import NavBar from "../components/NavBar";
+import Base from "../components/Base";
+import NotFound from "../components/NotFound";
 
 import pages from "@internal/pages";
 import siteData from "@internal/site-data";

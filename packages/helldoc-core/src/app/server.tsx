@@ -5,7 +5,7 @@ import { StaticRouter } from "react-router-dom";
 import { createStore } from "redux";
 
 import { sidebarReducer } from "./store/reducer";
-import genApplicationRouter from "./genApplicationRouter";
+import ApplicationRouter from "./data/routers";
 import siteData from "@internal/site-data";
 
 let App = class extends React.PureComponent<{ location: string }> {
@@ -15,13 +15,13 @@ let App = class extends React.PureComponent<{ location: string }> {
     return (
       <Provider store={createStore(sidebarReducer)}>
         <StaticRouter basename={basename} location={location}>
-          {genApplicationRouter()}
+          <ApplicationRouter />
         </StaticRouter>
       </Provider>
     );
   }
 };
 
-export function render(location = "/") {
+export default function render(location = "/") {
   return ReactDOMServer.renderToString(<App location={location} />);
 }
