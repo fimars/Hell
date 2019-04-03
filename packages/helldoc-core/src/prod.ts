@@ -1,4 +1,5 @@
 import * as Webpack from "webpack";
+import * as fs from "fs-extra";
 
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
@@ -18,11 +19,12 @@ async function prod(sourceDir: string, cliOptions: CLIOptions) {
 
   const server = resolveServerConfig(options);
   const client = resolveClientConfig(sourceDir, options);
-  await compile(client);
-  await compile(server);
+  await Promise.all([compile(client), compile(server)]);
 
   const ssrScriptPath = resolve(options.outDir, "scripts/ssr.js");
   require(ssrScriptPath); // run the server script
+
+  fs.removeSync(ssrScriptPath);
 }
 export default prod;
 
@@ -31,6 +33,7 @@ function resolveServerConfig(options: AppContext) {
   chainServer.entry("server").add(resolveAppPath("ssr"));
   chainServer.target("node");
   chainServer.externals(nodeExternals());
+  chainServer.node.set("__dirname", false);
   chainServer.output.filename("scripts/ssr.js");
   return chainServer.toConfig();
 }

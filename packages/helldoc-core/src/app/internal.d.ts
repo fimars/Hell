@@ -32,6 +32,6 @@ declare module "@internal/pages" {
 }
 declare module NodeJS {
   interface Global {
-    RUNTIME_DIST_PATH: string;
+    OUTPUT_DIR: string;
   }
 }

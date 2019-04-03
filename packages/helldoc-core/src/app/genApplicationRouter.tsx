@@ -28,15 +28,14 @@ function pageToRoute(page: MDPage) {
   );
 }
 
-const genRoutes = () => siteData.pages.filter(hasComponent).map(pageToRoute);
-console.log(genRoutes());
+const Routes = siteData.pages.filter(hasComponent).map(pageToRoute);
 
 export default () => {
   return (
     <Base>
       <NavBar />
       <Switch>
-        {genRoutes()}
+        {Routes}
         <Route component={NotFound} />
       </Switch>
     </Base>

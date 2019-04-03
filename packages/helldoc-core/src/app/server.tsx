@@ -11,9 +11,10 @@ import siteData from "@internal/site-data";
 let App = class extends React.PureComponent<{ location: string }> {
   public render() {
     const { location } = this.props;
+    const basename = siteData.base.slice(1) ? siteData.base : "";
     return (
       <Provider store={createStore(sidebarReducer)}>
-        <StaticRouter basename={siteData.base} context={{}} location={location}>
+        <StaticRouter basename={basename} location={location}>
           {genApplicationRouter()}
         </StaticRouter>
       </Provider>
