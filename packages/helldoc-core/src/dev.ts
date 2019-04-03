@@ -8,7 +8,7 @@ import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
-import { CLIOptions } from "./types";
+import { CLIOptions, AppContext } from "./types";
 import { resolveAssetsPath } from "./webpack/util";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
@@ -30,7 +30,45 @@ async function dev(sourceDir: string, cliOptions: CLIOptions) {
 async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   console.log("\nExtracting site metadata...");
   const ctx = await prepare(sourceDir, cliOptions);
+  watchSourceFiles(sourceDir);
 
+  const host = "localhost";
+  const port = await portfinder.getPortPromise();
+  const config = resolveDevConfig(host, port, ctx);
+  const contentBase = resolve(sourceDir, "public");
+  const devServerOptions: WebpackDevServer.Configuration = {
+    disableHostCheck: true,
+    compress: true,
+    host,
+    hot: true,
+    quiet: true,
+    headers: {
+      "access-control-allow-origin": "*"
+    },
+    watchOptions: {
+      ignored: [/node_modules/]
+    },
+    historyApiFallback: {
+      disableDotRule: true,
+      rewrites: [{ from: /./, to: posix.join(ctx.base, "index.html") }]
+    },
+    contentBase,
+    publicPath: ctx.base,
+    before(app) {
+      if (existsSync(contentBase)) {
+        app.use(ctx.base, require("express").static(contentBase));
+      }
+    }
+  };
+
+  WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
+
+  const compiler = Webpack(config);
+  const server = new WebpackDevServer(compiler, devServerOptions);
+  return { server, host, port };
+}
+
+function watchSourceFiles(sourceDir: string) {
   // setup watchers to update options and dynamically generated files
   const update = (file: string) => {
     console.log(`\nReload due to ${file}`);
@@ -58,68 +96,32 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
   pagesWatcher.on("unlink", update);
   pagesWatcher.on("addDir", update);
   pagesWatcher.on("unlinkDir", update);
+}
 
-  // mount the dev server
-  const configChain = createClientConfig(ctx);
-  const host = "localhost";
-  const port = await portfinder.getPortPromise();
+function resolveDevConfig(host: string, port: number, ctx: AppContext) {
+  const chainClient = createClientConfig(ctx);
 
-  configChain
+  chainClient
     .plugin("html")
     .use(require("html-webpack-plugin"), [
       { template: resolveAssetsPath("index.template.html") }
     ]);
 
-  configChain.plugin("head").use(require("./webpack/HeadPlugin"), [
+  chainClient.plugin("head").use(require("./webpack/HeadPlugin"), [
     {
       tags: ctx.siteConfig.head || []
     }
   ]);
 
-  configChain.plugin("helldoc-log").use(require("./webpack/DevLogPlugin"), [
+  chainClient.plugin("helldoc-log").use(require("./webpack/DevLogPlugin"), [
     {
       displayHost: host,
       port,
       publicPath: ctx.siteConfig.base || "/"
     }
   ]);
-
-  const contentBase = resolve(sourceDir, "public");
-  const devServerOptions: WebpackDevServer.Configuration = {
-    disableHostCheck: true,
-    compress: true,
-    host,
-    hot: true,
-    quiet: true,
-    headers: {
-      "access-control-allow-origin": "*"
-    },
-    watchOptions: {
-      ignored: [/node_modules/]
-    },
-    historyApiFallback: {
-      disableDotRule: true,
-      rewrites: [{ from: /./, to: posix.join(ctx.base, "index.html") }]
-    },
-    contentBase,
-    publicPath: ctx.base,
-    before(app) {
-      if (existsSync(contentBase)) {
-        app.use(ctx.base, require("express").static(contentBase));
-      }
-    }
-  };
-  const config = configChain.toConfig();
-  WebpackDevServer.addDevServerEntrypoints(config, devServerOptions);
-
-  const compiler = Webpack(config);
-
-  const server = new WebpackDevServer(compiler, devServerOptions);
-  return {
-    server,
-    host,
-    port
-  };
+  const config = chainClient.toConfig();
+  return config;
 }
 
 export default dev;

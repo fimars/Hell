@@ -1,8 +1,8 @@
 import Config = require("webpack-chain");
-
-import { resolveAppPath } from "./util";
 import createBaseConfig from "./createBaseConfig";
+import { resolveAppPath } from "./util";
 import { AppContext } from "../types";
+
 export default function(ctx: AppContext): Config {
   const config = createBaseConfig(ctx);
 

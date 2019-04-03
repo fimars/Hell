@@ -30,8 +30,3 @@ declare module "@internal/pages" {
   const pages: { [key: string]: any };
   export default pages;
 }
-declare module NodeJS {
-  interface Global {
-    OUTPUT_DIR: string;
-  }
-}

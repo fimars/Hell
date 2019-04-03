@@ -9,6 +9,7 @@ import ApplicationRouter from "./data/routers";
 import siteData from "@internal/site-data";
 
 import "@assets/theme";
+
 let App = class extends React.PureComponent {
   public render() {
     return (

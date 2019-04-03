@@ -1,56 +1,51 @@
 import * as Webpack from "webpack";
 import * as fs from "fs-extra";
-
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
-import createBaseConfig from "./webpack/createBaseConfig";
+
+import { CLIOptions, AppContext } from "./types";
 import { resolve } from "path";
 import { existsSync, emptyDir } from "fs-extra";
-import { CLIOptions, AppContext } from "./types";
-import { resolveAppPath } from "./webpack/util";
-
-import nodeExternals = require("webpack-node-externals");
+import createServerConfig from "./webpack/createServerConfig";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";
 
-  const options = await prepare(sourceDir, cliOptions);
-  await emptyDir(options.outDir);
+  const ctx = await prepare(sourceDir, cliOptions);
+  await emptyDir(ctx.outDir);
 
-  const server = resolveServerConfig(options);
-  const client = resolveClientConfig(sourceDir, options);
+  const server = resolveServerConfig(ctx);
+  const client = resolveClientConfig(sourceDir, ctx);
   await compile(client);
   await compile(server);
 
-  const resolveOutDir = (path: string) => resolve(options.outDir, path);
-  require(resolveOutDir("scripts/ssr.js")); // run the server script
-
-  // clear
-  fs.removeSync(resolveOutDir("scripts"));
-  fs.removeSync(resolveOutDir("manifest.json"));
+  genStaticHTMLFiles(ctx.outDir);
 }
 export default prod;
 
-function resolveServerConfig(options: AppContext) {
-  const chainServer = createBaseConfig(options);
-  chainServer.entry("server").add(resolveAppPath("ssr"));
-  chainServer.target("node");
-  chainServer.externals(nodeExternals());
-  chainServer.node.set("__dirname", false);
-  chainServer.output.filename("scripts/ssr.js");
+function resolveServerConfig(ctx: AppContext) {
+  const chainServer = createServerConfig(ctx);
   return chainServer.toConfig();
 }
-function resolveClientConfig(sourceDir: string, options: AppContext) {
-  const chainClient = createClientConfig(options);
+function resolveClientConfig(sourceDir: string, ctx: AppContext) {
+  const chainClient = createClientConfig(ctx);
   const publicDir = resolve(sourceDir, "public");
   if (existsSync(publicDir)) {
     chainClient
       .plugin("copy")
       .use(require("copy-webpack-plugin"), [
-        [{ from: publicDir, to: options.outDir }]
+        [{ from: publicDir, to: ctx.outDir }]
       ]);
   }
   return chainClient.toConfig();
+}
+
+function genStaticHTMLFiles(outDir: string) {
+  const resolveOutDir = (path: string) => resolve(outDir, path);
+  require(resolveOutDir("scripts/ssr.js")); // run the server script
+  // clear
+  fs.removeSync(resolveOutDir("scripts"));
+  fs.removeSync(resolveOutDir("manifest.json"));
 }
 
 function compile(config: Webpack.Configuration) {
