@@ -22,6 +22,6 @@ let App = class extends React.PureComponent<{ location: string }> {
   }
 };
 
-export default function render(location = "/") {
+export function render(location = "/") {
   return ReactDOMServer.renderToString(<App location={location} />);
 }

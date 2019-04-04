@@ -8,9 +8,12 @@ import { resolveAppPath } from "./util";
 export default function(ctx: AppContext): Config {
   const config = createBaseConfig(ctx);
 
-  config.entry("server").add(resolveAppPath("ssr"));
+  config.entry("server").add(resolveAppPath("server"));
 
-  config.output.filename("scripts/ssr.js");
+  config.output
+    .filename("scripts/server.js")
+    .library("ssr")
+    .libraryTarget("umd");
 
   config.target("node");
   config.node.set("__dirname", false);
