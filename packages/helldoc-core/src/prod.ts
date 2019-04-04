@@ -1,43 +1,60 @@
 import * as Webpack from "webpack";
-
+import SSR from "./ssr";
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
+import createServerConfig from "./webpack/createServerConfig";
+
+import { CLIOptions, AppContext } from "./types";
 import { resolve } from "path";
-import { existsSync } from "fs-extra";
-import { CLIOptions } from "./types";
+import { existsSync, emptyDir } from "fs-extra";
+import { resolveAssetsPath } from "./webpack/util";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";
 
-  console.log("\nExtracting site metadata...");
-  const options = await prepare(sourceDir, cliOptions);
+  const ctx = await prepare(sourceDir, cliOptions);
+  await emptyDir(ctx.outDir);
 
-  const configChain = createClientConfig(options);
+  const server = resolveServerConfig(ctx);
+  const client = resolveClientConfig(sourceDir, ctx);
+  await compile(client);
+  await compile(server);
+  await new SSR(ctx, resolveAssetsPath("index.template.html")).run();
+  console.log("\nProd site done.");
+}
+export default prod;
 
+function resolveServerConfig(ctx: AppContext) {
+  const chainServer = createServerConfig(ctx);
+  return chainServer.toConfig();
+}
+function resolveClientConfig(sourceDir: string, ctx: AppContext) {
+  const chainClient = createClientConfig(ctx);
   const publicDir = resolve(sourceDir, "public");
   if (existsSync(publicDir)) {
-    configChain
+    chainClient
       .plugin("copy")
       .use(require("copy-webpack-plugin"), [
-        [{ from: publicDir, to: options.outDir }]
+        [{ from: publicDir, to: ctx.outDir }]
       ]);
   }
-
-  const config = configChain.toConfig();
-  const compiler = Webpack(config);
-
-  compiler.run((err, stats) => {
-    if (err) {
-      return console.log(err);
-    }
-    if (stats.hasErrors()) {
-      (stats.toJson().errors as Error[]).forEach(err => {
-        console.error(err);
-      });
-      throw new Error(`Failed to compile with errors.`);
-    }
-    console.log("\nProd site done.");
-  });
+  return chainClient.toConfig();
 }
 
-export default prod;
+function compile(config: Webpack.Configuration) {
+  return new Promise((resolve, reject) => {
+    const compiler = Webpack(config);
+    compiler.run((err, stats) => {
+      if (err) {
+        return console.log(err);
+      }
+      if (stats.hasErrors()) {
+        (stats.toJson().errors as Error[]).forEach(err => {
+          console.error(err);
+        });
+        reject(new Error(`Failed to compile with errors.`));
+      }
+      resolve();
+    });
+  });
+}

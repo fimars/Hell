@@ -40,11 +40,8 @@ export default function(ctx: AppContext) {
   config
     .plugin("webpack-bar")
     .use(require("webpackbar"))
-    .end()
-    .plugin("html")
-    .use(require("html-webpack-plugin"), [
-      { template: resolveAssetsPath("index.template.html") }
-    ]);
+    .end();
+
   if (isProd) {
     config.plugin("extract-css").use(require("mini-css-extract-plugin"), [
       {

@@ -1,22 +1,19 @@
 import { resolve } from "path";
 import { isIndexFile } from "./util";
 import { AppContext } from "../types";
-
 export default async function genRegistrationFile({
   sourceDir,
   pageFiles
 }: AppContext) {
-  function genImport(file: string) {
+  function genRoutes(file: string) {
     const name = toComponentName(file);
     const absolutePath = resolve(sourceDir, file);
-    const code = `  "${name}": lazy(() => import(${JSON.stringify(
-      absolutePath
-    )}))`;
+    const code = `["${name}"]: require("${absolutePath}").default`;
     return code;
   }
   return (
     `import React, { lazy } from 'react'\n` +
-    `export default {\n${pageFiles.map(genImport).join(",\n")}\n};`
+    `export default {\n  ${pageFiles.map(genRoutes).join(",\n  ")}\n};`
   );
 }
 

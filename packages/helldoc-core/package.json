@@ -44,9 +44,9 @@
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-hot-loader": "^4.6.3",
+    "react-redux": "^6.0.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-redux": "^6.0.1",
     "redux": "^4.0.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
@@ -55,6 +55,8 @@
     "webpack": "^4.29.0",
     "webpack-chain": "^5.2.0",
     "webpack-dev-server": "^3.1.14",
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-node-externals": "^1.7.2",
     "webpackbar": "^3.1.5"
   },
   "devDependencies": {
@@ -71,7 +73,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/webpack": "^4.4.24",
     "@types/webpack-dev-server": "^3.1.2",
-    "@types/webpackbar": "^2.6.0",
-    "stats-webpack-plugin": "^0.7.0"
+    "@types/webpack-node-externals": "^1.6.3",
+    "@types/webpackbar": "^2.6.0"
   }
 }
