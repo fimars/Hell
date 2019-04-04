@@ -20,6 +20,7 @@ async function prod(sourceDir: string, cliOptions: CLIOptions) {
   await compile(client);
   await compile(server);
   await new SSR(ctx, resolveAssetsPath("index.template.html")).run();
+  console.log("\nProd site done.");
 }
 export default prod;
 
@@ -53,7 +54,6 @@ function compile(config: Webpack.Configuration) {
         });
         reject(new Error(`Failed to compile with errors.`));
       }
-      console.log("\nProd site done.");
       resolve();
     });
   });
