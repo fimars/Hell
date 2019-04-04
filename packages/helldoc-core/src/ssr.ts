@@ -25,8 +25,8 @@ export default class SSR {
     this.scriptPath = this.resolveOutDir("scripts/server.js");
 
     this.manifest = fs.readJSONSync(this.manifestPath);
-    this.render = require(this.scriptPath).render;
     this.template = fs.readFileSync(template).toString();
+    this.render = require(this.scriptPath).render;
   }
   public async run() {
     if (!this.ctx.siteData) return;
