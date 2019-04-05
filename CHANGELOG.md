@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.0](https://github.com/fimars/hell/releases/tag/v0.4.0) - 2019-04-05
+
+### Added
+
+- add export html static files support #20
+
+### Changed
+
+- remove suspense load the page componet, in fact we don't need
+
 ## [0.3.1](https://github.com/fimars/hell/releases/tag/v0.3.1) - 2019-03-29
 
 ### Added
