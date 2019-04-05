@@ -8,7 +8,7 @@
 
 ### Changed
 
-- remove suspense load the page componet, in fact we don't need
+- remove suspense load the page component. In fact, we don't need it now.
 
 ## [0.3.1](https://github.com/fimars/hell/releases/tag/v0.3.1) - 2019-03-29
 
