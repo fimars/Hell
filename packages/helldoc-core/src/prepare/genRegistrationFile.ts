@@ -7,8 +7,8 @@ export default async function genRegistrationFile({
 }: AppContext) {
   function genRoutes(file: string) {
     const name = toComponentName(file);
-    const absolutePath = resolve(sourceDir, file);
-    const code = `["${name}"]: require("${absolutePath}").default`;
+    const absolutePath = JSON.stringify(resolve(sourceDir, file));
+    const code = `["${name}"]: require(${absolutePath}).default`;
     return code;
   }
   return (
