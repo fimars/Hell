@@ -79,6 +79,7 @@ export default function(ctx: AppContext) {
       .options({
         babelrc: false,
         cwd: contextPath,
+        compact: false,
         cacheDirectory: true,
         plugins: [
           ["@babel/plugin-proposal-class-properties", { loose: true }],
