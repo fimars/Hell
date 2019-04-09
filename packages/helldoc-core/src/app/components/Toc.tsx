@@ -24,7 +24,8 @@ class HeadingLink extends React.PureComponent<HeadingLinkProps> {
   }
 
   private getLinkProps({ text, id }: HeadingData) {
-    const clearText = text.replace(/\(.*\)/, "");
+    const mdLink = /\[(.*)\]\(.*\)/;
+    const clearText = text.replace(mdLink, "$1");
     return {
       dangerouslySetInnerHTML: { __html: clearText },
       replace: false,
