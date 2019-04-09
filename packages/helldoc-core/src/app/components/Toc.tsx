@@ -1,6 +1,6 @@
 import * as React from "react";
 import Heading from "../components/Heading";
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import { navs } from "../data/navs";
 
 interface HeadingData {
@@ -23,12 +23,12 @@ class HeadingLink extends React.PureComponent<HeadingLinkProps> {
     );
   }
 
-  private getLinkProps({ text }: HeadingData) {
+  private getLinkProps({ text, id }: HeadingData) {
     const clearText = text.replace(/\(.*\)/, "");
     return {
       dangerouslySetInnerHTML: { __html: clearText },
       replace: false,
-      to: "#" + encodeURIComponent(clearText)
+      to: "#" + id
     };
   }
 }
@@ -37,7 +37,7 @@ function SidebarTop() {
   return (
     <div className="sidebar-top">
       {navs.map(({ text, link }) => (
-        <Link key={text} to={link} className="navstyle">
+        <Link key={text} to={link} className="nav-link">
           <div>{text}</div>
         </Link>
       ))}

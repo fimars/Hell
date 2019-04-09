@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Link } from "react-router-dom";
+import { HashLink as Link } from "react-router-hash-link";
 import siteData from "@internal/site-data";
 
 const navData = siteData.themeConfig.nav;
@@ -120,7 +120,7 @@ class Search extends React.Component<{}, SearchState> {
         .filter(this.isMatchItem)
         .map(header => ({
           subTitle: header.text,
-          path: `${page.path}#${header.text}`,
+          path: `${page.path}#${header.id}`,
           parentPath: page.path,
           mainTitle: ""
         }));

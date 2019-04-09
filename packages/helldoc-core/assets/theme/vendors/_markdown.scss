@@ -115,9 +115,9 @@ Repo: https://github.com/sindresorhus/github-markdown-css
 .markdown-body h4,
 .markdown-body h5,
 .markdown-body h6 {
-  font-weight: 600;
-  margin-bottom: 0;
-  margin-top: 0;
+  line-height: 1.25;
+  margin-bottom: 16px;
+  padding-top: 24px;
 }
 
 .markdown-body h1 {

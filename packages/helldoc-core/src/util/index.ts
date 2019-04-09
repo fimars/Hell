@@ -1,5 +1,5 @@
 import * as matter from "gray-matter";
-import { TokensList, Tokens } from "marked";
+import { TokensList, Tokens, Slugger } from "marked";
 import { TocHead } from "../types";
 import toml = require("toml");
 
@@ -12,10 +12,11 @@ export function extractHeaders(content: string, lexer: any): TocHead[] {
   const headerTokens = tokens.filter(
     ({ type }) => type === "heading"
   ) as HellHeader[];
+  const slugger = new Slugger();
   const headers = headerTokens.map(({ depth, text }, headerIndex) => {
     const parent = findHeaderParent(depth, headerIndex, headerTokens);
     return {
-      id: text,
+      id: slugger.slug(text),
       level: depth,
       parent,
       text

@@ -57,9 +57,11 @@
     "webpack-dev-server": "^3.1.14",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2",
-    "webpackbar": "^3.1.5"
+    "webpackbar": "^3.1.5",
+    "react-router-hash-link": "^1.2.1"
   },
   "devDependencies": {
+    "@types/react-router-hash-link": "^1.2.1",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@types/chokidar": "^1.7.5",
     "@types/fs-extra": "^5.0.5",
