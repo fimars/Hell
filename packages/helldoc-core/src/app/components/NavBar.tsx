@@ -1,5 +1,5 @@
 import * as React from "react";
-import Link from "./Link";
+import { HashLink as Link } from "react-router-hash-link";
 import { connect } from "react-redux";
 import { navs } from "../data/navs";
 import actions from "../store/actions";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import Heading from "../components/Heading";
-import Link from "./Link";
+import { HashLink as Link } from "react-router-hash-link";
 import { navs } from "../data/navs";
 
 interface HeadingData {

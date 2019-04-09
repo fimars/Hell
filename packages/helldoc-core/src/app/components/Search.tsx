@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Link from "./Link";
+import { HashLink as Link } from "react-router-hash-link";
 import siteData from "@internal/site-data";
 
 const navData = siteData.themeConfig.nav;

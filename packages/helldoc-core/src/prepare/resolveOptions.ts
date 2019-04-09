@@ -52,7 +52,7 @@ export default async function resolveOptions(
       data.title = titleMath[1];
     }
     if (content) {
-      data.headers = extractHeaders(content, marked.lexer);
+      data.headers = extractHeaders(frontmatter.content, marked.lexer);
     }
     delete frontmatter.content;
     if (Object.keys(frontmatter.data).length) {
