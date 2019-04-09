@@ -23,6 +23,7 @@
     "@babel/plugin-proposal-class-properties": "^7.3.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@types/react-router-hash-link": "^1.2.1",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
     "chokidar": "^2.0.4",
@@ -57,7 +58,8 @@
     "webpack-dev-server": "^3.1.14",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2",
-    "webpackbar": "^3.1.5"
+    "webpackbar": "^3.1.5",
+    "react-router-hash-link": "^1.2.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",

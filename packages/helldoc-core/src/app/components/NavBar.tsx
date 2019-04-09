@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Link } from "react-router-dom";
+import Link from "./Link";
 import { connect } from "react-redux";
 import { navs } from "../data/navs";
 import actions from "../store/actions";
@@ -16,7 +16,7 @@ function Navs(props: NavsProps) {
       <i className="fas fa-bars mobile-bar" onClick={props.onIconClick} />
 
       {navs.map(({ text, link }, idx) => (
-        <Link key={idx} to={link} className="navstyle">
+        <Link key={idx} to={link} className="nav-link">
           <div>{text}</div>
         </Link>
       ))}
