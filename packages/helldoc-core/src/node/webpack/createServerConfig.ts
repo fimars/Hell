@@ -3,12 +3,12 @@ import webpackNodeExternals = require("webpack-node-externals");
 import createBaseConfig from "./createBaseConfig";
 
 import { AppContext } from "../types";
-import { resolveAppPath } from "./util";
+import { resolveApp } from "../util/alias";
 
 export default function(ctx: AppContext): Config {
   const config = createBaseConfig(ctx);
 
-  config.entry("server").add(resolveAppPath("server"));
+  config.entry("server").add(resolveApp("server"));
 
   config.output
     .filename("scripts/server.js")

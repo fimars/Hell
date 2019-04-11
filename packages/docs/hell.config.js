@@ -1,6 +1,7 @@
+// TODO: allow yaml
 module.exports = {
+  theme: "blog",
   title: "|> Welcome To HellDoc️",
-  dest: '../../docs',
   head: [
     ['link', { rel: 'icon', href: './favicon.png' }]
   ],

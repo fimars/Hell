@@ -1,7 +1,6 @@
 import * as React from "react";
 import { connect } from "react-redux";
 
-// TODO: extract `sideBarDisplay` type
 interface LayoutProps {
   Side: React.ReactNode;
   Content: React.ReactNode;

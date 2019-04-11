@@ -1,5 +1,5 @@
 import * as React from "react";
-import Heading from "../components/Heading";
+import Heading from "./Heading";
 import { HashLink as Link } from "react-router-hash-link";
 import { navs } from "../data/navs";
 

@@ -1,8 +1,9 @@
-import { resolve } from "path";
 import Config = require("webpack-chain");
 
-import { resolveAppPath, resolveAssetsPath } from "./util";
 import { AppContext } from "../types";
+import { resolve } from "path";
+import { resolvePackage, getModulePaths } from "./util";
+import { resolveApp } from "../util/alias";
 
 const contextPath = resolve(__dirname, "../../");
 
@@ -26,12 +27,14 @@ export default function(ctx: AppContext) {
   }
 
   const modulePaths = getModulePaths();
-
+  const themeDir = resolvePackage(ctx.siteConfig.theme, {
+    prefix: "helldoc-theme-"
+  });
   config.resolve
     .symlinks(true)
-    .alias.set("components", resolveAppPath("components"))
+    .alias.set("components", resolveApp("components"))
     .set("@internal", resolve(ctx.tempPath, "internal"))
-    .set("@assets", resolveAssetsPath())
+    .set("@theme", themeDir)
     .end()
     .extensions.merge([".js", ".jsx", ".md", ".scss"])
     .end()
@@ -116,8 +119,4 @@ export default function(ctx: AppContext) {
   styleRule.use("css-loader").loader("css-loader");
   styleRule.use("sass-loader").loader("sass-loader");
   return config;
-}
-
-function getModulePaths() {
-  return [resolve(process.cwd(), "node_modules")].concat(module.paths);
 }

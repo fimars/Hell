@@ -1,13 +1,15 @@
 import Config = require("webpack-chain");
 import createBaseConfig from "./createBaseConfig";
-import { resolveAppPath } from "./util";
+
 import { AppContext } from "../types";
+import { resolveApp } from "../util/alias";
 
 export default function(ctx: AppContext): Config {
   const config = createBaseConfig(ctx);
 
+  config.entry("client").add(resolveApp("client"));
+
   if (process.env.NODE_ENV === "production") {
-    config.entry("client").add(resolveAppPath("client"));
     config.plugin("webpack-assets").use(require("webpack-manifest-plugin"));
     config
       .plugin("optimize-css")
@@ -22,7 +24,6 @@ export default function(ctx: AppContext): Config {
         }
       ]);
   } else {
-    config.entry("app").add(resolveAppPath("app"));
     config.plugin("time-fix").use(require("time-fix-plugin"));
     config.plugin("hmr").use(require("webpack/lib/HotModuleReplacementPlugin"));
   }

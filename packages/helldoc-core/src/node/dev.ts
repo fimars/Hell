@@ -3,13 +3,12 @@ import * as chokidar from "chokidar";
 import * as Webpack from "webpack";
 import * as WebpackDevServer from "webpack-dev-server";
 import portfinder = require("portfinder");
-
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
+
+import { CLIOptions, AppContext } from "./types";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
-import { CLIOptions, AppContext } from "./types";
-import { resolveAssetsPath } from "./webpack/util";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
   try {
@@ -104,7 +103,7 @@ function resolveDevConfig(host: string, port: number, ctx: AppContext) {
   chainClient
     .plugin("html")
     .use(require("html-webpack-plugin"), [
-      { template: resolveAssetsPath("index.template.html") }
+      { template: resolve(__dirname, "../../static/index.template.html") }
     ]);
 
   chainClient.plugin("head").use(require("./webpack/HeadPlugin"), [

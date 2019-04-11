@@ -1,8 +1,6 @@
 import * as React from "react";
 import { HashLink as Link } from "react-router-hash-link";
-import { connect } from "react-redux";
 import { navs } from "../data/navs";
-import actions from "../store/actions";
 
 import Search from "./Search";
 import Mask from "./SideMask";
@@ -60,23 +58,4 @@ class NavBar extends React.Component<NavBarProps> {
     }
   };
 }
-
-// TODO: extract the types interface
-const stroeFetch = (store: { sideBarDisplay: boolean; store: {} }) => {
-  return {
-    sideBarDisplay: store.sideBarDisplay
-  };
-};
-
-const mapDispatchToProps = (dispatch: (state: any) => any) => {
-  return {
-    sidebarControl: (state: boolean) => {
-      dispatch(actions.sidebarControl(state));
-    }
-  };
-};
-
-export default connect(
-  stroeFetch,
-  mapDispatchToProps
-)(NavBar);
+export default NavBar;

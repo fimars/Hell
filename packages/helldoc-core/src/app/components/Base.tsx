@@ -1,9 +1,11 @@
 import * as React from "react";
 import siteData from "@internal/site-data";
+// @ts-ignore
+import Layout from "@theme/layouts/Layout";
 
 export default class Base extends React.PureComponent {
   render() {
-    return <div className="base">{this.props.children}</div>;
+    return this.props.children;
   }
   componentDidMount() {
     // Set Site
