@@ -8,6 +8,7 @@
     "baseUrl": ".",
     "paths": {
       "@theme/*": ["src/*"]
-    }
+    },
+    "noImplicitAny": false
   }
 }

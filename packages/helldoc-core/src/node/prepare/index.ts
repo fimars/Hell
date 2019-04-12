@@ -1,22 +1,21 @@
+import { CLIOptions } from "../../types";
 import resolveOptions from "./resolveOptions";
 import genRegistrationFile from "./genRegistrationFile";
-import { CLIOptions } from "../types";
+import genLayoutsFile from "./genLayoutsFile";
 
 export default async function prepare(
   sourceDir: string,
   cliOptions: CLIOptions = {}
 ) {
-  // resolve options
   const ctx = await resolveOptions(sourceDir, cliOptions);
 
-  // @internal/site-data
   await ctx.writeTemp(
-    "internal/site-data.js",
+    "siteData",
     `export default ${JSON.stringify(ctx.siteData, null, 2)}`
   );
+  await ctx.writeTemp("pages", await genRegistrationFile(ctx));
+  await ctx.writeTemp("layouts", await genLayoutsFile(ctx));
 
-  // @internal/pages
-  await ctx.writeTemp("internal/pages.js", await genRegistrationFile(ctx));
-
+  await ctx.genTempRuntime();
   return ctx;
 }

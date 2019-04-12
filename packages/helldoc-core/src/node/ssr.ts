@@ -1,6 +1,6 @@
 import * as fs from "fs-extra";
 import { resolve } from "path";
-import { AppContext, Tag } from "./types";
+import { AppContext, Tag } from "../types";
 
 type StringMap = { [key: string]: string };
 type AppRender = (path: string) => string;

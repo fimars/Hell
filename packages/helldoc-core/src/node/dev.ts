@@ -6,7 +6,7 @@ import portfinder = require("portfinder");
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
 
-import { CLIOptions, AppContext } from "./types";
+import { CLIOptions, AppContext } from "../types";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
 
@@ -40,7 +40,7 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
     compress: true,
     host,
     hot: true,
-    quiet: true,
+    // quiet: true,
     headers: {
       "access-control-allow-origin": "*"
     },

@@ -9,14 +9,20 @@ export function markdownToReact(source: string) {
   const markdown = md();
   const frontmatter = parseFrontmatter(source);
   const markdownHTML = JSON.stringify(markdown(frontmatter.content));
-  const importDeps = `import * as React from 'react';`;
-  const htmlToReact = (html: string) => `
+  const importDeps = [
+    `import * as React from 'react';`,
+    `import LayoutManager from '@hell/components/LayoutManager'`
+  ].join("\n");
+  const htmlToReact = (html: string) =>
+    `
     export default function () {
       return (
-        <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: ${html} }}></div>
+        <LayoutManager renderContent={
+          () => <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: ${html} }}></div>
+        } />
       );
     }
-  `;
+  `.trim();
   const res = [importDeps, htmlToReact(markdownHTML)].join("\n");
 
   return res;

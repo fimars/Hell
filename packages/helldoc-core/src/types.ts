@@ -1,12 +1,4 @@
-export type Tag = [string, { [key: string]: string | number }, string];
-
-export interface TocHeader {
-  id: string;
-  level: number;
-  parent?: string | null;
-  text: string;
-}
-
+/* Runtime Information */
 export interface PageData {
   path: string;
   component: string;
@@ -17,25 +9,13 @@ export interface PageData {
   };
 }
 
+export interface ThemeConfig {
+  navbar: Navbar;
+}
 interface Navbar {
   text: string;
   link?: string;
   items?: Navbar[];
-}
-
-export interface ThemeConfig {
-  navbar: Navbar;
-}
-
-export interface SiteConfig {
-  theme: string;
-  title?: string;
-  description?: string;
-  dest?: string;
-  base?: string;
-  head?: Tag[];
-  ignores?: string[];
-  themeConfig?: ThemeConfig;
 }
 
 export interface SiteData {
@@ -46,13 +26,26 @@ export interface SiteData {
   themeConfig?: ThemeConfig;
 }
 
+/* Node Types */
+export interface SiteConfig {
+  theme: string;
+  title?: string;
+  description?: string;
+  dest?: string;
+  base?: string;
+  head?: Tag[];
+  ignores?: string[];
+  themeConfig?: ThemeConfig;
+}
 export interface AppContext {
   base: string;
   sourceDir: string;
   outDir: string;
   siteConfig: SiteConfig;
   tempPath: string;
-  writeTemp: any;
+  themePath: string;
+  writeTemp: (path: string, content: string) => Promise<string>;
+  genTempRuntime: () => Promise<void>;
   pageFiles: string[];
   siteData?: SiteData;
 }
@@ -61,6 +54,11 @@ export interface CLIOptions {
   output?: string;
 }
 
-export interface stateTypes {
-  sideBarDisplay: boolean;
+export type Tag = [string, { [key: string]: string | number }, string];
+
+export interface TocHeader {
+  id: string;
+  level: number;
+  parent?: string | null;
+  text: string;
 }
