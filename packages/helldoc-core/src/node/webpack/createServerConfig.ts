@@ -2,7 +2,7 @@ import Config = require("webpack-chain");
 import webpackNodeExternals = require("webpack-node-externals");
 import createBaseConfig from "./createBaseConfig";
 
-import { AppContext } from "../types";
+import { AppContext } from "../../types";
 import { resolveApp } from "../util/alias";
 
 export default function(ctx: AppContext): Config {

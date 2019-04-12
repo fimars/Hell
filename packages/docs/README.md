@@ -1,3 +1,7 @@
+---
+layout: Post
+---
+
 <img src="./hell.png" >
 
 ## 快速开始

@@ -1,20 +1,17 @@
-import * as React from "react";
+import "@theme/browser";
+import AppRouter from "./components/AppRouter";
 import { BrowserRouter } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
+import { siteData } from "./runtime";
+import * as React from "react";
 
-import ApplicationRouter from "./data/routers";
-import siteData from "@internal/site-data";
-
-import "@theme/browser";
-
-let App = class extends React.PureComponent {
-  public render() {
-    return (
-      <BrowserRouter basename={siteData.base}>
-        <ApplicationRouter />
-      </BrowserRouter>
-    );
-  }
+let App = function() {
+  const { base } = siteData;
+  return (
+    <BrowserRouter basename={base}>
+      <AppRouter />
+    </BrowserRouter>
+  );
 };
 
 if (process.env.NODE_ENV === "development") {

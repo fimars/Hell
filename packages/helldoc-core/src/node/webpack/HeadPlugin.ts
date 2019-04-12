@@ -1,5 +1,5 @@
 import { Compiler } from "webpack";
-import { Tag } from "../types";
+import { Tag } from "../../types";
 
 interface HeadPluginOptions {
   tags: Tag[];

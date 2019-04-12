@@ -1,31 +1,16 @@
+import { AppContext } from "../../types";
 import { resolve } from "path";
-import { isIndexFile } from "./util";
-import { AppContext } from "../types";
+import { toComponentName, toModuleMap } from "./util";
+
 export default async function genRegistrationFile({
   sourceDir,
   pageFiles
 }: AppContext) {
-  function genRoutes(file: string) {
+  function genRoutes(file: string): [string, string] {
     const name = toComponentName(file);
-    const absolutePath = JSON.stringify(resolve(sourceDir, file));
-    const code = `["${name}"]: require(${absolutePath}).default`;
-    return code;
+    const absolutePath = resolve(sourceDir, file);
+    return [name, absolutePath];
   }
-  return (
-    `import React, { lazy } from 'react'\n` +
-    `export default {\n  ${pageFiles.map(genRoutes).join(",\n  ")}\n};`
-  );
-}
-
-export function toComponentName(file: string) {
-  const isIndex = isIndexFile(file);
-  const normalize = (file: string) =>
-    "a-" +
-    file
-      .replace(/\.md$/, "")
-      .replace(/\/|\\/g, " ")
-      .split(" ")
-      .join("");
-  const normalizedName: string = isIndex ? "index" : normalize(file);
-  return normalizedName;
+  const files = pageFiles.map(genRoutes);
+  return toModuleMap(files);
 }

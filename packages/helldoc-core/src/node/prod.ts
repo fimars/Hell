@@ -5,7 +5,7 @@ import createClientConfig from "./webpack/createClientConfig";
 import createServerConfig from "./webpack/createServerConfig";
 import { resolve } from "path";
 import { existsSync, emptyDir } from "fs-extra";
-import { CLIOptions, AppContext } from "./types";
+import { CLIOptions, AppContext } from "../types";
 import { resolveApp } from "./util/alias";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {

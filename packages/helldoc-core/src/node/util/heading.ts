@@ -1,5 +1,5 @@
 import * as marked from "marked";
-import { TocHeader } from "../types";
+import { TocHeader } from "../../types";
 
 interface Header extends marked.Tokens.Heading {
   id: string;

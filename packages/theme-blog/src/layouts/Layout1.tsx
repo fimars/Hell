@@ -1,5 +1,4 @@
 import * as React from "react";
-import { connect } from "react-redux";
 
 interface LayoutProps {
   Side: React.ReactNode;
@@ -27,10 +26,4 @@ class Layout extends React.PureComponent<LayoutProps> {
   }
 }
 
-const stroeFetch = (store: { sideBarDisplay: boolean }) => {
-  return {
-    sideBarDisplay: store.sideBarDisplay
-  };
-};
-
-export default connect(stroeFetch)(Layout);
+export default Layout;

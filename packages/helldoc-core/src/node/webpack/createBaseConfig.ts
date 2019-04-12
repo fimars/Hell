@@ -1,8 +1,8 @@
 import Config = require("webpack-chain");
 
-import { AppContext } from "../types";
+import { AppContext } from "../../types";
 import { resolve } from "path";
-import { resolvePackage, getModulePaths } from "./util";
+import { getModulePaths } from "./util";
 import { resolveApp } from "../util/alias";
 
 const contextPath = resolve(__dirname, "../../");
@@ -13,10 +13,9 @@ export default function(ctx: AppContext) {
 
   const config = new Config();
 
-  config
-    .context(contextPath)
-    .mode(isProd ? "production" : "development")
-    .output.path(outDir)
+  config.context(contextPath).mode(isProd ? "production" : "development");
+  config.output
+    .path(outDir)
     .filename(
       isProd ? "assets/js/[name].[chunkhash:8].js" : "assets/js/[name].js"
     )
@@ -27,23 +26,19 @@ export default function(ctx: AppContext) {
   }
 
   const modulePaths = getModulePaths();
-  const themeDir = resolvePackage(ctx.siteConfig.theme, {
-    prefix: "helldoc-theme-"
-  });
-  config.resolve
-    .symlinks(true)
-    .alias.set("components", resolveApp("components"))
-    .set("@internal", resolve(ctx.tempPath, "internal"))
-    .set("@theme", themeDir)
-    .end()
-    .extensions.merge([".js", ".jsx", ".md", ".scss"])
-    .end()
-    .modules.merge(modulePaths);
 
-  config
-    .plugin("webpack-bar")
-    .use(require("webpackbar"))
-    .end();
+  config.resolve.symlinks(true);
+  config.resolve.alias
+    .set("@hell", resolveApp(""))
+    .set("@internal", ctx.tempPath)
+    .set("@theme", ctx.themePath);
+  config.resolve.extensions.merge([".js", ".jsx", ".md", ".scss"]);
+  config.resolve.modules.merge(modulePaths);
+
+  // config
+  //   .plugin('webpack-bar')
+  //   .use(require('webpackbar'))
+  //   .end();
 
   if (isProd) {
     config.plugin("extract-css").use(require("mini-css-extract-plugin"), [

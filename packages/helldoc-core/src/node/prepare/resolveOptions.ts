@@ -1,13 +1,14 @@
+import globby = require("globby");
+import { SiteConfig, AppContext, PageData, CLIOptions } from "../../types";
 import { existsSync, readFileSync } from "fs-extra";
 import { resolve } from "path";
 import { extractHeaders } from "../util/heading";
 import { parseFrontmatter } from "../util/matter";
 import { isIndexFile, createTemp } from "./util";
-import { toComponentName } from "./genRegistrationFile";
-import { SiteConfig, AppContext, PageData, CLIOptions } from "../types";
-import globby = require("globby");
+import { toComponentName } from "./util";
+import { resolvePackage } from "../webpack/util";
 
-const { writeTemp, tempPath } = createTemp();
+const { writeTemp, genTempRuntime, tempPath } = createTemp();
 
 export default async function resolveOptions(
   sourceDir: string,
@@ -17,6 +18,9 @@ export default async function resolveOptions(
   const siteConfig: SiteConfig = existsSync(configPath)
     ? require(configPath)
     : {};
+  const themePath = resolvePackage(siteConfig.theme, {
+    prefix: "helldoc-theme-"
+  });
 
   const ctx: AppContext = {
     siteConfig,
@@ -31,13 +35,16 @@ export default async function resolveOptions(
       cwd: sourceDir,
       ignore: siteConfig.ignores || []
     }),
+    themePath,
     writeTemp,
+    genTempRuntime,
     tempPath
   };
 
   const pagesData = ctx.pageFiles.map(file => {
     const urlPath = isIndexFile(file) ? "/" : `/${file.replace(/\.md$/, "")}`;
-    const content = readFileSync(resolve(sourceDir, file), "utf-8");
+    const absolutePath = resolve(sourceDir, file);
+    const content = readFileSync(absolutePath, "utf-8");
     const data: PageData = {
       path: urlPath,
       component: toComponentName(file)
