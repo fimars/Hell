@@ -36,10 +36,10 @@ export default function(ctx: AppContext) {
   config.resolve.extensions.merge([".js", ".jsx", ".md", ".scss"]);
   config.resolve.modules.merge(modulePaths);
 
-  // config
-  //   .plugin('webpack-bar')
-  //   .use(require('webpackbar'))
-  //   .end();
+  config
+    .plugin("webpack-bar")
+    .use(require("webpackbar"))
+    .end();
 
   if (isProd) {
     config.plugin("extract-css").use(require("mini-css-extract-plugin"), [

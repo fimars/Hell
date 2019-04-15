@@ -46,5 +46,5 @@ export = class DevLogPlugin {
 };
 
 function clearScreen() {
-  // process.stdout.write("\x1Bc");
+  process.stdout.write("\x1Bc");
 }

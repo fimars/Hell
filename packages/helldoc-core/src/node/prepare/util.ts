@@ -20,8 +20,6 @@ export function createTemp(customTempPath?: string) {
     const destPath = path.join(tempPath, file + ".js");
     await fs.ensureDir(path.parse(destPath).dir);
 
-    console.log(content);
-
     const cached = tempCache.get(file);
     if (cached !== content) {
       await fs.writeFile(destPath, content);

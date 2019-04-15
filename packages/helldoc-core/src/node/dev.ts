@@ -40,7 +40,7 @@ async function prepareDevServer(sourceDir: string, cliOptions: CLIOptions) {
     compress: true,
     host,
     hot: true,
-    // quiet: true,
+    quiet: true,
     headers: {
       "access-control-allow-origin": "*"
     },
