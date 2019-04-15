@@ -28,8 +28,9 @@ export default function(ctx: AppContext) {
   const modulePaths = getModulePaths();
 
   config.resolve.symlinks(true);
+  console.log(resolveApp(""));
   config.resolve.alias
-    .set("@hell", resolveApp(""))
+    .set("#hell", resolveApp(""))
     .set("@internal", ctx.tempPath)
     .set("@theme", ctx.themePath);
   config.resolve.extensions.merge([".js", ".jsx", ".md", ".scss"]);

@@ -1,5 +1,5 @@
 ---
-layout: Index
+layout: Post
 ---
 
 <img src="./hell.png" >
@@ -8,7 +8,7 @@ layout: Index
 
 ```bash
 # 1. 安装 HellDoc
-npm install @helldoc/cli -g
+npm install @helldoc/cli -g1
 # 2. 新建一个 README.md 文件
 `echo '# Hello World' > README.md`
 # 3. Enjoy

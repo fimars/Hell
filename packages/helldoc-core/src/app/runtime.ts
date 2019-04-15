@@ -1,6 +1,6 @@
 import { SiteData } from "../types";
 // @ts-ignore
-const $runtime = require("@internal/runtime");
+import * as $runtime from "@internal/runtime";
 
 type Modules = { [key: string]: any };
 

@@ -11,7 +11,7 @@ export function markdownToReact(source: string) {
   const markdownHTML = JSON.stringify(markdown(frontmatter.content));
   const importDeps = [
     `import * as React from 'react';`,
-    `import LayoutManager from '@hell/components/LayoutManager'`
+    `import LayoutManager from '#hell/components/LayoutManager'`
   ].join("\n");
   const htmlToReact = (html: string) =>
     `

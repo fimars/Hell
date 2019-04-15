@@ -1,19 +1,32 @@
 import * as React from "react";
-import { useContext } from "react";
 import { PageDataContext } from "../context";
-import { layouts } from "../runtime";
+import { layouts, siteData } from "../runtime";
+import { RouteComponentProps, withRouter } from "react-router";
 
-export default function LayoutManager(props: { renderContent: any }) {
-  const page = useContext(PageDataContext);
+interface LayoutManager extends RouteComponentProps {
+  renderContent: any;
+}
+
+function LayoutManager(props: RouteComponentProps) {
+  const pages = siteData.pages;
+  const matchPage = pages.find(page => page.path === props.match.path) || {
+    path: "",
+    component: ""
+  };
 
   function resolveLayoutName() {
     let layoutName = "Layout";
-    if (page.frontmatter && page.frontmatter.layout) {
-      layoutName = page.frontmatter.layout;
+    if (matchPage.frontmatter && matchPage.frontmatter.layout) {
+      layoutName = matchPage.frontmatter.layout;
     }
     return layoutName;
   }
 
   const Layout = layouts[resolveLayoutName()];
-  return <Layout {...props} />;
+  return (
+    <PageDataContext.Provider value={matchPage}>
+      <Layout {...props} />
+    </PageDataContext.Provider>
+  );
 }
+export default withRouter(LayoutManager);
