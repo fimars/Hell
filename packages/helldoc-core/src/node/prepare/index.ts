@@ -17,5 +17,6 @@ export default async function prepare(
   await ctx.writeTemp("layouts", await genLayoutsFile(ctx));
 
   await ctx.genTempRuntime();
+
   return ctx;
 }

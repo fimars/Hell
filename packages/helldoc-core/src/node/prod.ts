@@ -6,7 +6,7 @@ import createServerConfig from "./webpack/createServerConfig";
 import { resolve } from "path";
 import { existsSync, emptyDir } from "fs-extra";
 import { CLIOptions, AppContext } from "../types";
-import { resolveApp } from "./util/alias";
+import { resolveStatic } from "./util/alias";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";
@@ -18,7 +18,7 @@ async function prod(sourceDir: string, cliOptions: CLIOptions) {
   const client = resolveClientConfig(sourceDir, ctx);
   await compile(client);
   await compile(server);
-  await new SSR(ctx, resolveApp("index.template.html")).run();
+  await new SSR(ctx, resolveStatic("index.template.html")).run();
   console.log("\nProd site done.");
 }
 export default prod;

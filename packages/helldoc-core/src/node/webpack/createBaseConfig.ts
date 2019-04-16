@@ -28,7 +28,6 @@ export default function(ctx: AppContext) {
   const modulePaths = getModulePaths();
 
   config.resolve.symlinks(true);
-  console.log(resolveApp(""));
   config.resolve.alias
     .set("#hell", resolveApp(""))
     .set("@internal", ctx.tempPath)

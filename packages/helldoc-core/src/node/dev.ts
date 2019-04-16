@@ -9,6 +9,7 @@ import createClientConfig from "./webpack/createClientConfig";
 import { CLIOptions, AppContext } from "../types";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
+import { resolveStatic } from "./util/alias";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
   try {
@@ -103,7 +104,7 @@ function resolveDevConfig(host: string, port: number, ctx: AppContext) {
   chainClient
     .plugin("html")
     .use(require("html-webpack-plugin"), [
-      { template: resolve(__dirname, "../../static/index.template.html") }
+      { template: resolveStatic("index.template.html") }
     ]);
 
   chainClient.plugin("head").use(require("./webpack/HeadPlugin"), [

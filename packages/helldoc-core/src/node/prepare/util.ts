@@ -7,7 +7,7 @@ const tempFiles = new Set<string>();
 export function createTemp(customTempPath?: string) {
   const tempPath = customTempPath
     ? path.resolve(customTempPath)
-    : path.resolve(__dirname, "../../.temp");
+    : path.resolve(__dirname, "../../../.temp");
 
   if (!fs.existsSync(tempPath)) {
     fs.ensureDirSync(tempPath);
@@ -30,9 +30,13 @@ export function createTemp(customTempPath?: string) {
 
   async function genTempRuntime() {
     const runtime = Array.from(tempFiles)
-      .map(file => `export {default as ${file}} from '@internal/${file}';`)
+      .map(
+        file => `export const ${file} = require('@internal/${file}').default;`
+      )
       .join("\n");
-    await writeTemp("runtime", runtime);
+    const destPath = await writeTemp("runtime", runtime);
+    console.log(destPath);
+    return destPath;
   }
 
   return { writeTemp, tempPath, genTempRuntime };

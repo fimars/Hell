@@ -18,9 +18,17 @@ export default async function resolveOptions(
   const siteConfig: SiteConfig = existsSync(configPath)
     ? require(configPath)
     : {};
-  const themePath = resolvePackage(siteConfig.theme, {
-    prefix: "helldoc-theme-"
-  });
+
+  let themePath: string;
+  if (siteConfig.theme) {
+    themePath = resolvePackage(siteConfig.theme, {
+      prefix: "helldoc-theme-"
+    });
+  } else {
+    themePath = resolvePackage("helldoc-theme-default", {
+      cwd: __dirname
+    });
+  }
 
   const ctx: AppContext = {
     siteConfig,

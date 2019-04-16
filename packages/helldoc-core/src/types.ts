@@ -28,7 +28,7 @@ export interface SiteData {
 
 /* Node Types */
 export interface SiteConfig {
-  theme: string;
+  theme?: string;
   title?: string;
   description?: string;
   dest?: string;
@@ -45,7 +45,7 @@ export interface AppContext {
   tempPath: string;
   themePath: string;
   writeTemp: (path: string, content: string) => Promise<string>;
-  genTempRuntime: () => Promise<void>;
+  genTempRuntime: () => Promise<string>;
   pageFiles: string[];
   siteData?: SiteData;
 }
