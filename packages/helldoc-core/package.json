@@ -1,6 +1,6 @@
 {
   "name": "@helldoc/core",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "helldoc core",
   "main": "build/index.js",
   "author": "fimars <foru.fy@gmail.com>",
@@ -48,6 +48,7 @@
     "react-redux": "^6.0.1",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
+    "react-router-hash-link": "^1.2.1",
     "redux": "^4.0.1",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
@@ -58,11 +59,9 @@
     "webpack-dev-server": "^3.1.14",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2",
-    "webpackbar": "^3.1.5",
-    "react-router-hash-link": "^1.2.1"
+    "webpackbar": "^3.1.5"
   },
   "devDependencies": {
-    "@types/react-router-hash-link": "^1.2.1",
     "@types/chokidar": "^1.7.5",
     "@types/fs-extra": "^5.0.5",
     "@types/loader-utils": "^1.1.3",
@@ -73,6 +72,7 @@
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
     "@types/react-router-dom": "^4.3.1",
+    "@types/react-router-hash-link": "^1.2.1",
     "@types/webpack": "^4.4.24",
     "@types/webpack-dev-server": "^3.1.2",
     "@types/webpack-node-externals": "^1.6.3",
