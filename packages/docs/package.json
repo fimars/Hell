@@ -5,5 +5,8 @@
   "author": "fimars <foru.fy@gmail.com>",
   "repository": "https://github.com/fimars/hell",
   "license": "MIT",
-  "version": "0.4.0"
+  "dependencies": {
+    "@helldoc/cli": "^0.4.1"
+  },
+  "version": "0.4.1"
 }
