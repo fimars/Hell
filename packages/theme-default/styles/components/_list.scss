@@ -1,42 +1,25 @@
 .nav-label-item {
+  font-size: 1em;
   line-height: 1.6;
-  
-  &.level-1 {
-    font-weight: 300;
-    letter-spacing: 1.3px;
-    margin-bottom: 10px;
-  }
+}
 
-  &.level-1,
-  &.level-2.has-child {
+.level-1,
+.level-2 {
+  font-size: 1.1em;
+  font-weight: 300;
+
+  >a {
     color: $typo-dark;
   }
-
-  &.level-2.has-child>a {
-    color: $typo-dark;
-  }
-
 }
 
 .nav-label-item + .nav-label-item {
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 @for $i from 3 through 6 {
-  .nav-label.level-#{$i} {
+  .nav-label-item.level-#{$i} {
     padding-left: ($i - 2) * 12px;
   }
 }
 
-.label-post {
-  counter-increment: deep;
-  line-height: 2;
-
-  > .label-post {
-    margin-left: 15px;
-    margin-top: 0;
-  }
-
-  > .label { letter-spacing: normal; }
-  .label { margin-top: 1.5 * $block-out-spacer; }
-}

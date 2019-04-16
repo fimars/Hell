@@ -34,7 +34,7 @@ type TocProps = { headings: HeadingData[] };
 export default function Toc(props: TocProps) {
   const { headings } = props;
   return (
-    <div className="sibar-bottom">
+    <div className="sidebar-bottom">
       {headings.map(heading => (
         <HeadingLink heading={heading} key={heading.id} />
       ))}

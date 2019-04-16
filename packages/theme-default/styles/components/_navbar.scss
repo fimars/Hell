@@ -10,15 +10,27 @@ $mobile-max-width: 719px;
   font-size: 14px;
   font-weight: 600;
   justify-content: space-between;
-  padding: 0 1.5rem;
+  padding: 0 30px;
+
+  .nav-link + .nav-link {
+    margin-left: $block-out-spacer;
+  }
+
+  
+  @media screen and (max-width: 719px) {
+    padding: 0 10px;
+  }
 }
 
 .nav-link {
-  color: rgb(0, 0, 0);
   line-height: 54px;
-  padding-left: 18px;
-  padding-right: 18px;
   text-decoration: none;
+
+  &:hover {
+    color: $main-color;
+    text-decoration: none;
+  }
+
   @media screen and (max-width: $mobile-max-width) {
     display: none;
   }
@@ -29,24 +41,18 @@ $mobile-max-width: 719px;
 }
 
 .mobile-bar {
-  color: #000;
   cursor: pointer;
   display: none;
   font-size: 20px;
   line-height: 54px;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
+  padding-left: 10px;
+  padding-right: 10px;
   z-index: 15;
   @media screen and (max-width: $mobile-max-width) {
     display: block;
   }
 }
 
-
-.nav-link:hover {
-  color: $main-color;
-  text-decoration: none;
-}
 
 .side-mask {
   bottom: 0;
