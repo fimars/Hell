@@ -3,7 +3,8 @@
 import * as program from "commander";
 import { prod, dev } from "@helldoc/core";
 
-program.version("0.2.11");
+const pkg = require("../package.json");
+program.version(pkg.version);
 
 bindUniversalOptions(program.command("dev [dir]"))
   .description("run the docs dev server with dir path")

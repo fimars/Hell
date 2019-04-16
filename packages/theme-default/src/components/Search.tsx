@@ -3,137 +3,124 @@ import { siteData } from "@internal/runtime";
 import { HashLink as Link } from "react-router-hash-link";
 import { useState, useRef } from "react";
 import * as React from "react";
+import { nav as navData } from "@theme/themeConfig";
 
-const navData = siteData.themeConfig.nav;
-const pageData = siteData.pages;
+const pageData: any[] = siteData.pages;
 
-interface head {
+type Result = {
   subTitle?: string;
   path: string;
   mainTitle: string;
   parentPath: string;
-}
+};
 
-type SearchResultProps = {
-  results: head[];
+type SearchResultsProps = {
+  results: Result[];
   onItemClick: () => void;
 };
-function SearchResult({ results, onItemClick }: SearchResultProps) {
+function SearchResults({ results, onItemClick }: SearchResultsProps) {
   return (
     <ul className="search-results">
-      {results.map((item: head) => (
+      {results.map(item => (
         <li key={item.path} className="result-item">
           <Link to={item.path} onClick={onItemClick} className="full link-link">
             <span>{item.mainTitle}</span>
-            <span>{item.subTitle ? ` > ${item.subTitle}` : ``}</span>
+            {item.subTitle && <span>{` > ${item.subTitle}`}</span>}
           </Link>
         </li>
       ))}
+      {!results.length && <li className="result-item">🧐 No Match</li>}
     </ul>
   );
 }
 
 export default function Search() {
-  const [fullWidth, setFullWidth] = useState(false);
   const [focus, setFocus] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [results, setResults] = useState<head[]>([]);
-  const inputEl = useRef(null);
+  const [results, setResults] = useState<Result[]>([]);
+  const inputEl = useRef<HTMLInputElement>(null);
 
   const showResults = focus && keyword.trim();
-  console.log(showResults);
 
   return (
-    <div className="search-box" onClick={onTouchSearchBox}>
+    <div className="search-box" onClick={handleClick}>
       <i className="fas fa-search search-icon" />
       <input
-        id="searchInput"
         type="text"
         ref={inputEl}
-        onBlur={onLeaveSearchBox}
         value={keyword}
-        onChange={userInputing}
-        className={`${fullWidth ? "full-width-input" : ""}`}
+        className={`${focus ? "full-width-input" : ""}`}
+        onBlur={handleBlur}
+        onChange={handleChange}
       />
-      {showResults && (
-        <SearchResult results={results} onItemClick={resetState} />
-      )}
+      {showResults && <SearchResults results={results} onItemClick={clear} />}
     </div>
   );
 
-  function onTouchSearchBox() {
-    setFocus(true);
-    isFullWidth();
-  }
-  function onLeaveSearchBox(e: React.FocusEvent) {
-    if (!e.relatedTarget) {
-      isMobileSize() && setFullWidth(false);
-      setFocus(false);
+  function handleClick() {
+    if (isMobileSize()) {
+      inputEl.current && inputEl.current.focus();
     }
+    setFocus(true);
   }
-  function userInputing(e: React.FormEvent<HTMLInputElement>) {
+
+  function handleBlur() {
+    setFocus(false);
+  }
+
+  function handleChange(e: React.FormEvent<HTMLInputElement>) {
     setKeyword(e.currentTarget.value);
-    search();
+    search(e.currentTarget.value);
   }
-  function resetState() {
+
+  function clear() {
     setKeyword("");
     setFocus(false);
   }
 
-  function isFullWidth() {
-    const shouldUseFullWidth = isMobileSize() && !fullWidth;
-    if (shouldUseFullWidth) {
-      setFullWidth(true);
-      // @ts-ignore
-      inputEl.current && inputEl.current.focus();
+  function search(keyword: string) {
+    let headers = searchPagesHeaders(keyword);
+    if (!headers.length) {
+      headers = searchNavs(keyword);
     }
-  }
-  function search() {
-    let headers = searchPagesHeaders();
-    if (headers.length) {
-      addMainTitle(headers);
-    } else {
-      headers = searchNavs();
-    }
-    console.log(headers);
     setResults(headers);
   }
-  function searchPagesHeaders() {
-    const headerResult: head[] = pageData.reduce((result: head[], page) => {
-      const matchHeaders = page.headers.filter(isMatchItem).map(header => ({
-        subTitle: header.text,
-        path: `${page.path}#${header.id}`,
-        parentPath: page.path,
-        mainTitle: ""
-      }));
-      return result.concat(matchHeaders);
-    }, []);
-    return headerResult;
-  }
-  function addMainTitle(headers: head[]) {
-    headers.forEach(head => {
-      navData.forEach(({ text, link }) => {
-        if (head.parentPath === link) {
-          head.mainTitle = text;
-        }
-      });
-    });
-  }
-  function searchNavs() {
-    const navResults: head[] = navData.filter(isMatchItem).map(nav => ({
-      path: nav.link,
-      parentPath: nav.link,
-      mainTitle: nav.text
-    }));
-    return navResults;
-  }
+}
 
-  function isMatchItem(item: { text: string }) {
-    return (
-      item.text.toLowerCase().indexOf(keyword.trim().toLowerCase()) > -1 &&
-      keyword !== ""
-    );
-  }
+function searchPagesHeaders(keyword: string): Result[] {
+  return pageData.reduce((result: Result[], page) => {
+    const matchHeaders = page.headers
+      .filter(header => matchItem(keyword, header))
+      .map(({ text: subTitle, path: parentPath, id }) => {
+        const path = `${page.parentPath}#${id}`;
+        const matchNav = navData.find(nav => parentPath === nav.link);
+
+        return {
+          subTitle,
+          path,
+          parentPath,
+          mainTitle: matchNav ? matchNav.text : ""
+        };
+      });
+    return result.concat(matchHeaders);
+  }, []);
+}
+function searchNavs(keyword: string): Result[] {
+  return navData
+    .filter(nav => matchItem(keyword, nav))
+    .map(({ link, text }) => ({
+      path: link,
+      parentPath: link,
+      mainTitle: text
+    }));
+}
+
+function matchItem(keyword: string, item: { text: string }) {
+  console.log(keyword, item.text);
+  return (
+    item.text.toLowerCase().indexOf(keyword.trim().toLowerCase()) > -1 &&
+    keyword !== ""
+  );
 }
 
 function isMobileSize() {
