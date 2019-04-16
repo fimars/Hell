@@ -7,23 +7,20 @@ import { AppContext } from "@theme/browser";
 import * as React from "react";
 
 export default function Sidebar() {
-  const {
-    headers,
-    frontmatter: { sidebar }
-  } = useContext(PageDataContext);
+  const { headers, frontmatter } = useContext(PageDataContext);
   const { displaySidebar } = useContext(AppContext);
-  const setSidebarHide = sidebar === false;
+  const hideSidebar = frontmatter && frontmatter.sidebar === false;
 
   const sideClassName = [
     "side",
     displaySidebar ? "side-open" : "",
-    setSidebarHide ? "side-hide" : ""
+    hideSidebar ? "side-hide" : ""
   ].join(" ");
 
   return (
     <div className={sideClassName}>
       <SidebarLinks />
-      {!setSidebarHide && <Toc headings={headers} />}
+      {!hideSidebar && <Toc headings={headers} />}
     </div>
   );
 }

@@ -35,7 +35,6 @@ export function createTemp(customTempPath?: string) {
       )
       .join("\n");
     const destPath = await writeTemp("runtime", runtime);
-    console.log(destPath);
     return destPath;
   }
 
