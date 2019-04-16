@@ -1,6 +1,7 @@
 // @ts-ignore
 import { siteData } from "@internal/runtime";
 import { HashLink as Link } from "react-router-hash-link";
+import { useState, useRef } from "react";
 import * as React from "react";
 
 const navData = siteData.themeConfig.nav;
@@ -13,10 +14,10 @@ interface head {
   parentPath: string;
 }
 
-interface SearchResultProps {
+type SearchResultProps = {
   results: head[];
   onItemClick: () => void;
-}
+};
 function SearchResult({ results, onItemClick }: SearchResultProps) {
   return (
     <ul className="search-results">
@@ -32,103 +33,84 @@ function SearchResult({ results, onItemClick }: SearchResultProps) {
   );
 }
 
-interface SearchState {
-  fullWidth: boolean;
-  keyword: string;
-  results: head[];
-  onFocus: boolean;
-}
-class Search extends React.Component<{}, SearchState> {
-  private inputRef: React.RefObject<HTMLInputElement>;
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      fullWidth: false,
-      onFocus: false,
-      keyword: "",
-      results: []
-    };
-    this.inputRef = React.createRef();
-  }
+export default function Search() {
+  const [fullWidth, setFullWidth] = useState(false);
+  const [focus, setFocus] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [results, setResults] = useState<head[]>([]);
+  const inputEl = useRef(null);
 
-  render() {
-    const hasResult = this.state.onFocus && this.state.keyword.trim();
-    return (
-      <div className="search-box" onClick={this.onTouchSearchBox}>
-        <i className="fas fa-search search-icon" />
-        <input
-          ref={this.inputRef}
-          type="text"
-          onBlur={this.onLeaveSearchBox}
-          value={this.state.keyword}
-          onChange={this.userInputing}
-          className={`${this.state.fullWidth ? "full-width-input" : ""}`}
-          id="searchInput"
-        />
-        {hasResult && (
-          <SearchResult
-            results={this.state.results}
-            onItemClick={this.resetState}
-          />
-        )}
-      </div>
-    );
-  }
+  const showResults = focus && keyword.trim();
+  console.log(showResults);
 
-  onTouchSearchBox = () => {
-    this.setState({ onFocus: true });
-    this.isFullWidth();
-  };
-  onLeaveSearchBox = (e: React.FocusEvent) => {
+  return (
+    <div className="search-box" onClick={onTouchSearchBox}>
+      <i className="fas fa-search search-icon" />
+      <input
+        id="searchInput"
+        type="text"
+        ref={inputEl}
+        onBlur={onLeaveSearchBox}
+        value={keyword}
+        onChange={userInputing}
+        className={`${fullWidth ? "full-width-input" : ""}`}
+      />
+      {showResults && (
+        <SearchResult results={results} onItemClick={resetState} />
+      )}
+    </div>
+  );
+
+  function onTouchSearchBox() {
+    setFocus(true);
+    isFullWidth();
+  }
+  function onLeaveSearchBox(e: React.FocusEvent) {
     if (!e.relatedTarget) {
-      isMobileSize() && this.setState({ fullWidth: false });
-      this.setState({ onFocus: false });
+      isMobileSize() && setFullWidth(false);
+      setFocus(false);
     }
-  };
-  userInputing = (e: React.FormEvent<HTMLInputElement>) => {
-    this.setState({ keyword: e.currentTarget.value }, this.search);
-  };
-  resetState = () => {
-    this.setState({
-      keyword: "",
-      onFocus: false
-    });
-  };
+  }
+  function userInputing(e: React.FormEvent<HTMLInputElement>) {
+    setKeyword(e.currentTarget.value);
+    search();
+  }
+  function resetState() {
+    setKeyword("");
+    setFocus(false);
+  }
 
-  isFullWidth() {
-    const shouldUseFullWidth = isMobileSize() && !this.state.fullWidth;
+  function isFullWidth() {
+    const shouldUseFullWidth = isMobileSize() && !fullWidth;
     if (shouldUseFullWidth) {
-      this.setState({ fullWidth: true });
-      const node = this.inputRef.current;
-      node && node.focus();
+      setFullWidth(true);
+      // @ts-ignore
+      inputEl.current && inputEl.current.focus();
     }
   }
-  search() {
-    let headers = this.searchPagesHeaders();
+  function search() {
+    let headers = searchPagesHeaders();
     if (headers.length) {
-      this.addMainTitle(headers);
+      addMainTitle(headers);
     } else {
-      headers = this.searchNavs();
+      headers = searchNavs();
     }
-    this.setState({
-      results: headers
-    });
+    console.log(headers);
+    setResults(headers);
   }
-  searchPagesHeaders() {
+  function searchPagesHeaders() {
     const headerResult: head[] = pageData.reduce((result: head[], page) => {
-      const matchHeaders = page.headers
-        .filter(this.isMatchItem)
-        .map(header => ({
-          subTitle: header.text,
-          path: `${page.path}#${header.id}`,
-          parentPath: page.path,
-          mainTitle: ""
-        }));
+      const matchHeaders = page.headers.filter(isMatchItem).map(header => ({
+        subTitle: header.text,
+        path: `${page.path}#${header.id}`,
+        parentPath: page.path,
+        mainTitle: ""
+      }));
       return result.concat(matchHeaders);
     }, []);
     return headerResult;
   }
-  addMainTitle(headers: head[]) {
+  function addMainTitle(headers: head[]) {
     headers.forEach(head => {
       navData.forEach(({ text, link }) => {
         if (head.parentPath === link) {
@@ -137,8 +119,8 @@ class Search extends React.Component<{}, SearchState> {
       });
     });
   }
-  searchNavs() {
-    const navResults: head[] = navData.filter(this.isMatchItem).map(nav => ({
+  function searchNavs() {
+    const navResults: head[] = navData.filter(isMatchItem).map(nav => ({
       path: nav.link,
       parentPath: nav.link,
       mainTitle: nav.text
@@ -146,17 +128,15 @@ class Search extends React.Component<{}, SearchState> {
     return navResults;
   }
 
-  isMatchItem = (item: { text: string }) => {
+  function isMatchItem(item: { text: string }) {
     return (
-      item.text.toLowerCase().indexOf(this.state.keyword.trim().toLowerCase()) >
-        -1 && this.state.keyword !== ""
+      item.text.toLowerCase().indexOf(keyword.trim().toLowerCase()) > -1 &&
+      keyword !== ""
     );
-  };
+  }
 }
 
 function isMobileSize() {
   const mobileSize = 545;
   return window.innerWidth <= mobileSize;
 }
-
-export default Search;
