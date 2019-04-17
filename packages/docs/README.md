@@ -1,3 +1,7 @@
+---
+sidebar: false
+---
+
 <img src="./hell.png" >
 
 ## 快速开始
@@ -11,11 +15,9 @@ npm install @helldoc/cli -g
 `helldoc dev`
 ```
 
-开始体验吧。
-
 ## 了解更多
 
-运行 `helldoc -h` 看看吧
+运行 `helldoc -h`
 
 ## 关于此项目
 

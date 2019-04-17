@@ -1,0 +1,25 @@
+.nav-label-item {
+  font-size: 1em;
+  line-height: 1.6;
+}
+
+.level-1,
+.level-2 {
+  font-size: 1.1em;
+  font-weight: 300;
+
+  >a {
+    color: $typo-dark;
+  }
+}
+
+.nav-label-item + .nav-label-item {
+  margin-top: 10px;
+}
+
+@for $i from 3 through 6 {
+  .nav-label-item.level-#{$i} {
+    padding-left: ($i - 2) * 12px;
+  }
+}
+

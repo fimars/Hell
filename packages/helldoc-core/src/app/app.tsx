@@ -1,5 +1,21 @@
+import "@theme/browser";
+import AppRouter from "./components/AppRouter";
+import { BrowserRouter } from "react-router-dom";
+import { hot } from "react-hot-loader/root";
+import { siteData } from "./runtime";
 import * as React from "react";
-import * as ReactDOM from "react-dom";
-import App from "./bundle";
 
-ReactDOM.render(<App />, document.getElementById("app"));
+let App = function() {
+  const { base } = siteData;
+  return (
+    <BrowserRouter basename={base}>
+      <AppRouter />
+    </BrowserRouter>
+  );
+};
+
+if (process.env.NODE_ENV === "development") {
+  App = hot(App);
+}
+
+export default App;

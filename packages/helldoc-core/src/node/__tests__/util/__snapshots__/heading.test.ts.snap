@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`extract headers correctly 1`] = `
+Array [
+  Object {
+    "id": "t1",
+    "level": 1,
+    "parent": null,
+    "text": "t1",
+  },
+  Object {
+    "id": "t1-1",
+    "level": 2,
+    "parent": "t1",
+    "text": "t1-1",
+  },
+  Object {
+    "id": "t1-2",
+    "level": 2,
+    "parent": "t1",
+    "text": "t1-2",
+  },
+  Object {
+    "id": "t1-2-1",
+    "level": 3,
+    "parent": "t1-2",
+    "text": "t1-2-1",
+  },
+  Object {
+    "id": "t2",
+    "level": 1,
+    "parent": null,
+    "text": "t2",
+  },
+  Object {
+    "id": "t2-1",
+    "level": 2,
+    "parent": "t2",
+    "text": "t2-1",
+  },
+  Object {
+    "id": "t2-1-1",
+    "level": 3,
+    "parent": "t2-1",
+    "text": "t2-1-1",
+  },
+  Object {
+    "id": "t2-2",
+    "level": 2,
+    "parent": "t2",
+    "text": "t2-2",
+  },
+]
+`;
