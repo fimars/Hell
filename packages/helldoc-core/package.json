@@ -1,6 +1,6 @@
 {
   "name": "@helldoc/core",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "helldoc core",
   "main": "build/node/index.js",
   "author": "fimars <foru.fy@gmail.com>",
@@ -33,6 +33,7 @@
     "fs-extra": "^7.0.1",
     "globby": "^9.0.0",
     "gray-matter": "^4.0.2",
+    "helldoc-theme-default": "^0.5.0",
     "html-webpack-plugin": "^3.2.0",
     "loader-utils": "^1.2.3",
     "lodash.merge": "^4.6.1",
@@ -58,8 +59,7 @@
     "webpack-dev-server": "^3.1.14",
     "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2",
-    "webpackbar": "^3.1.5",
-    "helldoc-theme-default": "^0.4.0"
+    "webpackbar": "^3.1.5"
   },
   "devDependencies": {
     "@types/chokidar": "^1.7.5",
