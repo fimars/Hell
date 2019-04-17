@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.5.0](https://github.com/fimars/hell/releases/tag/v0.5.0) - 2019-04-17
+
+### Changed
+
+- rewrite the client part, extract default-theme part to support custom theme suppport later.
+- coverage more test cases for util modules.
+
+### Fixed
+
+- fix an build error caused by `@helldoc/core` miss a dependencies.
+
 ## [0.4.0](https://github.com/fimars/hell/releases/tag/v0.4.0) - 2019-04-05
 
 ### Added
