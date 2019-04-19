@@ -24,6 +24,10 @@
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@loadable/babel-plugin": "^5.8.0",
+    "@loadable/component": "^5.7.0",
+    "@loadable/server": "^5.8.0",
+    "@loadable/webpack-plugin": "^5.7.1",
     "babel-loader": "^8.0.5",
     "chalk": "^2.4.2",
     "chokidar": "^2.0.4",
@@ -57,7 +61,6 @@
     "webpack": "^4.29.0",
     "webpack-chain": "^5.2.0",
     "webpack-dev-server": "^3.1.14",
-    "webpack-manifest-plugin": "^2.0.4",
     "webpack-node-externals": "^1.7.2",
     "webpackbar": "^3.1.5"
   },

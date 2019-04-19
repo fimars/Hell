@@ -60,10 +60,8 @@ export function toComponentName(file: string) {
 
 type ModuleItem = [string, string];
 export function toModuleMap(files: Array<ModuleItem>) {
-  function requireAsItem([name, absolutePath]: ModuleItem) {
-    const code = `["${name}"]: require(${JSON.stringify(
-      absolutePath
-    )}).default`;
+  function requireAsItem([name, value]: ModuleItem) {
+    const code = `["${name}"]: ${value}`;
     return code;
   }
   const moduleMap = files.map(requireAsItem).join(",\n  ");

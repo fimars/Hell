@@ -8,9 +8,14 @@ export default async function genRegistrationFile({
 }: AppContext) {
   function genRoutes(file: string): [string, string] {
     const name = toComponentName(file);
-    const absolutePath = resolve(sourceDir, file);
-    return [name, absolutePath];
+    const absolutePath = JSON.stringify(resolve(sourceDir, file));
+    const value = `React.createFactory(loadable(() => import(${absolutePath}), { fallback: <div>loading...</div> }))`;
+    return [name, value];
   }
   const files = pageFiles.map(genRoutes);
-  return toModuleMap(files);
+  return [
+    `import loadable from '@loadable/component';`,
+    `import * as React from 'react';`,
+    toModuleMap(files)
+  ].join("\n");
 }

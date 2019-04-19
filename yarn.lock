@@ -1490,6 +1490,34 @@
     npmlog "^4.1.2"
     write-file-atomic "^2.3.0"
 
+"@loadable/babel-plugin@^5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@loadable/babel-plugin/-/babel-plugin-5.8.0.tgz#fe6672ebeaea0c428d32e3f3927ed9f727e2b61b"
+  integrity sha512-GxcuhjO+d5ZLDSoqThrAe8gtlGN9Gd55CGGz8xX52B3xV6QXv0D+yQsdTFr8yVw/85sJ0AQ4sKAxAmqL4OqYkw==
+  dependencies:
+    "@babel/plugin-syntax-dynamic-import" "^7.2.0"
+
+"@loadable/component@^5.7.0":
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/@loadable/component/-/component-5.7.0.tgz#6d6b5afc2c18b9bbcb2adf1b581621e5291feecf"
+  integrity sha512-yHe2WrqUqw2zyS5MnHziVfhMONFe7Pd8oMO2UB/G9XxkXLZkSvFZQIpNouHNNE1Kc29asIYXnR42vMD5IjruSQ==
+  dependencies:
+    hoist-non-react-statics "^3.3.0"
+
+"@loadable/server@^5.8.0":
+  version "5.8.0"
+  resolved "https://registry.yarnpkg.com/@loadable/server/-/server-5.8.0.tgz#b577e181fcdc6edad7a4a811a3970c7319bdf98d"
+  integrity sha512-GSrm360ZBt1xlcwEM6MOuZxteDIbk3nrhDs5aD44952LdUnx3DUl3ctX+S+PQCNhSWpzjPqD54TbKjqzfUtrdg==
+  dependencies:
+    lodash "^4.17.11"
+
+"@loadable/webpack-plugin@^5.7.1":
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/@loadable/webpack-plugin/-/webpack-plugin-5.7.1.tgz#9fe4b19c347eaa72f8ff366ae9a9d2b724f86124"
+  integrity sha512-tURNYwPUahbM4Miz/mwMD+PZGnMpknRukwt4RViVX6tYOt06a5U92xJTv7t54C4tHdtCIEOmDrqCo97sfIu4mg==
+  dependencies:
+    mkdirp "^0.5.1"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"

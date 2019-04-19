@@ -101,11 +101,12 @@ function watchSourceFiles(sourceDir: string) {
 function resolveDevConfig(host: string, port: number, ctx: AppContext) {
   const chainClient = createClientConfig(ctx);
 
-  chainClient
-    .plugin("html")
-    .use(require("html-webpack-plugin"), [
-      { template: resolveStatic("index.template.html") }
-    ]);
+  chainClient.plugin("html").use(require("html-webpack-plugin"), [
+    {
+      template: resolveStatic("index.template.html"),
+      chunksSortMode: "none"
+    }
+  ]);
 
   chainClient.plugin("head").use(require("./webpack/HeadPlugin"), [
     {
