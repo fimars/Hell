@@ -89,10 +89,11 @@ export default function Search() {
 
 function searchPagesHeaders(keyword: string): Result[] {
   return pageData.reduce((result: Result[], page) => {
+    const parentPath = page.path;
     const matchHeaders = page.headers
       .filter(header => matchItem(keyword, header))
-      .map(({ text: subTitle, path: parentPath, id }) => {
-        const path = `${page.parentPath}#${id}`;
+      .map(({ id, text: subTitle }) => {
+        const path = `${parentPath}#${id}`;
         const matchNav = navData.find(nav => parentPath === nav.link);
 
         return {
@@ -116,7 +117,6 @@ function searchNavs(keyword: string): Result[] {
 }
 
 function matchItem(keyword: string, item: { text: string }) {
-  console.log(keyword, item.text);
   return (
     item.text.toLowerCase().indexOf(keyword.trim().toLowerCase()) > -1 &&
     keyword !== ""
