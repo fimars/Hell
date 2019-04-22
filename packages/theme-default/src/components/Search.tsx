@@ -1,7 +1,7 @@
 // @ts-ignore
 import { siteData } from "@internal/runtime";
 import { HashLink as Link } from "react-router-hash-link";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import * as React from "react";
 import { nav as navData } from "@theme/themeConfig";
 
@@ -34,13 +34,18 @@ function SearchResults({ results, onItemClick }: SearchResultsProps) {
   );
 }
 
+let blurTimer: NodeJS.Timeout;
+
 export default function Search() {
   const [focus, setFocus] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [results, setResults] = useState<Result[]>([]);
   const inputEl = useRef<HTMLInputElement>(null);
-
   const showResults = focus && keyword.trim();
+
+  useEffect(() => {
+    clearTimeout(blurTimer);
+  });
 
   return (
     <div className="search-box" onClick={handleClick}>
@@ -65,7 +70,9 @@ export default function Search() {
   }
 
   function handleBlur() {
-    setFocus(false);
+    blurTimer = setTimeout(() => {
+      setFocus(false);
+    }, 300);
   }
 
   function handleChange(e: React.FormEvent<HTMLInputElement>) {
@@ -90,7 +97,8 @@ export default function Search() {
 function searchPagesHeaders(keyword: string): Result[] {
   return pageData.reduce((result: Result[], page) => {
     const parentPath = page.path;
-    const matchHeaders = page.headers
+    const headers = page.headers || [];
+    const matchHeaders = headers
       .filter(header => matchItem(keyword, header))
       .map(({ id, text: subTitle }) => {
         const path = `${parentPath}#${id}`;

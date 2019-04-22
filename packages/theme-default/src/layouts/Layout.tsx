@@ -1,5 +1,4 @@
 import Page from "@theme/components/Page";
-import NavBar from "@theme/components/NavBar";
 import Sidebar from "@theme/components/Sidebar";
 import { AppContext } from "@theme/browser";
 import { useState } from "react";
@@ -19,7 +18,6 @@ export default function Layout(props: LayoutProps) {
         setDisplaySidebar
       }}
     >
-      <NavBar />
       <div className="columns">
         <Sidebar />
         <Page {...props} />
