@@ -1,7 +1,8 @@
-import * as React from "react";
 import { PageDataContext } from "../context";
 import { layouts, siteData } from "../runtime";
 import { RouteComponentProps, withRouter } from "react-router";
+import { useEffect } from "react";
+import * as React from "react";
 
 interface LayoutManager extends RouteComponentProps {
   renderContent: any;
@@ -13,6 +14,13 @@ function LayoutManager(props: RouteComponentProps) {
     path: "",
     component: ""
   };
+
+  useEffect(() => {
+    if (matchPage.title) {
+      console.log(matchPage.title);
+      document.title = matchPage.title;
+    }
+  });
 
   function resolveLayoutName() {
     let layoutName = "Layout";
