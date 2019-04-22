@@ -10,7 +10,11 @@ export default function(ctx: AppContext): Config {
   config.entry("client").add(resolveApp("client"));
 
   if (process.env.NODE_ENV === "production") {
-    config.plugin("webpack-assets").use(require("webpack-manifest-plugin"));
+    config.plugin("loadable").use(require("@loadable/webpack-plugin"), [
+      {
+        filename: "web-stats.json"
+      }
+    ]);
     config
       .plugin("optimize-css")
       .use(require("optimize-css-assets-webpack-plugin"), [

@@ -4,6 +4,7 @@ import createBaseConfig from "./createBaseConfig";
 
 import { AppContext } from "../../types";
 import { resolveApp } from "../util/alias";
+import { join } from "path";
 
 export default function(ctx: AppContext): Config {
   const config = createBaseConfig(ctx);
@@ -11,7 +12,8 @@ export default function(ctx: AppContext): Config {
   config.entry("server").add(resolveApp("server"));
 
   config.output
-    .filename("scripts/server.js")
+    .path(join(ctx.outDir, "scripts"))
+    .filename("server.js")
     .library("ssr")
     .libraryTarget("umd");
 

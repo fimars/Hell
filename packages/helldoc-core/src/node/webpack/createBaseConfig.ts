@@ -16,9 +16,7 @@ export default function(ctx: AppContext) {
   config.context(contextPath).mode(isProd ? "production" : "development");
   config.output
     .path(outDir)
-    .filename(
-      isProd ? "assets/js/[name].[chunkhash:8].js" : "assets/js/[name].js"
-    )
+    .filename(isProd ? "assets/js/[chunkhash:8].js" : "assets/js/[name].js")
     .publicPath(ctx.base);
 
   if (!isProd) {
@@ -35,10 +33,7 @@ export default function(ctx: AppContext) {
   config.resolve.extensions.merge([".js", ".jsx", ".md", ".scss"]);
   config.resolve.modules.merge(modulePaths);
 
-  config
-    .plugin("webpack-bar")
-    .use(require("webpackbar"))
-    .end();
+  config.plugin("webpack-bar").use(require("webpackbar"));
 
   if (isProd) {
     config.plugin("extract-css").use(require("mini-css-extract-plugin"), [
@@ -67,31 +62,34 @@ export default function(ctx: AppContext) {
   }
 
   const mdRule = config.module.rule("markdown").test(/\.md?$/);
-
   const babelRule = config.module.rule("babel").test(/\.js?$/);
+  const babelOptions = {
+    babelrc: false,
+    cwd: contextPath,
+    compact: false,
+    cacheDirectory: true,
+    plugins: [
+      ["@babel/plugin-proposal-class-properties", { loose: true }],
+      "react-hot-loader/babel",
+      "@babel/plugin-syntax-dynamic-import"
+    ],
+    presets: [
+      [
+        "@babel/preset-env",
+        { targets: { browsers: "last 2 versions" } } // or whatever your project requires
+      ],
+      "@babel/preset-react"
+    ]
+  };
+  if (isProd) {
+    babelOptions.plugins.push("@loadable/babel-plugin");
+  }
 
   [mdRule, babelRule].forEach(rule =>
     rule
       .use("babel")
       .loader("babel-loader")
-      .options({
-        babelrc: false,
-        cwd: contextPath,
-        compact: false,
-        cacheDirectory: true,
-        plugins: [
-          ["@babel/plugin-proposal-class-properties", { loose: true }],
-          "react-hot-loader/babel",
-          "@babel/plugin-syntax-dynamic-import"
-        ],
-        presets: [
-          [
-            "@babel/preset-env",
-            { targets: { browsers: "last 2 versions" } } // or whatever your project requires
-          ],
-          "@babel/preset-react"
-        ]
-      })
+      .options(babelOptions)
       .end()
       .exclude.add(/node_modules/)
       .end()
