@@ -1,13 +1,9 @@
-// TODO: allow yaml
 module.exports = {
-  head: [
-    ['link', { rel: 'icon', href: './favicon.png' }]
-  ],
+  dest: '../../docs',
   themeConfig: {
     nav: [
-      { text: "/HellDoc", link: "/" },
-      { text: "指南", link: "/guide" },
-      { text: "默认皮肤", link: "/default-theme-config" },
+      { text: "🐱", link: "/" },
+      { text: "如何使用", link: "/guide" }
     ]
   }
 };

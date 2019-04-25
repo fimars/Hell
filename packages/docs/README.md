@@ -20,7 +20,7 @@ helldoc dev
 
 ## 了解更多
 
-运行 `helldoc -h`
+完整的[使用指南](./guide)
 
 ## 关于此项目
 
