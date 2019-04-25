@@ -4,8 +4,12 @@
   overflow-y: auto;
 }
 
+.not-found {
+  margin: 30px;
+}
+
 .section {
-  margin: 32px $block-out-spacer;
+  margin: 0 $block-out-spacer 30px;
 
   & + & {
     margin-top: $block-out-spacer * 1.5;
