@@ -1,8 +1,11 @@
 ---
+title: HellDoc
 sidebar: false
 ---
 
-<img src="./hell.png" >
+# HellDoc
+
+又一个基于 Markdown 的静态文档生成框架
 
 ## 快速开始
 
@@ -10,14 +13,14 @@ sidebar: false
 # 1. 安装 HellDoc
 npm install @helldoc/cli -g
 # 2. 新建一个 README.md 文件
-`echo '# Hello World' > README.md`
-# 3. Enjoy
-`helldoc dev`
+echo '# Hello World' > README.md
+# 3. 启动helldoc, Enjoy!
+helldoc dev
 ```
 
 ## 了解更多
 
-运行 `helldoc -h`
+完整的[使用指南](./guide)
 
 ## 关于此项目
 

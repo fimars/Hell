@@ -12,7 +12,7 @@ $main-color: rgb(120, 24, 105);
 
 .side {
   background-color: #fff;
-  border-right: 1px solid #eaecef;
+  border-right: $border-default;
   overflow-y: auto;
   width: $side-width;
   z-index: 1;

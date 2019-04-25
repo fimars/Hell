@@ -1,3 +1,3 @@
 import * as React from "react";
 
-export default () => <div className="section">404 | Not Found</div>;
+export default () => <div className="not-found">404 | Not Found</div>;
