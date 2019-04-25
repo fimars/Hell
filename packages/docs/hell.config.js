@@ -1,5 +1,6 @@
 module.exports = {
   dest: '../../docs',
+  base: '/Hell/',
   themeConfig: {
     nav: [
       { text: "🐱", link: "/" },
