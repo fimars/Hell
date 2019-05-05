@@ -14,33 +14,52 @@
 
 ### 测试流程
 
-1. 初始化一个 Context
+1. 初始化一个 Nana 查看运行状态
 2. 测试每个模块的运行情况
-3. 测试变更 Context 内容时各个模块的运行状况
+3. 测试 watch 的工作情况
 
 ### 模块
 
+config
+
+**nana.config.yaml**
+
+```yaml
+```
+
+**site.config.yaml**
+
+```yaml
+```
+
 node
 
-- Context 流程
+- cli, cwd
 
-  - cwd
-  - new HellServer with (\$cwd)
-    - loadConfig -> afterLoadConfig<config>
-      - call merge default config
-    - transferToContext -> afterTransfer<context>
-      - output files with context
-    - run the webpack server -> upWebpack<compiler>
+- /nana 初始化 nana(opts)
 
-- 打包文档文件和客户端的 webpack 工具
+  - load Opts, load Config
+  - 整理皮肤，整理共享数据，整理路由，整理 webpack 配置
+  - run the webpack server -> upWebpack<compiler>
+
+- /webpack 打包文档文件和客户端的 webpack 工具
   - Loader
   - Plugin
-- 运行时模块
-  - 本地服务
-  - 打包文件
-- 收集用户提供的约定的信息的合集
-- 无上下文依赖的通用工具库
+- /utils 通用模块
+  - configLoader
   - logger
-  - lang tool
+- /prepare 打包运行时数据
+- /markdown markdown 文件处理工具
 
-application
+### Recipes
+
+Q: 有哪些 node 运行流程？以及相应的钩子
+
+A:
+
+hooks:
+
+- init
+- afterLoadConfig
+- webpackChain
+- afterWebpackChain

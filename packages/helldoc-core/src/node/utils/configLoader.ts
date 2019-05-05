@@ -8,6 +8,12 @@ export const NANA_CONFIG_FILES = [
   "nana.config.json"
 ];
 
+export const SITE_CONFIG_FILES = [
+  "site.config.yaml",
+  "site.config.js",
+  "site.config.json"
+];
+
 export function load(
   files: string[],
   options: { cwd: string } = { cwd: process.cwd() }
