@@ -1,7 +1,7 @@
 import { AppContext } from "../../types";
 import { join } from "path";
 import { readdirSync, existsSync } from "fs-extra";
-import { isJS } from "../util/regex";
+import { isJS } from "../utils/regex";
 import { toModuleMap } from "./util";
 
 export default async function({ themePath }: AppContext) {

@@ -1,7 +1,9 @@
 import { SiteConfig } from "../../types";
-import { loadConfig } from "../util/configLoader";
+import { loadConfig } from "../utils/configLoader";
+import { Hook } from "tapable";
+
 import merge = require("lodash.merge");
-import * as path from "path";
+import { resolve } from "path";
 
 type Opts = {
   cwd: string;
@@ -12,11 +14,13 @@ type Opts = {
 class Nana {
   opts: Opts;
   config: {};
-  hooks: {};
+  hooks: {
+    [hookName: string]: Hook;
+  };
 
   constructor(opts: Opts, config = {}) {
     this.opts = opts;
-    this.opts.cwd = path.resolve(opts.cwd || ".");
+    this.opts.cwd = resolve(opts.cwd || ".");
     this.config = config;
     this.hooks = {};
   }

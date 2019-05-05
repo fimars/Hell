@@ -1,5 +1,5 @@
 import md from "../markdown";
-import { parseFrontmatter } from "../util/matter";
+import { parseFrontmatter } from "../utils/matter";
 
 export default function MarkdownLoader(source: string) {
   return markdownToReact(source);

@@ -6,7 +6,7 @@ import createServerConfig from "./webpack/createServerConfig";
 import { resolve } from "path";
 import { existsSync, emptyDir } from "fs-extra";
 import { CLIOptions, AppContext } from "../types";
-import { resolveStatic } from "./util/alias";
+import { resolveStatic } from "./utils/alias";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";

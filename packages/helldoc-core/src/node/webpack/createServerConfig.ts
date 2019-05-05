@@ -3,7 +3,7 @@ import webpackNodeExternals = require("webpack-node-externals");
 import createBaseConfig from "./createBaseConfig";
 
 import { AppContext } from "../../types";
-import { resolveApp } from "../util/alias";
+import { resolveApp } from "../utils/alias";
 import { join } from "path";
 
 export default function(ctx: AppContext): Config {

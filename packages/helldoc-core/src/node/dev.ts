@@ -9,7 +9,7 @@ import createClientConfig from "./webpack/createClientConfig";
 import { CLIOptions, AppContext } from "../types";
 import { resolve, posix, isAbsolute } from "path";
 import { existsSync } from "fs-extra";
-import { resolveStatic } from "./util/alias";
+import { resolveStatic } from "./utils/alias";
 
 async function dev(sourceDir: string, cliOptions: CLIOptions) {
   try {

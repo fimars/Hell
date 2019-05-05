@@ -3,7 +3,7 @@ import Config = require("webpack-chain");
 import { AppContext } from "../../types";
 import { resolve } from "path";
 import { getModulePaths } from "./util";
-import { resolveApp } from "../util/alias";
+import { resolveApp } from "../utils/alias";
 
 const contextPath = resolve(__dirname, "../../");
 
