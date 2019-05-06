@@ -1,5 +1,5 @@
 import { isAbsolute } from "path";
-import { resolveApp } from "../../util/alias";
+import { resolveApp } from "../../utils/alias";
 
 it("should be a absolute path", () => {
   expect(isAbsolute(resolveApp(""))).toBeTruthy();

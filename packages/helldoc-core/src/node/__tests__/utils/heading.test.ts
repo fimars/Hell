@@ -1,4 +1,4 @@
-import { extractHeaders } from "../../util/heading";
+import { extractHeaders } from "../../utils/heading";
 
 it("extract headers correctly", () => {
   const headers = extractHeaders(

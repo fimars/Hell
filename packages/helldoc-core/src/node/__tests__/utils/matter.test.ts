@@ -1,4 +1,4 @@
-import { parseFrontmatter } from "../../util/matter";
+import { parseFrontmatter } from "../../utils/matter";
 
 const content = `
 ---
