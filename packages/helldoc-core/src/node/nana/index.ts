@@ -56,7 +56,8 @@ export class Nana {
     // Load theme
     if (this.config.theme) {
       this.theme = resolvePackage(this.config.theme, {
-        prefix: "helldoc-theme-"
+        prefix: "helldoc-theme-",
+        cwd: this.opts.cwd
       });
 
       console.log(`Using site theme: \n  ${this.config.theme}`);
@@ -109,9 +110,9 @@ export class Nana {
   }
 }
 
-export function boot(cwd = "."): Nana {
-  const nana = new Nana({ cwd });
-  return nana;
-}
+// function boot(cwd = "."): Nana {
+//   const nana = new Nana({ cwd });
+//   return nana;
+// }
 
-boot("./packages/docs/").run();
+// boot("./packages/docs/").run();
