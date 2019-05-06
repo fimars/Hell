@@ -22,6 +22,7 @@ module.exports = {
     '/node_modules/',
     '\\.snap$',
     '/packages/.*/build',
+    '/fixtures/'
   ],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
