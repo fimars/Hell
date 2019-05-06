@@ -22,11 +22,6 @@
 
 config
 
-**nana.config.yaml**
-
-```yaml
-```
-
 **site.config.yaml**
 
 ```yaml
@@ -38,8 +33,8 @@ node
 
 - /nana 初始化 nana(opts)
 
-  - load Opts, load Config
-  - 整理皮肤，整理共享数据，整理路由，整理 webpack 配置
+  - load Opts, load Config, load ThemePath
+  - 整理页面数据，整理路由，整理 webpack 配置
   - run the webpack server -> upWebpack<compiler>
 
 - /webpack 打包文档文件和客户端的 webpack 工具

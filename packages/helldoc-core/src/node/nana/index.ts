@@ -1,62 +1,111 @@
-import { SiteConfig } from "../../types";
-import {
-  load,
-  NANA_CONFIG_FILES,
-  SITE_CONFIG_FILES
-} from "../utils/configLoader";
-import { Hook } from "tapable";
-
+import { load, SITE_CONFIG_FILES } from "../utils/configLoader";
+import { AsyncSeriesHook, SyncHook } from "tapable";
+import { resolve, join } from "path";
+import { resolvePackage } from "../webpack/util";
 import merge = require("lodash.merge");
-import { resolve } from "path";
+import Transformers from "./Transformers";
+import Pages from "./Pages";
 
 type Options = {
   cwd: string;
-  siteConfig?: SiteConfig;
+};
+type Config = {
+  theme?: string;
+  ignores?: string[];
 };
 
-class Nana {
+export class Nana {
   opts: Options;
-  config: {};
+  config: Config;
   hooks: {
-    [hookName: string]: Hook;
+    afterPlugins: SyncHook;
+    beforeRun: AsyncSeriesHook;
+    emitPages: AsyncSeriesHook;
+    emitRoutes: AsyncSeriesHook;
   };
+  pages: Pages;
+  transformers: Transformers;
+  theme?: string;
 
-  constructor(opts: Options, config = {}) {
+  constructor(opts: Options, config: Config = {}) {
     this.opts = opts;
     this.opts.cwd = resolve(opts.cwd || ".");
     this.config = config;
-    this.hooks = {};
+    this.hooks = {
+      afterPlugins: new SyncHook(),
+      beforeRun: new AsyncSeriesHook(),
+      emitPages: new AsyncSeriesHook(),
+      emitRoutes: new AsyncSeriesHook()
+    };
+    this.pages = new Pages(this);
+    this.transformers = new Transformers();
 
     this.prepare();
   }
 
   prepare() {
-    const loadOptions = {
+    const { path: configpath, data: config } = load(SITE_CONFIG_FILES, {
       cwd: resolve(this.opts.cwd, ".helldoc")
-    };
-
-    const { path: nanapath, data: nana } = load(NANA_CONFIG_FILES, loadOptions);
-    this.opts = merge({}, nana, this.opts);
-    if (nanapath) {
-      console.log(`Using nana config file: \n  ${nanapath}`);
-    }
-
-    const { path: configpath, data: config } = load(
-      SITE_CONFIG_FILES,
-      loadOptions
-    );
+    });
     this.config = merge({}, config, this.config);
+
     if (configpath) {
       console.log(`Using site config file: \n  ${configpath}`);
     }
 
-    // load theme Config
+    // Load theme
+    if (this.config.theme) {
+      this.theme = resolvePackage(this.config.theme, {
+        prefix: "helldoc-theme-"
+      });
+
+      console.log(`Using site theme: \n  ${this.config.theme}`);
+    } else {
+      this.theme = resolvePackage("helldoc-theme-default", {
+        cwd: __dirname
+      });
+
+      console.log(`Using helldoc default theme.`);
+    }
+
+    // Load plugins
+    const plugins = this.getPlugins();
+    for (const plugin of plugins) {
+      plugin.apply(this, plugin.options);
+    }
   }
 
-  async run() {}
+  getPlugins() {
+    type Plugin = { resolve: string; options?: any };
+
+    const builtinPlugins: Plugin[] = [
+      { resolve: require.resolve("../plugins/collectPages") },
+      { resolve: require.resolve("../plugins/transformerMarkdown") }
+    ];
+
+    const plugins = builtinPlugins.map(({ resolve, options }) => {
+      const plugin = require(resolve);
+      plugin.__path = resolve;
+      plugin.options = options;
+      return plugin;
+    });
+    return plugins;
+  }
+
+  async run() {
+    await this.hooks.beforeRun.promise();
+  }
 
   async serve() {
     await this.run();
+  }
+
+  resolveNana(...args: string[]) {
+    return join(this.opts.cwd, ".nana", ...args);
+  }
+
+  resolveCwd(...args: string[]) {
+    return join(this.opts.cwd, ...args);
   }
 }
 
@@ -65,4 +114,4 @@ export function boot(cwd = "."): Nana {
   return nana;
 }
 
-boot("./packages/docs/");
+boot("./packages/docs/").run();
