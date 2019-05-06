@@ -8,6 +8,7 @@ import Pages from "./Pages";
 
 type Options = {
   cwd: string;
+  __withoutBuiltinPlugins__?: boolean;
 };
 type Config = {
   theme?: string;
@@ -77,6 +78,9 @@ export class Nana {
   }
 
   getPlugins() {
+    // for plugins test
+    if (this.opts.__withoutBuiltinPlugins__) return [];
+
     type Plugin = { resolve: string; options?: any };
 
     const builtinPlugins: Plugin[] = [
