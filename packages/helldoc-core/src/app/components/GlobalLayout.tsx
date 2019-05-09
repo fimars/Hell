@@ -1,12 +1,11 @@
 // @ts-ignore
-import ThemeLayout from "@theme/ThemeLayout";
+import ThemeLayout from "#theme/ThemeLayout";
 import { useEffect, ReactElement } from "react";
-import { siteData } from "../runtime";
 
 function GlobalLayout(props: { children: ReactElement }) {
-  const { title } = siteData;
+  const title = "";
   useEffect(() => {
-    document.title = title || "Welcome to Hell";
+    document.title = title;
   });
 
   const Layout = ThemeLayout ? ThemeLayout(props) : props.children;

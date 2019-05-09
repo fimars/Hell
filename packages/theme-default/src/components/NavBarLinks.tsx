@@ -1,7 +1,7 @@
 import { HashLink as Link } from "react-router-hash-link";
 import { nav } from "../themeConfig";
 import { useContext } from "react";
-import { AppContext } from "@theme/browser";
+import { AppContext } from "#theme/browser";
 import * as React from "react";
 
 export default function NavBarLinks() {

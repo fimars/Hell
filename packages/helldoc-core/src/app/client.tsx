@@ -1,4 +1,4 @@
-import "@theme/browser";
+import "#theme/browser";
 import App from "./app";
 import { render, hydrate } from "react-dom";
 // @ts-ignore

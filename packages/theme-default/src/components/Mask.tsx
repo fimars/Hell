@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "@theme/browser";
+import { AppContext } from "#theme/browser";
 import * as React from "react";
 
 export default function Mask() {

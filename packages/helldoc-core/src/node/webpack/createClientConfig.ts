@@ -1,10 +1,10 @@
 import Config = require("webpack-chain");
 import createBaseConfig from "./createBaseConfig";
 
-import { AppContext } from "../../types";
 import { resolveApp } from "../utils/alias";
+import { Nana } from "../nana";
 
-export default function(ctx: AppContext): Config {
+export default function(ctx: Nana): Config {
   const config = createBaseConfig(ctx);
 
   config.entry("client").add(resolveApp("client"));

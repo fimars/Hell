@@ -1,14 +1,14 @@
-import AppRouter from "./components/AppRouter";
+// @ts-ignore
+import Routes from "#nana/routes";
 import { BrowserRouter } from "react-router-dom";
 import { hot } from "react-hot-loader/root";
-import { siteData } from "./runtime";
 import * as React from "react";
 
 let App = function() {
-  const { base } = siteData;
+  const base = "";
   return (
     <BrowserRouter basename={base}>
-      <AppRouter />
+      <Routes />
     </BrowserRouter>
   );
 };

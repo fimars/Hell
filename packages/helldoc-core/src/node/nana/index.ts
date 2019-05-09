@@ -5,6 +5,9 @@ import { resolvePackage } from "../webpack/util";
 import merge = require("lodash.merge");
 import Transformers from "./Transformers";
 import Pages from "./Pages";
+import Renderer from "./Renderer";
+import createBaseConfig from "../webpack/createBaseConfig";
+import WebpackChain = require("webpack-chain");
 
 type Options = {
   cwd: string;
@@ -13,6 +16,9 @@ type Options = {
 type Config = {
   theme?: string;
   ignores?: string[];
+  client?: {
+    [key: string]: string;
+  };
 };
 
 export class Nana {
@@ -21,12 +27,14 @@ export class Nana {
   hooks: {
     afterPlugins: SyncHook;
     beforeRun: AsyncSeriesHook;
+    chainWebpack: SyncHook<WebpackChain>;
     emitPages: AsyncSeriesHook;
     emitRoutes: AsyncSeriesHook;
   };
   pages: Pages;
+  renderer: Renderer;
   transformers: Transformers;
-  theme?: string;
+  theme: string;
 
   constructor(opts: Options, config: Config = {}) {
     this.opts = opts;
@@ -35,13 +43,20 @@ export class Nana {
     this.hooks = {
       afterPlugins: new SyncHook(),
       beforeRun: new AsyncSeriesHook(),
+      chainWebpack: new SyncHook(["config", "opts"]),
       emitPages: new AsyncSeriesHook(),
       emitRoutes: new AsyncSeriesHook()
     };
+    this.renderer = new Renderer(this);
     this.pages = new Pages(this);
     this.transformers = new Transformers();
+    this.theme = "";
 
     this.prepare();
+  }
+
+  get dev() {
+    return true;
   }
 
   prepare() {
@@ -99,6 +114,8 @@ export class Nana {
 
   async run() {
     await this.hooks.beforeRun.promise();
+
+    await this.renderer.getRequestHandler();
   }
 
   async serve() {
@@ -112,11 +129,17 @@ export class Nana {
   resolveCwd(...args: string[]) {
     return join(this.opts.cwd, ...args);
   }
+
+  createWebpackChain(opts: any) {
+    const config = createBaseConfig(this);
+    this.hooks.chainWebpack.call(config, opts);
+    return config;
+  }
 }
 
-// function boot(cwd = "."): Nana {
-//   const nana = new Nana({ cwd });
-//   return nana;
-// }
+function boot(cwd = "."): Nana {
+  const nana = new Nana({ cwd });
+  return nana;
+}
 
-// boot("./packages/docs/").run();
+boot("./packages/docs/").run();

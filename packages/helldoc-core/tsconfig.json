@@ -4,6 +4,6 @@
     "rootDir": "src",
     "outDir": "build",
     "jsx": "react",
-    "lib": ["dom", "esnext"]
-  }
-}
+    "lib": ["dom", "esnext"],
+    "target": "esnext"
+  }}

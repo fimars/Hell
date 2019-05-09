@@ -3,6 +3,7 @@
 .eslintcache
 .vscode
 .temp
+.nana
 *.swp
 *~
 

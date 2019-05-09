@@ -1,6 +1,6 @@
-import Page from "@theme/components/Page";
-import Sidebar from "@theme/components/Sidebar";
-import { AppContext } from "@theme/browser";
+import Page from "#theme/components/Page";
+import Sidebar from "#theme/components/Sidebar";
+import { AppContext } from "#theme/browser";
 import { useState } from "react";
 import * as React from "react";
 

@@ -1,26 +1,26 @@
-import Config = require("webpack-chain");
-import webpackNodeExternals = require("webpack-node-externals");
-import createBaseConfig from "./createBaseConfig";
+// import Config = require("webpack-chain");
+// import webpackNodeExternals = require("webpack-node-externals");
+// import createBaseConfig from "./createBaseConfig";
 
-import { AppContext } from "../../types";
-import { resolveApp } from "../utils/alias";
-import { join } from "path";
+// import { AppContext } from "../../types";
+// import { resolveApp } from "../utils/alias";
+// import { join } from "path";
 
-export default function(ctx: AppContext): Config {
-  const config = createBaseConfig(ctx);
+// export default function(ctx: AppContext): Config {
+//   const config = createBaseConfig(ctx);
 
-  config.entry("server").add(resolveApp("server"));
+//   config.entry("server").add(resolveApp("server"));
 
-  config.output
-    .path(join(ctx.outDir, "scripts"))
-    .filename("server.js")
-    .library("ssr")
-    .libraryTarget("umd");
+//   config.output
+//     .path(join(ctx.outDir, "scripts"))
+//     .filename("server.js")
+//     .library("ssr")
+//     .libraryTarget("umd");
 
-  config.target("node");
-  config.node.set("__dirname", false);
+//   config.target("node");
+//   config.node.set("__dirname", false);
 
-  config.externals(webpackNodeExternals());
+//   config.externals(webpackNodeExternals());
 
-  return config;
-}
+//   return config;
+// }

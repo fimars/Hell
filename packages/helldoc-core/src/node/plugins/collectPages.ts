@@ -51,5 +51,6 @@ export const apply = (api: Nana) => {
     });
 
     await api.hooks.emitPages.promise();
+    await api.hooks.emitRoutes.promise();
   });
 };

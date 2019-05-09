@@ -1,23 +1,22 @@
 import Config = require("webpack-chain");
 
-import { AppContext } from "../../types";
 import { resolve } from "path";
 import { getModulePaths } from "./util";
 import { resolveApp } from "../utils/alias";
+import { Nana } from "../nana";
 
 const contextPath = resolve(__dirname, "../../");
 
-export default function(ctx: AppContext) {
+export default function(api: Nana) {
   const isProd = process.env.NODE_ENV === "production";
-  const outDir = ctx.outDir;
 
   const config = new Config();
 
   config.context(contextPath).mode(isProd ? "production" : "development");
   config.output
-    .path(outDir)
-    .filename(isProd ? "assets/js/[chunkhash:8].js" : "assets/js/[name].js")
-    .publicPath(ctx.base);
+    .path(api.resolveNana(`dist`))
+    .filename(isProd ? "assets/js/[chunkhash:8].js" : "assets/js/[name].js");
+  // .publicPath('');
 
   if (!isProd) {
     config.devtool("cheap-module-eval-source-map");
@@ -28,12 +27,10 @@ export default function(ctx: AppContext) {
   config.resolve.symlinks(true);
   config.resolve.alias
     .set("#hell", resolveApp(""))
-    .set("@internal", ctx.tempPath)
-    .set("@theme", ctx.themePath);
+    .set("#nana", api.resolveNana())
+    .set("#theme", api.theme);
   config.resolve.extensions.merge([".js", ".jsx", ".md", ".scss"]);
   config.resolve.modules.merge(modulePaths);
-
-  config.plugin("webpack-bar").use(require("webpackbar"));
 
   if (isProd) {
     config.plugin("extract-css").use(require("mini-css-extract-plugin"), [
@@ -94,12 +91,6 @@ export default function(ctx: AppContext) {
       .exclude.add(/node_modules/)
       .end()
   );
-
-  // handle the markdown part
-  mdRule
-    .use("easy-markdown-loader")
-    .loader(require.resolve("./markdownLoader"))
-    .end();
 
   const styleRule = config.module.rule("scss").test(/\.scss$/);
   if (isProd) {

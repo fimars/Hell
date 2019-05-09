@@ -19,14 +19,18 @@ export const apply = (api: Nana) => {
       page.content = markdown(page.content);
     },
     getPageComponent(page) {
+      console.log(
+        `Transfer markdown ${page.internal.relative} at:`,
+        new Date()
+      );
       return [
         `import LayoutManager from '#hell/components/LayoutManager'`,
-        `export default function () {
+        `export default () => {
             return (
               <LayoutManager renderContent={
-                () => <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: ${
+                () => <div className='markdown-body section' dangerouslySetInnerHTML={{ __html: \`${
                   page.content
-                } }}></div>
+                }\` }}></div>
               } />
             );
           }

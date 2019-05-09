@@ -24,7 +24,7 @@ export default function(this: webpack.loader.LoaderContext, source: string) {
   if (!transformer) throw new Error("miss transformer : (");
 
   return `
-  import * as React from 'react';
-  ${transformer.getPageComponent(page)}
-  `;
+import * as React from 'react';
+${transformer.getPageComponent(page)}
+  `.trim();
 }
