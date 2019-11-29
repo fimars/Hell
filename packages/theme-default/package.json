@@ -2,7 +2,8 @@
 	"name": "helldoc-theme-default",
 	"version": "0.5.2",
 	"files": [
-		"build"
+    "build",
+    "styles"
 	],
 	"description": "helldoc theme for blog",
 	"author": "fimars <foru.fy@gmail.com>",
