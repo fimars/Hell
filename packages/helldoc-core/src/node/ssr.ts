@@ -1,4 +1,4 @@
-import * as fs from "fs-extra";
+import fs from "fs-extra";
 import { resolve } from "path";
 import { AppContext, Tag } from "../types";
 

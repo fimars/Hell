@@ -1,6 +1,6 @@
 import Heading from "./Heading";
 import { HashLink as Link } from "react-router-hash-link";
-import * as React from "react";
+import React from "react";
 
 interface HeadingData {
   level: number;

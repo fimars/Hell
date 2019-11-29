@@ -1,5 +1,5 @@
 import fs = require("fs-extra");
-import * as path from "path";
+import path from "path";
 
 const tempCache = new Map<string, string | Buffer>();
 const tempFiles = new Set<string>();

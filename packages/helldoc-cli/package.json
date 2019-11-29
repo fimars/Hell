@@ -22,6 +22,6 @@
 	],
 	"dependencies": {
 		"@helldoc/core": "^0.5.1",
-		"commander": "^2.19.0"
+		"commander": "^4.0.1"
 	}
 }

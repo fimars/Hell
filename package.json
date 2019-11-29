@@ -13,20 +13,19 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@types/globby": "^8.0.0",
-    "@types/jest": "^24.0.6",
-    "@types/node": "^11.9.4",
-    "@types/react-redux": "^7.0.3",
-    "husky": "^1.3.1",
-    "jest": "^24.1.0",
-    "jest-environment-node": "^24.0.0",
-    "lerna": "^3.13.0",
-    "lint-staged": "^8.1.3",
-    "prettier": "^1.16.3",
-    "stylelint": "^9.10.1",
-    "stylelint-config-sass-guidelines": "^5.3.0",
-    "ts-jest": "^24.0.0",
-    "typescript": "^3.2.4"
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
+    "@types/react-redux": "^7.1.5",
+    "husky": "^3.1.0",
+    "jest": "^24.9.0",
+    "jest-environment-node": "^24.9.0",
+    "lerna": "^3.19.0",
+    "lint-staged": "^9.5.0",
+    "prettier": "^1.19.1",
+    "stylelint": "^12.0.0",
+    "stylelint-config-sass-guidelines": "^6.2.0",
+    "ts-jest": "^24.2.0",
+    "typescript": "^3.7.2"
   },
   "husky": {
     "hooks": {

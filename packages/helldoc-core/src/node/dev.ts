@@ -1,7 +1,7 @@
 import chalk from "chalk";
-import * as chokidar from "chokidar";
-import * as Webpack from "webpack";
-import * as WebpackDevServer from "webpack-dev-server";
+import chokidar from "chokidar";
+import Webpack from "webpack";
+import WebpackDevServer from "webpack-dev-server";
 import portfinder = require("portfinder");
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";

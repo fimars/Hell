@@ -3,7 +3,7 @@ import App from "./app";
 import { render, hydrate } from "react-dom";
 // @ts-ignore
 import { loadableReady } from "@loadable/component";
-import * as React from "react";
+import React from "react";
 
 const isDev = process.env.NODE_ENV === "development";
 const el = document.getElementById("app");

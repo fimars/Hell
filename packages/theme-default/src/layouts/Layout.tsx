@@ -1,6 +1,6 @@
 import Page from "@theme/components/Page";
 import Sidebar from "@theme/components/Sidebar";
-import * as React from "react";
+import React from "react";
 
 type LayoutProps = {
   renderContent: () => React.ReactElement;

@@ -1,7 +1,7 @@
 import GlobalLayout from "./GlobalLayout";
 import NotFound from "./NotFound";
 import { Route, Switch } from "react-router-dom";
-import * as React from "react";
+import React from "react";
 import { siteData, pages as Contents } from "../runtime";
 
 export default function AppRouter() {

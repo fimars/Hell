@@ -1,5 +1,5 @@
-import * as toml from "toml";
-import * as matter from "gray-matter";
+import toml from "toml";
+import matter from "gray-matter";
 
 export function parseFrontmatter(content: string) {
   return matter(content.trim(), {

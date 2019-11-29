@@ -1,6 +1,6 @@
 import { HashLink as Link } from "react-router-hash-link";
 import { nav } from "../themeConfig";
-import * as React from "react";
+import React from "react";
 
 export default function SidebarLinks() {
   return (

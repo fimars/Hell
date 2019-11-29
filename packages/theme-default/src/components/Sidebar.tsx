@@ -4,7 +4,7 @@ import { useContext } from "react";
 // @ts-ignore
 import { PageDataContext } from "#hell/context";
 import { AppContext } from "@theme/browser";
-import * as React from "react";
+import React from "react";
 
 export default function Sidebar() {
   const { headers, frontmatter } = useContext(PageDataContext);

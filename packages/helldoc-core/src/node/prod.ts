@@ -1,4 +1,4 @@
-import * as Webpack from "webpack";
+import Webpack from "webpack";
 import SSR from "./ssr";
 import prepare from "./prepare";
 import createClientConfig from "./webpack/createClientConfig";
@@ -10,7 +10,7 @@ import { resolveStatic } from "./util/alias";
 
 async function prod(sourceDir: string, cliOptions: CLIOptions) {
   process.env.NODE_ENV = "production";
-
+  debugger;
   const ctx = await prepare(sourceDir, cliOptions);
   await emptyDir(ctx.outDir);
 
@@ -48,7 +48,7 @@ function compile(config: Webpack.Configuration) {
         return console.log(err);
       }
       if (stats.hasErrors()) {
-        (stats.toJson().errors as Error[]).forEach(err => {
+        stats.toJson().errors.forEach(err => {
           console.error(err);
         });
         reject(new Error(`Failed to compile with errors.`));

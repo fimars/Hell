@@ -15,7 +15,7 @@ export default async function genRegistrationFile({
   const files = pageFiles.map(genRoutes);
   return [
     `import loadable from '@loadable/component';`,
-    `import * as React from 'react';`,
+    `import React from 'react';`,
     toModuleMap(files)
   ].join("\n");
 }

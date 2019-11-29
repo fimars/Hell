@@ -1,7 +1,7 @@
 import AppRouter from "./components/AppRouter";
 import { siteData } from "./runtime";
 import { StaticRouter } from "react-router-dom";
-import * as React from "react";
+import React from "react";
 import { renderToString } from "react-dom/server";
 // @ts-ignore
 import { ChunkExtractor } from "@loadable/server";

@@ -2,7 +2,7 @@
 import { siteData } from "@internal/runtime";
 import { HashLink as Link } from "react-router-hash-link";
 import { useState, useRef, useEffect } from "react";
-import * as React from "react";
+import React from "react";
 import { nav as navData } from "@theme/themeConfig";
 
 const pageData: any[] = siteData.pages;

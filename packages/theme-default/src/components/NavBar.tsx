@@ -5,7 +5,7 @@ import Mask from "./Mask";
 import Search from "./Search";
 import { useContext } from "react";
 import { AppContext } from "@theme/browser";
-import * as React from "react";
+import React from "react";
 
 export default function NavBar() {
   const { displaySidebar } = useContext(AppContext);

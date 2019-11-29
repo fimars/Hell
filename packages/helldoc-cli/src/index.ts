@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import * as program from "commander";
+import program from "commander";
 import { prod, dev } from "@helldoc/core";
 
 const pkg = require("../package.json");
