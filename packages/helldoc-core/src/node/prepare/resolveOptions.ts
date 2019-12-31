@@ -50,7 +50,9 @@ export default async function resolveOptions(
   };
 
   const pagesData = ctx.pageFiles.map(file => {
-    const urlPath = isIndexFile(file) ? "/" : `/${file.replace(/\.md$/, "")}`;
+    const urlPath = isIndexFile(file)
+      ? "/"
+      : `/${file.replace(/\.md$/, ".html")}`;
     const absolutePath = resolve(sourceDir, file);
     const content = readFileSync(absolutePath, "utf-8");
     const data: PageData = {

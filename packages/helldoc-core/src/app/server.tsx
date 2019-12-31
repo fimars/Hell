@@ -9,7 +9,9 @@ import { resolve } from "path";
 
 function App(props: { location: string }) {
   const { base } = siteData;
-  const basename = base.slice(1) ? base : "";
+  let basename = base;
+  if (base.startsWith("/")) basename = base.slice(1);
+  if (basename.endsWith("/")) basename = base.slice(0, -1);
   return (
     <StaticRouter basename={basename} location={props.location}>
       <AppRouter />

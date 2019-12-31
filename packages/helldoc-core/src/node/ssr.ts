@@ -64,7 +64,9 @@ export default class SSR {
   }
 
   private async extractHTMLFile(path: string, templateData: StringMap) {
-    const filename = (path.slice(1) || "index") + ".html";
+    if (path.startsWith("/")) path = path.slice(1);
+    const indexname = "index.html";
+    const filename = path || indexname;
     const filepath = this.resolveOutDir(filename);
     await fs.writeFile(filepath, this.renderWithTemplate({ ...templateData }));
   }

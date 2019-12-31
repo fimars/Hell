@@ -10,7 +10,7 @@
     "access": "public"
   },
   "scripts": {
-    "tsc": "tsc"
+    "tsc": "tsc -w"
   },
   "keywords": [
     "hell",
@@ -24,7 +24,7 @@
     "@babel/plugin-syntax-dynamic-import": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/preset-react": "^7.7.4",
-    "@loadable/babel-plugin": "^5.10.3",
+    "@loadable/babel-plugin": "^5.11.0",
     "@loadable/component": "^5.10.3",
     "@loadable/server": "^5.10.3",
     "@loadable/webpack-plugin": "^5.7.1",

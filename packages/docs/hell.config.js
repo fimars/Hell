@@ -4,7 +4,7 @@ module.exports = {
   themeConfig: {
     nav: [
       { text: "🐱", link: "/" },
-      { text: "如何使用", link: "/guide" }
+      { text: "如何使用", link: "/guide.html" }
     ]
   }
 };
